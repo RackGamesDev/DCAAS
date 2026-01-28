@@ -1,0 +1,163 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0" version="29.3.6">
+  <diagram name="Page-1" id="cYnbG5RcdLMRD21S5_Ya">
+    <mxGraphModel dx="1524" dy="1839" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-2" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Usuario" vertex="1">
+          <mxGeometry height="170" width="120" x="50" y="80" as="geometry">
+            <mxRectangle height="30" width="80" x="70" y="70" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-7" parent="cM5SfK6GZDvp-nGmChkk-2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div align=&quot;left&quot;&gt;UUID (PK)&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;nickname (UK) NN&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;nombre_formal NN&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;descripcion&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;url_foto&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;contraseña NN&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;tipo&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;permisos NN&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;correo NN&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="110" x="10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-10" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Encuesta" vertex="1">
+          <mxGeometry height="170" width="220" x="370" y="60" as="geometry">
+            <mxRectangle height="30" width="80" x="70" y="70" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-11" parent="cM5SfK6GZDvp-nGmChkk-10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div align=&quot;left&quot;&gt;UUID (PK)&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;nombre (UK) NN&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;descripcion&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;UUID_usuario (FK Usuario.UUID) NN&lt;/div&gt;&lt;div&gt;url_foto&lt;/div&gt;&lt;div&gt;publico&lt;/div&gt;&lt;div&gt;votacion&lt;/div&gt;&lt;div&gt;estado&lt;/div&gt;&lt;div&gt;certificacion&lt;/div&gt;&lt;div&gt;anonimo&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="215" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-15" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="cM5SfK6GZDvp-nGmChkk-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-80" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="cM5SfK6GZDvp-nGmChkk-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-13" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="1:N" vertex="1">
+          <mxGeometry height="80" width="80" x="220" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1:1" vertex="1">
+          <mxGeometry height="30" width="60" x="150" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="0:N" vertex="1">
+          <mxGeometry height="30" width="60" x="320" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-27" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="cM5SfK6GZDvp-nGmChkk-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-18" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Pregunta" vertex="1">
+          <mxGeometry height="140" width="230" x="335" y="-230" as="geometry">
+            <mxRectangle height="30" width="80" x="70" y="70" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-19" parent="cM5SfK6GZDvp-nGmChkk-18" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div align=&quot;left&quot;&gt;UUID (PK)&lt;/div&gt;&lt;div&gt;titulo NN&lt;/div&gt;&lt;div&gt;descripcion&lt;/div&gt;&lt;div&gt;tipo NN&lt;/div&gt;&lt;div&gt;contenido&lt;/div&gt;&lt;div&gt;opcional&lt;/div&gt;&lt;div&gt;UUID_encuesta (FK Encuesta.UUID) NN&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="220" x="10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-20" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="1:N" vertex="1">
+          <mxGeometry height="80" width="80" x="415" y="-55" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-23" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.375;entryY=-0.007;entryDx=0;entryDy=0;entryPerimeter=0;" target="cM5SfK6GZDvp-nGmChkk-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1:1" vertex="1">
+          <mxGeometry height="30" width="60" x="440" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-29" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1:50" vertex="1">
+          <mxGeometry height="30" width="60" x="440" y="-90" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-30" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Informe" vertex="1">
+          <mxGeometry height="122.5" width="240" x="780" y="67.5" as="geometry">
+            <mxRectangle height="30" width="80" x="70" y="70" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-31" parent="cM5SfK6GZDvp-nGmChkk-30" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div align=&quot;left&quot;&gt;UUID (PK)&lt;/div&gt;&lt;div&gt;titulo NN&lt;/div&gt;&lt;div&gt;UUID_encuesta (FK Encuesta.UUID) NN&lt;/div&gt;&lt;div&gt;publico&lt;/div&gt;&lt;div&gt;contenido NN&lt;/div&gt;&lt;div&gt;datos_crudos&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="235" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-34" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="cM5SfK6GZDvp-nGmChkk-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-61" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="cM5SfK6GZDvp-nGmChkk-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-32" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="1:1" vertex="1">
+          <mxGeometry height="80" width="80" x="640" y="88.75" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-35" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="0:1" vertex="1">
+          <mxGeometry height="30" width="60" x="720" y="88.75" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-36" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1:1" vertex="1">
+          <mxGeometry height="30" width="60" x="570" y="88.75" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-37" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Respuesta" vertex="1">
+          <mxGeometry height="122.5" width="240" x="-110" y="-221.25" as="geometry">
+            <mxRectangle height="30" width="80" x="70" y="70" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-38" parent="cM5SfK6GZDvp-nGmChkk-37" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;UUID (PK)&lt;/div&gt;&lt;div&gt;contenido&lt;/div&gt;&lt;div&gt;UUID_pregunta (FK Pregunta.UUID) NN&lt;/div&gt;&lt;div&gt;UUID_usuario (FK Usuario.UUID)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="225" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-44" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="cM5SfK6GZDvp-nGmChkk-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-53" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="105" y="-100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-39" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="1:N" vertex="1">
+          <mxGeometry height="80" width="80" x="65" y="-60" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-40" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Crear encuesta" vertex="1">
+          <mxGeometry height="30" width="60" x="230" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-41" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Generar informe" vertex="1">
+          <mxGeometry height="30" width="60" x="650" y="58.75" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-42" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Pregunta está en encuesta" vertex="1">
+          <mxGeometry height="30" width="60" x="485" y="-30" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-43" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Votar" vertex="1">
+          <mxGeometry height="30" width="60" x="130" y="-35" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-48" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="cM5SfK6GZDvp-nGmChkk-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-49" edge="1" parent="1" source="cM5SfK6GZDvp-nGmChkk-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="cM5SfK6GZDvp-nGmChkk-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-46" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="1:N" vertex="1">
+          <mxGeometry height="80" width="80" x="200" y="-200" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-50" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Respuesta a que pregunta" vertex="1">
+          <mxGeometry height="30" width="60" x="210" y="-240" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-51" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1:1" vertex="1">
+          <mxGeometry height="30" width="60" x="280" y="-190" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-52" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="0:N" vertex="1">
+          <mxGeometry height="30" width="60" x="130" y="-200" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-54" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="0:N" vertex="1">
+          <mxGeometry height="30" width="60" x="40" y="-98.75" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-55" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1:1" vertex="1">
+          <mxGeometry height="30" width="60" x="50" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-74" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="El contenido puede ser un simple número, varios valores o un texto, depende del tipo de la pregunta" vertex="1">
+          <mxGeometry height="60" width="190" x="-110" y="-290" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-75" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;Opcional: debe de ser true o false, si es true esta pregunta debe de ser respondida antes de enviar.&lt;/div&gt;&lt;div&gt;Tipo: puede ser: &quot;e&quot; de elaborar (pide un texto), &quot;m&quot; de multiple opción (1 o varias opciones), &quot;u&quot; de una única opción (responde con el número de la opcón)&lt;/div&gt;&lt;div&gt;Contenido: depende del tipo, puede ser una lista con las opciones posibles (JSONB)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="190" width="320" x="580" y="-260" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-76" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div align=&quot;left&quot;&gt;Tipo: debe de ser &quot;v&quot; de votante o &quot;p&quot; de publicador de encuestas&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;Permisos: un número del 0 al 4, 0=usuario normal, 1=usuario admin, 2=usuario bloqueado, 3=usuario deshabilitado&lt;/div&gt;" vertex="1">
+          <mxGeometry height="91.25" width="320" x="-250" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-77" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;Público: debe de ser true o false, si es false solo lo puede ver el creador de su encuesta&lt;/div&gt;&lt;div&gt;Contenido: datos JSON estadísticos de cada pregunta&lt;/div&gt;&lt;div&gt;datos_crudos: lista de todas las respuestas y sus votantes (en caso de que no sean anónimas)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="320" x="760" y="-20" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-79" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;Público: debe de ser true o false, si es false el resto de usuarios ni lo podrán ver ni podrán votar&lt;/div&gt;&lt;div&gt;Votación: debe de ser true o false, esto afecta a ciertas configuraciones de formateo (además que solo podría tener 1 pregunta)&lt;/div&gt;Estado: 0=sin empezar (se pueden editar los datos, no se puede votar), 1=activa (se puede votar pero no editar los datos), 2=terminada (no se puede ni votar ni editar los datos)&lt;div&gt;Anónimo: debe de ser true o false, si es true no se guardará el uuid de los usuarios votantes (pero sigue siendo necesario para cumplir la restricción de 1 voto por votante, solo que no se verán en los informes)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="320" x="370" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-81" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;Un usuario se registra escribiendo sus datos, cuando se crea (o se inicia sesión) se crea una sesión para que pueda interactuar. Al crearse debe declararse votante o publicante&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Un usuairo publicante puede crear una encuesta con sus distintos datos, se crea en la misma petición también las preguntas (y sus datos). Esto se puede editar hasta que el creador inicie la encuesta, en ese momento no se podrá cambiar nada pero si se podrá votar.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Un usuario votante se mete a una encuesta (solo puede votar 1 vez por encuesta) respondiendo a cada una de sus preguntas (obligatoriamente las no opcionales), y manda los datos de todas las respuestas (si es una pregunta anónima no se guarda su UUID, pero sigue siendo necesario)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Después de un rato, el creador de la encuesta puede darla como finalizada, osea que sigue sin poder editarse pero tampoco se puede votar&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Además el creador de la encuesta puede crear informes de una encuesta que haya empezado o finalizado, se mantienen inmutables.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Un usuario no puede borrar sus respuestas, incluso si borra el usuario (el borrado de usuarios no genera borrado en cascada, los objetos que haya creado cambiarán de dueño a &quot;usuario borrado&quot;)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Si se borra una encuesta se borran todos sus informes y sus respuestas y sus preguntas&lt;/div&gt;" vertex="1">
+          <mxGeometry height="420" width="470" x="-640" y="-330" as="geometry" />
+        </mxCell>
+        <mxCell id="cM5SfK6GZDvp-nGmChkk-82" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;API endpoints&lt;/h1&gt;&lt;p&gt;Todas estas empiezan por /api/v1&lt;/p&gt;&lt;p&gt;Está resumido, no se indica el formato de la request o el body&lt;/p&gt;&lt;p&gt;* = requiere token de sesión de votante&lt;/p&gt;&lt;p&gt;** = requiere token de sesión de publicante&lt;/p&gt;&lt;p&gt;*** = requiere estrictamente el token de un administrador&lt;/p&gt;&lt;p&gt;Todas las acciones se podrán con el token de sesión de un usuario administrador (cuando un endpoint pide un token es para autentificar que sea ese usuario, esta restricción se la salta el admin)&lt;/p&gt;&lt;p&gt;POST /usuario&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Registrarse como usuario, genera una sesión (pide datos de registro) (devuelve datos de usuario sin contraseña, token de sesion y uuid)&lt;/p&gt;&lt;p&gt;POST /usuario/login&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Hacer login para activar la sesión (pide correo/nickanme y contraseña) (devuelve datos de usuario, token de sesion y uuid)&lt;/p&gt;&lt;p&gt;GET /validateToken/&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Valida el token de sesión (que está en el header), devuelve si es uno de votante o de publicante (nada más, solo dice si es válido)&lt;/p&gt;&lt;p&gt;GET /usuario/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Devuelve los datos públicos de un usuario a partir de su :uuid&lt;/p&gt;&lt;p&gt;*/** PATCH /usuario/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Edita un usuario (de cualquier tipo) a partir de su :uuid, (pide los datos para editar en formato patch)&lt;/p&gt;&lt;p&gt;*/** DELETE /usuario/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;Borra un usuario a partir de su :uuid, no genera borrado en cascada&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;*** PATCH /usuario/alterPerms/:uuid&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;Altera los permisos de un usuario, recibe el código de los nuevos permisos&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;** POST /encuesta&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Crea una encuesta, recibe los datos de la encuesta Y de las preguntas, devuelve su uuid&lt;/p&gt;&lt;p&gt;GET /encuesta/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Devuelve los datos públicos de una encuesta a partir de su :uuid&lt;/p&gt;&lt;p&gt;GET /encuesta/:busqueda&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Devuelve como máximo 50 encuestas que coincidan parcialmente con ese nombre (:busqueda puede estar vacio, entonces devolvera encuestas aleatorias)&lt;/p&gt;&lt;p&gt;** PATCH /encuesta/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Edita los datos de una encuesta a partir de su :uuid SOLO si no ha empezado (pide los nuevos datos)&lt;/p&gt;&lt;p&gt;** POST /encuesta/:uuid/start&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Inicia una encuesta, los usuarios podrán votar ahora pero nunca más se podrán editar los datos (solo si no se había iniciado aún)&lt;/p&gt;&lt;p&gt;** POST /encuesta/:uuid/finish&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Si la encuesta ha empezado, la termina. Ya nadie podrá votar&lt;/p&gt;&lt;p&gt;* POST /encuesta/:uuid/vote&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;El usuario vota a x encuesta a partir de su :uuid, pide los datos de cada respuesta para registrar dichas respuestas (puede o no ser anónimo)&lt;/p&gt;&lt;p&gt;** POST /stats/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;El creador de una encuesta genera un informe de la encuesta con :uuid, solo si la encuesta ha empezado. Devuelve el uuid del informe generado, recibe si va a ser público y si se van a guardar los datos crudos (en caso de que la encuesta no sea anónima)&lt;/p&gt;&lt;p&gt;** GET /stats/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Recibe los datos de un informe a partir de su :uuid&lt;/p&gt;&lt;p&gt;** DELETE /encuesta/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;Borra una encuesta a partir de su :uuid, y con ello sus informes, preguntas y respuestas&lt;/span&gt;&lt;/p&gt;&lt;p&gt;** DELETE /stats/:uuid&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Borra un informe a partir de su :uuid&lt;/p&gt;" vertex="1">
+          <mxGeometry height="1170" width="920" x="1170" y="-310" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
