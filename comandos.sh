@@ -53,6 +53,9 @@ php artisan migrate
 #crear modelo para integrarlo a las migraciones, la app y la base de datos
 php artisan make:model Encuesta
 
+#crear factory
+php artisan make:factory EncuestaFactory
+
 #migrar
 php artisan make:migration create_encuestas_table #crea el archivo de migracion para dicha tarea
 php artisan migrate #aplica las migraciones a la base de datos

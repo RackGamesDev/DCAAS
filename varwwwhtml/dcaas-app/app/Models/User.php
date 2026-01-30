@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -18,9 +19,15 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'nickname',
+        'nombre',
+        'correo',
+        'descripcion',
+        'url_foto',
+        'permisos',
+        'publicante',
+        'fecha_creacion',
+        'contrasegna',
     ];
 
     /**
@@ -32,6 +39,24 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Casts attributes to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'permisos' => 'integer', // Or whatever type your enum is stored as in the database
+        // Add other casts here if needed (e.g., dates, booleans)
+    ];
+
+    /**
+     * Hash the password before saving.  (If you are using passwords)
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
 
     /**
      * Get the attributes that should be cast.
