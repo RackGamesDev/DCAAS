@@ -35,7 +35,7 @@ services:
         #condition: service_healthy
 
 
-  basemariadb: #AAAAAAAAAAAAAAAAAAAAAAAAAAA cambiar a postgresql
+  basemariadb:
     image: mariadb:latest
     restart: on-failure
     ports:
@@ -46,6 +46,20 @@ services:
       - ./.docker/mariadb:/var/lib/mysql:Z
     env_file: "./.docker/.env"
     command: ["--default-authentication-plugin=mysql_native_password"]
+
+#  basedatos:
+#    image: postgres:13
+#    env_file: "./varwwwhtml/dcaas-app/.env"
+#    #environment:
+#    #  POSTGRES_USER: ${POSTGRES_USER}
+#    #  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#    #  POSTGRES_DB: ${POSTGRES_DB}
+#    ports:
+#      - "5433:5432"
+#    volumes:
+#      - ./.docker/postgresql:/var/lib/postgresql/data
+#    networks:
+#      - todored
     
 
 #  mongo-cont:

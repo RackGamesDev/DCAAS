@@ -1,6 +1,9 @@
 #!/bin/bash
 #http://localhost:8081/
 
+#conectar al contenedor
+docker exec -it apache-http bash
+
 #instalar laravel
 composer global require laravel/installer
 
@@ -32,6 +35,11 @@ php artisan config:cache
 php artisan route:cache
 php artisan optimize
 php artisan optimize:clear
+php artisan config:clear
+php artisan route:clear
+php artisan cache:clear
+php artisan view:clear
+
 
 #conectar a bases de datos sql o redis
 #mirar .env.example
@@ -40,6 +48,10 @@ php artisan optimize:clear
 composer require laravel/telescope --dev
 php artisan telescope:install
 php artisan migrate
+#http://localhost:8081/telescope
+
+#crear modelo para integrarlo a las migraciones, la app y la base de datos
+php artisan make:model Encuesta
 
 #migrar
 php artisan make:migration create_encuestas_table #crea el archivo de migracion para dicha tarea
@@ -59,6 +71,13 @@ tail -f storage/logs/laravel.log #abre una consola interactiva para debugging
 #lanzar mensaje
 #use Illuminate\Support\Facades\Log;
 #Log::info('Checking the user data', ['user' => $user]);
+docker exec -it apache-http bash ; cd dcaas-app ; tail -f storage/logs/laravel.log ; clear
+
+#crear middleware para una ruta
+php artisan make:middleware SuppressLaravel404
+
+#crear controlador para poner lógica (acoplable a rutas)
+php artisan make:controler EncuestaControlador
 
 #mandar a produccion (obviando comandos anteriores)
 composer install --optimize-autoloader --no-dev
