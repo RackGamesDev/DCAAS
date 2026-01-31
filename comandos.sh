@@ -50,24 +50,24 @@ php artisan telescope:install
 php artisan migrate
 #http://localhost:8081/telescope
 
-#crear modelo para integrarlo a las migraciones, la app y la base de datos
-php artisan make:model Encuesta
-
-#crear factory
-php artisan make:factory EncuestaFactory
-
-#crear seeder
-php artisan make:seeder UserSeeder
-php artisan migrate:fresh --seed #aplicar migraciones usando seeders para poblar las bases de datos
-
 #migrar
-php artisan make:migration create_encuestas_table #crea el archivo de migracion para dicha tarea
+php artisan make:migration create_encuestas_table #crea el archivo de migracion para dicha tarea (es aqui donde se definen los campos)
 php artisan migrate #aplica las migraciones a la base de datos
 #php artisan migrate:rollback #devuelve la base de datos al estado anterior
 php artisan migrate:status
 #php artisan migrate:fresh #borrar todo
 #php artisan migrate:reset down() a todas las migraciones
 php artisan schema:dump #fusiona los archivos de migracion existentes
+
+#crear modelo para integrarlo a las migraciones, la app y la base de datos
+php artisan make:model Encuesta
+
+#crear factory (para definir como se crea una instancia falsa)
+php artisan make:factory EncuestaFactory
+
+#crear seeder (para mandar a poblar la base de datos usando el factory)
+php artisan make:seeder UserSeeder
+php artisan migrate:fresh --seed #aplicar migraciones usando seeders para poblar las bases de datos
 
 #instalar paquete
 composer require spatie/laravel-permission
@@ -84,7 +84,10 @@ docker exec -it apache-http bash ; cd dcaas-app ; tail -f storage/logs/laravel.l
 php artisan make:middleware SuppressLaravel404
 
 #crear controlador para poner lógica (acoplable a rutas)
-php artisan make:controler EncuestaControlador
+php artisan make:controller EncuestaControlador
+
+#crear un request para validar datos de peticiones
+php artisan make:request UserRequest
 
 #mandar a produccion (obviando comandos anteriores)
 composer install --optimize-autoloader --no-dev

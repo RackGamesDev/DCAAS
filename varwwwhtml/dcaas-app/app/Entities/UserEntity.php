@@ -7,7 +7,7 @@ use App\Enums\PermisosUsuario;
 use Illuminate\Support\Str;
 use App\Casts\PermisosUsuarioCast;
 
-class UserEntity
+class UserEntity //ACTUALMENTE EN DESHUSO
 {
     public string $id;
     public string $nickname;
