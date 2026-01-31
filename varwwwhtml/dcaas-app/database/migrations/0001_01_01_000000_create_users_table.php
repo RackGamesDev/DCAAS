@@ -12,21 +12,24 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //Crear la tabla de usuarios
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id')->primary()->unique();
-            $table->string('nickname')->unique()->nullable(false);
-            $table->string('nombre')->nullable(false);
-            $table->string('correo')->unique();
-            $table->text('descripcion')->nullable();
-            $table->string('url_foto')->nullable();
-            $table->enum('permisos', [0,1,2,3])->default(0);
-            $table->boolean('publicante')->default(false);
-            $table->string('fecha_creacion')->default(now());
-            $table->string('contrasegna')->nullable(false);
+            $table->uuid('id')->primary()->unique(); //UUID identificativo
+            $table->string('nickname')->unique()->nullable(false); //Nickname identificativo
+            $table->string('nombre')->nullable(false); //Nombre normal
+            $table->string('email')->unique(); //Correo identificativo
+            $table->text('descripcion')->nullable(); //Descripción opcional
+            $table->string('url_foto')->nullable(); //URL de la foto opcional
+            //$table->enum('permisos', [0,1,2,3])->default(0); //Nivel de permisos, asignado al enum PermisosUsuario
+            $table->unsignedTinyInteger('permisos')->default(0); //Nivel de permisos, asignado al enum PermisosUsuario
+            $table->boolean('publicante')->default(false); //false = votante, true = publicante
+            $table->string('fecha_creacion')->default(now()); //Fecha en la que se crea
+            $table->string('password')->nullable(false); //Contrasegna hasheada
             $table->rememberToken();
             $table->timestamps();
         });
 
+        //Tabla de sesiones
         Schema::create('sessions', function (Blueprint $table) {
             $table->uuid('id')->primary()->unique();
             $table->uuid('user_id')->index()->constrained('users'); // Changed to uuid
@@ -44,7 +47,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('users');
     }
 };

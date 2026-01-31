@@ -56,6 +56,10 @@ php artisan make:model Encuesta
 #crear factory
 php artisan make:factory EncuestaFactory
 
+#crear seeder
+php artisan make:seeder UserSeeder
+php artisan migrate:fresh --seed #aplicar migraciones usando seeders para poblar las bases de datos
+
 #migrar
 php artisan make:migration create_encuestas_table #crea el archivo de migracion para dicha tarea
 php artisan migrate #aplica las migraciones a la base de datos
