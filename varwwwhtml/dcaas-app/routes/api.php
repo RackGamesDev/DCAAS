@@ -36,16 +36,65 @@ Route::get('/usuario/{id}', [UserController::class, 'ver']);
 //Registrarse
 Route::post('/usuario', [UserController::class, 'registrar']);
 
+//Hacer login
+Route::post('/usuario/login', [UserController::class, 'login']);
+
+//Ver encuesta (solo si es pública)
 
 
+//Buscar encuesta
 
 
-//RUTAS PRIVADAS
+//Leer datos de encuesta (solo si es público)
+
+
+//RUTAS PRIVADAS (necesitan sesión)
 //hacer antes los middlewares
 
+//Validar token
+
+
+//Editar usuario
+
+
+//Borrar usuario
+
+
+//Crear encuesta
+
+
+//Editar encuesta
+
+
+//Empezar encuesta
+
+
+//Terminar encuesta (posible que sea tras x tiempo)
+
+
+//Votar en encuesta
+
+
+//Generar informe de encuesta
+
+
+//Borrar encuesta
+
+
+//Borrar datos de encuesta
 
 
 
+
+//RUTAS DE ADMIN
+
+//Alterar permisos de usuario
+
+
+//Info para admins
+Route::get('/admin', function (Request $request) {
+    return RespuestaAPI::exito("Posibles operaciones que tienes como admin", ["PATCH /usuairo/alterPerms/:uuid" => "Alterar permisos del usuario", "Otros" => "Hacer cualquier acción aunque el item no lo hayas creado tú"]);
+});
 
 
 //Ruta de error 404

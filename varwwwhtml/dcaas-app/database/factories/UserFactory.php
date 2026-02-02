@@ -14,7 +14,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => (string) Str::uuid(), // Generate a UUID
+            'id' => (string) Str::uuid(),
             'nickname' => fake()->unique()->userName(),
             'nombre' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'url_foto' => fake()->imageUrl(200, 200, 'people'),
             'permisos' => fake()->randomElement([0, 1, 2, 3]), // Or PermisosUsuario::Normal->value
             'publicante' => fake()->boolean(),
-            'password' => Hash::make('password'), // Use 'password' or 'contrasegna' based on your fix
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }
