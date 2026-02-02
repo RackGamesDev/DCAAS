@@ -58,17 +58,18 @@ RUN pecl install redis \
 RUN pecl install mongodb \
  && docker-php-ext-enable mongodb
 
-RUN composer global require laravel/installer
-
-
-# 6. Install Composer (already good, using the latest stable version)
-# Using 'composer:latest' is more robust than 'composer:2.0'
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
-# 7. Install Xdebug (as per original file)
-RUN pecl install xdebug \
+ 
+ 
+ # 6. Install Composer (already good, using the latest stable version)
+ # Using 'composer:latest' is more robust than 'composer:2.0'
+ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+ 
+ # 7. Install Xdebug (as per original file)
+ RUN pecl install xdebug \
  && docker-php-ext-enable xdebug
-
+ 
+ RUN composer global require laravel/installer
+ 
 # 8. Set permissions for Apache and Laravel storage (Apache user is 'www-data')
 RUN chown -R www-data:www-data /var/www/html/
 

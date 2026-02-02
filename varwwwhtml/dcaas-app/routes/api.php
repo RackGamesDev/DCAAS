@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
 use App\Responses\RespuestaAPI;
+use App\Http\Controllers\UserController;
 
 //Este archivo es api.php, todas las rutas empezarán por /api
 
@@ -26,6 +27,11 @@ Route::get('/debug', function (Request $request) {
     }
     abort(404); //Si no, 404
 });
+
+
+
+//EDITAR
+Route::get('/usuarios', [UserController::class, 'ver']);
 
 //RUTAS PRIVADAS
 //hacer antes los middlewares
