@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('email')->unique(); //Correo identificativo
             $table->text('descripcion')->nullable(); //Descripción opcional
             $table->string('url_foto')->nullable(); //URL de la foto opcional
-            //$table->enum('permisos', [0,1,2,3])->default(0); //Nivel de permisos, asignado al enum PermisosUsuario
-            $table->unsignedTinyInteger('permisos')->default(0); //Nivel de permisos, asignado al enum PermisosUsuario
+            $table->enum('permisos', PermisosUsuario::toArray())->default(0); //Nivel de permisos, asignado al enum PermisosUsuario
+            //$table->unsignedTinyInteger('permisos')->default(0); //Nivel de permisos, asignado al enum PermisosUsuario
             $table->boolean('publicante')->default(false); //false = votante, true = publicante
             $table->string('fecha_creacion')->default(now()); //Fecha en la que se crea
             $table->string('password')->nullable(false); //Contrasegna hasheada
