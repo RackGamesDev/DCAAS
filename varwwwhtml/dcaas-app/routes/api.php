@@ -30,8 +30,15 @@ Route::get('/debug', function (Request $request) {
 
 
 
-//EDITAR
-Route::get('/usuarios', [UserController::class, 'ver']);
+//Ver los datos públicos de un usuario
+Route::get('/usuario/{id}', [UserController::class, 'ver']);
+
+//Registrarse
+Route::post('/usuario', [UserController::class, 'registrar']);
+
+
+
+
 
 //RUTAS PRIVADAS
 //hacer antes los middlewares

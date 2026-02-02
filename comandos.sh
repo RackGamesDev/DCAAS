@@ -39,6 +39,7 @@ php artisan config:clear
 php artisan route:clear
 php artisan cache:clear
 php artisan view:clear
+composer audit
 
 
 #conectar a bases de datos sql o redis
