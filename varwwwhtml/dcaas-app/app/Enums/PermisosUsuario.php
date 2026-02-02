@@ -18,4 +18,8 @@ enum PermisosUsuario: int {
             default => throw new \ValueError("Invalid PermisosUsuario value: {$name}"),
         };
     }
+
+    public static function toArray(): array {
+        return [0,1,2,3];
+    }
 }
