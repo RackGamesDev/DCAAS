@@ -29,7 +29,7 @@ class RespuestaAPI
         ], $codigo ?? 400);
     }
 
-    public static function falloInterno(?int $codigo = 500, ?string $mensaje = '', ?array $datos = null)
+    public static function falloInterno(?array $datos = null, ?int $codigo = 500, ?string $mensaje = '')
     {
         return response()->json([
             'status' => 'internal failure',

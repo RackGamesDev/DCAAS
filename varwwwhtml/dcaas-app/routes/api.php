@@ -39,6 +39,22 @@ Route::post('/usuario', [UserController::class, 'registrar']);
 //Hacer login
 Route::post('/usuario/login', [UserController::class, 'login']);
 
+
+//¿?¿?¿?¿?
+Route::middleware('auth:sanctum')->group(function () {
+
+    // Example: Get the data of the currently logged-in user
+    Route::get('/me', function (Request $request) {
+        return $request->user();
+    });
+
+    // You could put your 'update' or 'delete' routes here
+});
+
+
+
+
+
 //Ver encuesta (solo si es pública)
 
 

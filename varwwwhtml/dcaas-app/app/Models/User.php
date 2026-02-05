@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Laravel\Sanctum\HasApiTokens;
 
 //Modelo del usuario que define como se comportará con el ORM Eloquent
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids;
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -52,15 +54,17 @@ class User extends Authenticatable
     protected $casts = [
         //'permisos' => PermisosUsuarioCast::class,
         'permisos' => \App\Enums\PermisosUsuario::class,
+        'password' => 'hashed',
+        'publicante' => 'boolean',
     ];
 
     /**
      * Encripta la contrasegna antes de guardarla (para guardar la encriptada)
      */
-    public function setPasswordAttribute($value)
+    /*public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
-    }
+    }*/
 
     /**
      * Devuelve los atributos a los que hay que hacer cast.

@@ -16,6 +16,7 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate
 composer dump-autoload
+#php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 #npm install
 
 #iniciar laravel
