@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use App\Responses\RespuestaAPI;
 
 class UserController extends Controller
 {
@@ -45,5 +47,29 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    /**
+     *
+     */
+    public function registrar(User $user)
+    {
+        return RespuestaAPI::exito('registrar');
+    }
+
+    /**
+     *
+     */
+    public function ver(User $user)
+    {
+        return RespuestaAPI::exito('ver');
+    }
+
+    /**
+     *
+     */
+    public function login(User $user)
+    {
+        return RespuestaAPI::exito('login');
     }
 }

@@ -3,6 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use App\Responses\RespuestaAPI;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,5 +19,14 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (MethodNotAllowedHttpException $e, $request) {
+            if ($request->is('api/*')) {
+                return RespuestaAPI::fallo(405, 'Método no permitido.');
+            }
+        });
+        $exceptions->render(function (NotFoundHttpException $e, $request) {
+        if ($request->is('api/*')) {
+            return RespuestaAPI::fallo(404, 'Ruta no encontrada.');
+        }
+    });
     })->create();

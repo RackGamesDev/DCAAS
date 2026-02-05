@@ -98,12 +98,6 @@ Route::get('/admin', function (Request $request) {
 
 
 //Ruta de error 404
-Route::get('/{x}', function (Request $request) {
+/*Route::get('/{x}', function (Request $request) {
     return RespuestaAPI::fallo(404, "Error 404 route not found");
-});
-
-
-
-
-
-
+});*/
