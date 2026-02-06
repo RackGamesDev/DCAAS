@@ -133,6 +133,12 @@ return [
             'level' => 'debug',
         ],
 
+        'debug3' => [
+            'driver' => 'single',
+            'path' => storage_path('bbb.log'),
+            'level' => 'debug',
+        ],
+
     ],
 
 ];

@@ -1,0 +1,86 @@
+type: collection.insomnia.rest/5.0
+name: Peticiones standard
+meta:
+  id: wrk_c4bbf3b0d7e544faaf56e4f9009ba1a0
+  created: 1770379485661
+  modified: 1770388052114
+  description: ""
+collection:
+  - url: http://localhost:8081/api/test
+    name: test1
+    meta:
+      id: req_da186a2872c04424a05b35570d0edef2
+      created: 1770387646820
+      modified: 1770387948887
+      isPrivate: false
+      description: ""
+      sortKey: -1770387646821
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.2.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/debug
+    name: debug1
+    meta:
+      id: req_be83708afad34f95b0d2b46912946edf
+      created: 1770387961484
+      modified: 1770387969290
+      isPrivate: false
+      description: ""
+      sortKey: -1770048714635
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.2.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/test
+    name: Crear usuario
+    meta:
+      id: req_abd8b352e94141008d38eed294776e68
+      created: 1770388551513
+      modified: 1770388551513
+      isPrivate: false
+      description: ""
+      sortKey: -1770218180728
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.2.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_6b6bda0b8afea05bdbf76678c8adf595a6dd43b9
+    created: 1770387639505
+    modified: 1770387639505
+environments:
+  name: Base Environment
+  meta:
+    id: env_6b6bda0b8afea05bdbf76678c8adf595a6dd43b9
+    created: 1770379485662
+    modified: 1770388360044
+    isPrivate: false
+  data:
+    prueba: aaaaa

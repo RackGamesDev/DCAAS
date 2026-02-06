@@ -25,6 +25,7 @@ composer dump-autoload
 #inicializar rutas /api
 php artisan install:api
 php artisan route:clear
+php artisan route:list #ver lista de rutas para documentacion
 
 #inicializar sistema de archivos
 php artisan storage:link
@@ -42,7 +43,6 @@ php artisan route:clear
 php artisan cache:clear
 php artisan view:clear
 composer audit
-
 
 #conectar a bases de datos sql o redis
 #mirar .env.example

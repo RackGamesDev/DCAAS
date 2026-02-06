@@ -47,7 +47,8 @@ return [
     |
     */
 
-    'expiration' => null,
+    //'expiration' => null,
+    'expiration' => 1440, //DURA UN DIA
 
     /*
     |--------------------------------------------------------------------------

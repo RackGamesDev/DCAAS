@@ -1,0 +1,20 @@
+type: collection.insomnia.rest/5.0
+name: Wildcard
+meta:
+  id: wrk_ce2f21182181426691a6c4fbc13cad75
+  created: 1770388062888
+  modified: 1770388062888
+  description: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_a1fc032ee80c850efbdb8573e02e4e19c861d586
+    created: 1770388062903
+    modified: 1770388062903
+environments:
+  name: Base Environment
+  meta:
+    id: env_a1fc032ee80c850efbdb8573e02e4e19c861d586
+    created: 1770388062895
+    modified: 1770388062895
+    isPrivate: false

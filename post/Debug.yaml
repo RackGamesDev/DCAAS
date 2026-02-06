@@ -1,0 +1,20 @@
+type: collection.insomnia.rest/5.0
+name: Debug
+meta:
+  id: wrk_20355d2660fd48b0a95a0c5cbb03e5ff
+  created: 1770388080815
+  modified: 1770388658053
+  description: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_7b96019f98a1ff5fb6952885052ffdcbc8174741
+    created: 1770388080818
+    modified: 1770388080818
+environments:
+  name: Base Environment
+  meta:
+    id: env_7b96019f98a1ff5fb6952885052ffdcbc8174741
+    created: 1770388080817
+    modified: 1770388080817
+    isPrivate: false
