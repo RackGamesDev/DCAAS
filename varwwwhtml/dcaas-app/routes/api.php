@@ -22,6 +22,11 @@ Route::get('/test', function (Request $request) {
 
 Route::get('/debug', function (Request $request) {
     if (config("app.debug")) { //Solo disponible cuando no está en producción
+        /*dd("hola");
+        dump("hola");
+        echo "hola";
+        Log::channel('debug2')->emergency('aaaadfasdf');
+        file_put_contents(storage_path('logs/aaa.log'), 'Testing write permissions' . PHP_EOL, FILE_APPEND);*/
         Log::info('aaaa', ['obj' => "???"]);
         return RespuestaAPI::exito('aaa', null);
     }

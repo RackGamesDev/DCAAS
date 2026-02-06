@@ -30,6 +30,7 @@ php artisan route:clear
 php artisan storage:link
 
 #reestablecer (comandos tipicos para cache y arreglos)
+#php artisan migrate:fresh
 php artisan migrate
 composer dump-autoload
 php artisan config:cache
@@ -80,7 +81,9 @@ tail -f storage/logs/laravel.log #abre una consola interactiva para debugging
 #lanzar mensaje
 #use Illuminate\Support\Facades\Log;
 #Log::info('Checking the user data', ['user' => $user]); //Genera un log
-docker exec -it apache-http bash ; cd dcaas-app ; tail -f storage/logs/laravel.log ; clear #Ver los logs en modo acoplado
+#Log::channel('debug')->info('Checking the user data', ['user' => $user]); //Genera un log en el canal de debug
+docker exec -it -w /var/www/html/dcaas-app apache-http tail -f storage/logs/laravel.log ; clear #Ver los logs en modo acoplado
+docker exec -it -w /var/www/html/dcaas-app apache-http tail -f storage/logs/debug.log ; clear #Ver los logs en modo acoplado pero de debug
 
 #crear middleware para una ruta, un middleware hace como segurata entre una ruta y la petición, haciendo que se requiera seguridad extra
 php artisan make:middleware SuppressLaravel404
