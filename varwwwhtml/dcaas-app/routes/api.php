@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
@@ -53,22 +54,60 @@ Route::middleware('auth:sanctum')->group(function () {
     //Requieren usuario cualquiera:
 
     Route::get('/usuario/yo', [UserController::class, 'verYo'])->name('verUsuarioPrivado');
+    Route::get('/validarSesion', [UserController::class, 'verYo'])->name('validarSesion');
 
-    Route::patch('/usuario', [UserController::class, 'editar'])->name('editarUsuario');
+    Route::delete('/usuario', [UserController::class, 'borrar'])->name('borrarUsuario');
 
-    //Route::delete('/usuario', [UserController::class, 'borrar'])->name('borrarUsuario');
+    Route::delete('/usuario/cerrarSesion', [UserController::class, 'cerrarSesion'])->name('cerrarSesion');
+
+    //Requieren un usuario con permisos de edición (que puedan editar y logear):
+    Route::middleware("editor")->group(function () {
+        Route::patch('/usuario', [UserController::class, 'editar'])->name('editarUsuario');
+
+        //Requieren usuario votante:
+        Route::middleware("votante")->group(function () {
+
+
+
+        });
+
+        //Requieren usuario publicante:
+        Route::middleware("publicante")->group(function () {
+
+
+
+        });
+
+    });
+
+    //Requieren un usuario que simplemente pueda logear (no hace falta que pueda editar):
+    Route::middleware("logeable")->group(function () {
+
+
+    });
+
 
 
     //Requieren usuario administrador:
+    Route::middleware("admin")->group(function () {
+        //Info para admins
+        Route::get('/admin', function (Request $request) {
+            return RespuestaAPI::exito("Posibles operaciones que tienes como admin", ["PATCH /admin/usuario/alterPerms" => "Alterar permisos del usuario", "Otros" => "Hacer cualquier acción aunque el item no lo hayas creado tú"]);
+        });
 
-    //Info para admins
-    Route::get('/admin', function (Request $request) {
-        return RespuestaAPI::exito("Posibles operaciones que tienes como admin", ["PATCH /usuairo/alterPerms/:uuid" => "Alterar permisos del usuario", "Otros" => "Hacer cualquier acción aunque el item no lo hayas creado tú"]);
+        Route::patch("/admin/usuario/alterPerms", [AdminController::class, 'editarPermisos']);
+
+        Route::patch("/admin/usuario/{id}/editar", [AdminController::class, 'editarUsuarioAjeno']);
+
+        Route::delete("/admin/usuario/{id}/borrar", [AdminController::class, 'borrarUsuarioAjeno']);
+
+        Route::get("/admin/usuario/{id}/ver", [AdminController::class, 'verUsuarioAjeno']);
+
+
+
     });
 
-    //Requieren usuario votante:
 
-    //Requieren usuario publicante:
 
 
 });

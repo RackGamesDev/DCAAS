@@ -67,7 +67,7 @@ class RegistrarUsuarioRequest extends FormRequest
             'permisos' => 'required|integer',
 
             'publicante' => 'boolean',
-            'descripcion' => 'nullable|string',
+            'descripcion' => 'nullable|string|max:512',
             'url_foto' => 'nullable|url',
         ];
     }

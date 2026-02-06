@@ -17,7 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'logeable'   => \App\Http\Middleware\Logeable::class,
+            'admin'      => \App\Http\Middleware\Admin::class,
+            'editor'     => \App\Http\Middleware\Editor::class,
+            'publicante' => \App\Http\Middleware\Publicante::class,
+            'votante'    => \App\Http\Middleware\Votante::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (MethodNotAllowedHttpException $e, $request) {

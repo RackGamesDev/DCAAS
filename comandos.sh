@@ -42,6 +42,7 @@ php artisan config:clear
 php artisan route:clear
 php artisan cache:clear
 php artisan view:clear
+php artisan sanctum:prune-expired
 composer audit
 
 #conectar a bases de datos sql o redis
@@ -71,6 +72,7 @@ php artisan make:factory EncuestaFactory
 #crear seeder (para mandar a poblar la base de datos usando el factory)
 php artisan make:seeder UserSeeder
 php artisan migrate:fresh --seed #aplicar migraciones usando seeders para poblar las bases de datos
+php artisan db:seed --class=UserSeeder #aplicar solo el seeder
 
 #instalar paquete
 composer require spatie/laravel-permission
