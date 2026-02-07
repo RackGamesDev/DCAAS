@@ -4,30 +4,35 @@ namespace App\Facades;
 use Illuminate\Support\Facades\Facade;
 use App\Models\User;
 use App\Enums\PermisosUsuario;
+use Illuminate\Support\Facades\Log;
 
-class ManejadorPermisos extends Facade
+class ManejadorPermisos// extends Facade
 {
-    protected static function esAdmin(User $user) {
-        return $user && is_numeric($user['permisos']) && $user['permisos'] == PermisosUsuario::Admin;
+    static function esAdmin(User $user) {
+        return $user && $user['permisos'] == PermisosUsuario::Admin;
     }
 
-    protected static function puedeLogin(User $user) {
-        return $user && is_numeric($user['permisos']) && $user['permisos'] != PermisosUsuario::Deshabilitado;
+    static function puedeLogin(User $user) {
+        return $user && $user['permisos'] != PermisosUsuario::Deshabilitado;
     }
 
-    protected static function puedeAutoeditar(User $user) {
-        return $user && is_numeric($user['permisos']) && ($user['permisos'] == PermisosUsuario::Admin || $user['permisos'] == PermisosUsuario::Normal);
+    static function puedeAutoeditar(User $user) {
+        return $user && ($user['permisos'] == PermisosUsuario::Admin || $user['permisos'] == PermisosUsuario::Normal);
     }
 
-    protected static function puedeEditar(User $user) {
-        return $user && is_numeric($user['permisos']) && ($user['permisos'] == PermisosUsuario::Admin || $user['permisos'] == PermisosUsuario::Normal);
+    static function puedeEditar(User $user) {
+        return $user && ($user['permisos'] == PermisosUsuario::Admin || $user['permisos'] == PermisosUsuario::Normal);
     }
 
-    protected static function todoRestringido(User $user) {
-        return $user && is_numeric($user['permisos']) && $user['permisos'] == PermisosUsuario::Deshabilitado;
+    static function todoRestringido(User $user) {
+        return $user && $user['permisos'] == PermisosUsuario::Deshabilitado;
     }
 
-    protected static function esPublicante(User $user) {
+    static function esPublicante(User $user) {
         return $user && $user['publicante'] == true;
+    }
+
+    static function esVotante(User $user) {
+        return $user && $user['publicante'] == false;
     }
 }

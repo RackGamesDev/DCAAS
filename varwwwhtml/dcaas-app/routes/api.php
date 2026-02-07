@@ -13,14 +13,14 @@ use App\Http\Controllers\UserController;
 
 //Ruta de ejemplo, ante GET /api/test manda un json con esos datos y código 200
 Route::get('/test', function (Request $request) {
-    Log::info('Test', ['user' => "???"]); //Lanzar mensaje a la consola "tail -f storage/logs/laravel.log"
-    //dd("hola");
+    Log::info('Test', ['user' => '???']); //Lanzar mensaje a la consola 'tail -f storage/logs/laravel.log'
+    //dd('hola');
     return RespuestaAPI::exito('Funciona correctamente');
 });
 
 Route::get('/debug', function (Request $request) {
-    if (config("app.debug")) { //Solo disponible cuando no está en producción
-        Log::info('aaaa', ['obj' => "???"]);
+    if (config('app.debug')) { //Solo disponible cuando no está en producción
+        Log::info('aaaa', ['obj' => '???']);
         return RespuestaAPI::exito('aaa', null);
     }
     abort(404); //Si no, 404
@@ -61,18 +61,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/usuario/cerrarSesion', [UserController::class, 'cerrarSesion'])->name('cerrarSesion');
 
     //Requieren un usuario con permisos de edición (que puedan editar y logear):
-    Route::middleware("editor")->group(function () {
+    Route::middleware('editor')->group(function () {
         Route::patch('/usuario', [UserController::class, 'editar'])->name('editarUsuario');
 
         //Requieren usuario votante:
-        Route::middleware("votante")->group(function () {
+        Route::middleware('votante')->group(function () {
 
 
 
         });
 
         //Requieren usuario publicante:
-        Route::middleware("publicante")->group(function () {
+        Route::middleware('publicante')->group(function () {
 
 
 
@@ -81,7 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     //Requieren un usuario que simplemente pueda logear (no hace falta que pueda editar):
-    Route::middleware("logeable")->group(function () {
+    Route::middleware('logeable')->group(function () {
 
 
     });
@@ -89,19 +89,19 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     //Requieren usuario administrador:
-    Route::middleware("admin")->group(function () {
+    Route::middleware('admin')->group(function () {
         //Info para admins
         Route::get('/admin', function (Request $request) {
-            return RespuestaAPI::exito("Posibles operaciones que tienes como admin", ["PATCH /admin/usuario/alterPerms" => "Alterar permisos del usuario", "Otros" => "Hacer cualquier acción aunque el item no lo hayas creado tú"]);
+            return RespuestaAPI::exito('Posibles operaciones que tienes como admin', ['PATCH /admin/usuario/alterPerms' => 'Alterar permisos del usuario', 'Otros' => 'Hacer cualquier acción aunque el item no lo hayas creado tú']);
         });
 
-        Route::patch("/admin/usuario/alterPerms", [AdminController::class, 'editarPermisos']);
+        Route::patch('/admin/usuario/alterPerms', [AdminController::class, 'editarPermisos']);
 
-        Route::patch("/admin/usuario/{id}/editar", [AdminController::class, 'editarUsuarioAjeno']);
+        Route::patch('/admin/usuario/{id}/editar', [AdminController::class, 'editarUsuarioAjeno']);
 
-        Route::delete("/admin/usuario/{id}/borrar", [AdminController::class, 'borrarUsuarioAjeno']);
+        Route::delete('/admin/usuario/{id}/borrar', [AdminController::class, 'borrarUsuarioAjeno']);
 
-        Route::get("/admin/usuario/{id}/ver", [AdminController::class, 'verUsuarioAjeno']);
+        Route::get('/admin/usuario/{id}/ver', [AdminController::class, 'verUsuarioAjeno']);
 
 
 
@@ -157,5 +157,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //Ruta de error 404
 /*Route::get('/{x}', function (Request $request) {
-    return RespuestaAPI::fallo(404, "Error 404 route not found");
+    return RespuestaAPI::fallo(404, 'Error 404 route not found');
 });*/

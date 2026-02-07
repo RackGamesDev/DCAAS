@@ -14,19 +14,22 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function editarPermisos(CambiarPermisosRequest $request) {
+    public function editarPermisos(CambiarPermisosRequest $request)
+    {
         $datos = $request->validated();
         $user = User::where('id', $datos['id'])
             ->first();
-        if (!$user) return RespuestaAPI::fallo(404, 'Usuario no encontrado');
-        $edicion = ["permisos" => $datos["permisos"]];
+        if (!$user)
+            return RespuestaAPI::fallo(404, 'Usuario no encontrado');
+        $edicion = ['permisos' => $datos['permisos']];
         $user->fill($edicion);
         $user->tokens()->delete();
         $user->save();
         return RespuestaAPI::exito('Permisos del usuario actualizados correctamente');
     }
 
-    public function editarUsuarioAjeno(AdminEditarUsuarioRequest $request) {
+    public function editarUsuarioAjeno(AdminEditarUsuarioRequest $request)
+    {
         $user = $request->user();
         $datos = $request->validated();
 
@@ -36,13 +39,15 @@ class AdminController extends Controller
         $user->fill($datos);
         $user->save();
         return RespuestaAPI::exito('Usuario actualizado correctamente', [
-            'user' => $user->only(['id','nickname','nombre','email','descripcion','url_foto','permisos','fecha_creacion'])
+            'usuario' => $user->only(['id', 'nickname', 'nombre', 'email', 'descripcion', 'url_foto', 'permisos', 'fecha_creacion'])
         ]);
     }
 
-    public function borrarUsuarioAjeno($id) {
+    public function borrarUsuarioAjeno($id)
+    {
         $user = User::find($id);
-        if (!$user) return RespuestaAPI::fallo(404, 'Usuario no encontrado');
+        if (!$user)
+            return RespuestaAPI::fallo(404, 'Usuario no encontrado');
         $user->tokens()->delete();
         $user->delete();
 
@@ -51,9 +56,11 @@ class AdminController extends Controller
         return RespuestaAPI::exito('Usuario borrado correctamente');
     }
 
-    public function verUsuarioAjeno($id) {
+    public function verUsuarioAjeno($id)
+    {
         $user = User::find($id);
-        if (!$user) return RespuestaAPI::fallo(404, 'Usuario no encontrado');
-        return RespuestaAPI::exito('Usuario encontrado', ['user' => $user]);
+        if (!$user)
+            return RespuestaAPI::fallo(404, 'Usuario no encontrado');
+        return RespuestaAPI::exito('Usuario encontrado', ['usuario' => $user]);
     }
 }

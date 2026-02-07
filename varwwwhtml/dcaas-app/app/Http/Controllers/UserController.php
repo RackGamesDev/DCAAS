@@ -28,9 +28,9 @@ class UserController extends Controller
             //$user->permisos = 0;
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return RespuestaAPI::exito('Usuario registrado con éxito', ["usuario" => $user, "token" => $token, 'token_type' => 'Bearer',]);
+            return RespuestaAPI::exito('Usuario registrado con éxito', ['usuario' => $user->only(['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion', 'email']), 'token' => $token, 'token_type' => 'Bearer',]);
         } catch (\Exception $e) {
-            return RespuestaAPI::falloInterno(["info" => $e]);
+            return RespuestaAPI::falloInterno(['info' => $e]);
         }
 
     }
@@ -41,17 +41,17 @@ class UserController extends Controller
     public function ver($id)
     {
         $user = User::find($id);
-        if (!$user) return RespuestaAPI::fallo(404, 'Usuario no encontrado');
-        return RespuestaAPI::exito('Usuario encontrado correctamente', $user->only(['nickname','nombre','descripcion','url_foto','id','permisos','fecha_creacion']));
+        if (!$user || ManejadorPermisos::todoRestringido($user))
+            return RespuestaAPI::fallo(404, 'Usuario no encontrado');
+        return RespuestaAPI::exito('Usuario encontrado correctamente', ['usuario' => $user->only(['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion'])]);
     }
 
     public function verYo(Request $request)
     {
-        Log::info('aaaa', ['obj' => $request]);
         $user = $request->user();
         //$token = $user->currentAccessToken();
         return RespuestaAPI::exito('Tus datos', [
-            'user' => $user->only(['nickname','nombre','descripcion','url_foto','id','permisos','fecha_creacion','email']),
+            'usuario' => $user->only(['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion', 'email']),
             //'access_token' => $token,
             'token_type' => 'Bearer'
         ]);
@@ -69,11 +69,12 @@ class UserController extends Controller
         if (!$user || !Hash::check($datos['password'], $user->password)) {
             return RespuestaAPI::fallo(401, 'Credenciales incorrectas');
         }
-        if (ManejadorPermisos::todoRestringido($user)) return RespuestaAPI::fallo(401, "No tienes permisos para realizar esta acción");
+        if (ManejadorPermisos::todoRestringido($user))
+            return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
         $user->tokens()->delete();
         $token = $user->createToken('login_token')->plainTextToken;
         return RespuestaAPI::exito('Login exitoso', [
-            'user' => $user->only(['nickname','nombre','descripcion','url_foto','id','permisos','fecha_creacion','email']),
+            'usuario' => $user->only(['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion', 'email']),
             'access_token' => $token,
             'token_type' => 'Bearer'
         ]);
@@ -83,8 +84,10 @@ class UserController extends Controller
     {
         $user = $request->user();
         $datos = $request->validated();
-        if (!ManejadorPermisos::puedeAutoeditar($user)) return RespuestaAPI::fallo(401, "No tienes permisos para realizar esta acción");
-        if (!empty($datos['permisos']) || !empty($datos['publicante']) || !empty($datos['fecha_creacion']) || !empty($datos['id']) || !empty($datos['token'])) return RespuestaAPI::fallo(422, "Hay parámetros que no tienes permitido editar");
+        if (!ManejadorPermisos::puedeAutoeditar($user))
+            return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
+        if (!empty($datos['permisos']) || !empty($datos['publicante']) || !empty($datos['fecha_creacion']) || !empty($datos['id']) || !empty($datos['token']))
+            return RespuestaAPI::fallo(422, 'Hay parámetros que no tienes permitido editar');
         if (!empty($datos['nickname']) || !empty($datos['email']) || !empty($datos['password'])) {
             if (!Hash::check($request->oldPassword, $user->password)) {
                 return RespuestaAPI::fallo(401, 'La contraseña antigua es incorrecta');
@@ -96,11 +99,12 @@ class UserController extends Controller
         $user->fill($datos);
         $user->save();
         return RespuestaAPI::exito('Usuario actualizado correctamente', [
-            'user' => $user->only(['id','nickname','nombre','email','descripcion','url_foto','permisos','fecha_creacion'])
+            'usuario' => $user->only(['id', 'nickname', 'nombre', 'email', 'descripcion', 'url_foto', 'permisos', 'fecha_creacion'])
         ]);
     }
 
-    public function borrar(BorrarUsuarioRequest $request) {
+    public function borrar(BorrarUsuarioRequest $request)
+    {
         $user = $request->user();
         $datos = $request->validated();
         if (!$user || !Hash::check($datos['password'], $user->password)) {
@@ -111,17 +115,19 @@ class UserController extends Controller
 
         //TODO: borrado en cascada
 
-        return RespuestaAPI::exito("Usuario borrado correctamente", [
-            'user' => $user->only(['id','nickname','nombre','email','descripcion','url_foto','permisos','fecha_creacion'])
+        return RespuestaAPI::exito('Usuario borrado correctamente', [
+            'user' => $user->only(['id', 'nickname', 'nombre', 'email', 'descripcion', 'url_foto', 'permisos', 'fecha_creacion'])
         ]);
     }
 
-    public function cerrarSesion(Request $request) {
+    public function cerrarSesion(Request $request)
+    {
         $user = $request->user();
-        if (!$user) return RespuestaAPI::fallo(401, 'Credenciales incorrectas');
+        if (!$user)
+            return RespuestaAPI::fallo(401, 'Credenciales incorrectas');
         $user->tokens()->delete();
-        return RespuestaAPI::exito("Sesión cerrada correctamente", [
-            'user' => $user->only(['id','nickname','nombre','email','descripcion','url_foto','permisos','fecha_creacion'])
+        return RespuestaAPI::exito('Sesión cerrada correctamente', [
+            'usuario' => $user->only(['id', 'nickname', 'nombre', 'email', 'descripcion', 'url_foto', 'permisos', 'fecha_creacion'])
         ]);
     }
 }

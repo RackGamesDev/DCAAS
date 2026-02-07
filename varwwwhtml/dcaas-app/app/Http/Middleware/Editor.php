@@ -6,8 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Responses\RespuestaAPI;
-use App\Enums\PermisosUsuario;
+use Illuminate\Support\Facades\Log;
 use App\Facades\ManejadorPermisos;
+
 
 //Indica que el usuario tiene permisos para interactuar con la app
 //Quiere decir que no está bloqueado (ni deshabilitado), porque bloqueado quita permisos de edición sobre lo que sea en la app
