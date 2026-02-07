@@ -28,7 +28,7 @@ class UserController extends Controller
             //$user->permisos = 0;
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return RespuestaAPI::exito('Usuario registrado con éxito', ['usuario' => $user->only(['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion', 'email']), 'token' => $token, 'token_type' => 'Bearer',]);
+            return RespuestaAPI::exito('Usuario registrado con éxito', ['usuario' => $user->only(['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion', 'email']), 'access_token' => $token, 'token_type' => 'Bearer',]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
