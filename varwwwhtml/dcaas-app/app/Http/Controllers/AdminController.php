@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EstadoEncuesta;
+use App\Facades\ManejadorPermisos;
 use App\Http\Requests\AdminEditarUsuarioRequest;
 use App\Http\Requests\CambiarPermisosRequest;
+use App\Http\Requests\EditarEncuestaRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Encuesta;
 use Illuminate\Routing\Controller;
 use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
@@ -18,6 +22,8 @@ class AdminController extends Controller
     public function editarPermisos(CambiarPermisosRequest $request)
     {
         try {
+            $usuarioPeticion = $request->user();
+            if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
             $datos = $request->validated();
             $user = User::where('id', $datos['id'])
                 ->first();
@@ -37,6 +43,9 @@ class AdminController extends Controller
     public function editarUsuarioAjeno(AdminEditarUsuarioRequest $request)
     {
         try {
+            $usuarioPeticion = $request->user();
+            if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
+
             $user = $request->user();
             $datos = $request->validated();
 
@@ -54,9 +63,15 @@ class AdminController extends Controller
 
     }
 
-    public function borrarUsuarioAjeno($id)
+    public function borrarUsuarioAjeno(Request $request, $id)
     {
         try {
+            $usuarioPeticion = $request->user();
+            if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
+
+            $usuarioPeticion = $request->user();
+            if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
+
             $user = User::find($id);
             if (!$user)
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
@@ -72,9 +87,12 @@ class AdminController extends Controller
 
     }
 
-    public function verUsuarioAjeno($id)
+    public function verUsuarioAjeno(Request $request, $id)
     {
         try {
+            $usuarioPeticion = $request->user();
+            if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
+
             $user = User::find($id);
             if (!$user)
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
@@ -82,13 +100,49 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
-
     }
 
 
+    public function editarEncuestaAjena(EditarEncuestaRequest $request, $id) {
+        try {
+            $usuarioPeticion = $request->user();
+            if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
+            $encuesta = Encuesta::find($id);
+            if (!$encuesta) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if ($encuesta['estado'] != EstadoEncuesta::SinIniciar) return RespuestaAPI::fallo(403, 'A pesar de ser administrador, no puedes editar encuestas que hayan empezado');
+            $datos = $request->validated();
+            $encuesta->fill($datos);
+            $encuesta->save();
+            return RespuestaAPI::exito('Encuesta editada', ['encuesta' => $encuesta]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
 
-    //TODO: funciones sobre encuestas
+    public function borrarEncuestaAjena(Request $request, $id) {
+        try {
+            $usuarioPeticion = $request->user();
+            if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
+            $encuesta = Encuesta::find($id);
+            if (!$encuesta) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if ($encuesta['estado'] == EstadoEncuesta::Activa) return RespuestaAPI::fallo(403, 'A pesar de ser administrador, no puedes borrar una encuesta que esté activa');
+            $encuesta->delete();
+            return RespuestaAPI::exito('Encuesta borrada', ['encuesta' => $encuesta]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
 
-
+    public function verEncuestaAjena(Request $request, $id) {
+        try {
+            $usuarioPeticion = $request->user();
+            if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
+            $encuesta = Encuesta::find($id);
+            if (!$encuesta) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            return RespuestaAPI::exito('Encuesta encontrada', ['encuesta' => $encuesta]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
 
 }

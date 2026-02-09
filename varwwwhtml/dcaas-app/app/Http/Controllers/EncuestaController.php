@@ -126,4 +126,15 @@ class EncuestaController extends Controller
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
     }
+
+    public function buscar($busqueda) {
+        try {
+            $encuestas = Encuesta::where('publico', true)->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower($busqueda) . '%'])->select(self::$entregablesPublicos)->get();
+            //dd($encuestas);
+            if (!$encuestas || $encuestas->isEmpty()) return RespuestaAPI::fallo(404, 'Encuestas no encontradas (que coincidan con la busqueda)');
+            return RespuestaAPI::exito('Encuestas encontradas', ['encuestas' => $encuestas]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
 }
