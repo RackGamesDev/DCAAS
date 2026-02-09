@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EncuestaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +37,7 @@ Route::post('/usuario', [UserController::class, 'registrar'])->name('registrarse
 Route::post('/usuario/login', [UserController::class, 'login'])->name('login');
 
 //Ver encuesta (solo si es pública)
-
+Route::get('/encuesta/ver/{id}', [EncuestaController::class, 'verPublico'])->name('verEncuestaPublica');
 
 //Buscar encuesta
 
@@ -73,8 +74,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
         //Requieren usuario publicante:
         Route::middleware('publicante')->group(function () {
-
-
+            Route::post("/encuesta", [EncuestaController::class, 'crear'])->name('crearEncuesta');
+            Route::get('/encuesta/verMia/{id}', [EncuestaController::class, 'verPrivado'])->name('verEncuestaPrivada');
+            Route::delete('/encuesta/borrar/{id}', [EncuestaController::class, 'borrar'])->name('borrarEncuesta');
+            Route::patch('/encuesta/editar/{id}', [EncuestaController::class, 'editar'])->name('editarEncuesta');
+            Route::post('/encuesta/iniciar/{id}', [EncuestaController::class, 'iniciar'])->name('iniciarEncuesta');
+            Route::post('/encuesta/finalizar/{id}', [EncuestaController::class, 'finalizar'])->name('finalizarEncuesta');
 
         });
 

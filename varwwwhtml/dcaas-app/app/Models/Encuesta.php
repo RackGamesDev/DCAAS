@@ -3,46 +3,38 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use App\Enums\EstadoEncuesta;
-use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Support\Str;
 
 class Encuesta extends Model
 {
-    use HasFactory;
-    protected $table = 'ENCUESTAS';
-    protected $fillable = [
-        'nombre',
-        'uuid_usuario',
-        'descripcion',
-        'url_foto',
-        'publico',
-        'votacion',
-        'certificacion',
-    ];
+    use HasFactory, HasUuids;
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
+    protected $fillable = ['nombre', 'descripcion', 'url_foto', 'certificacion', 'votacion', 'anonimo', 'fecha_creacion', 'id_user', 'fecha_inicio', 'fecha_fin', 'publico', 'estado'];
+    //protected $fillable = ['nombre', 'descripcion', 'url_foto', 'certificacion', 'votacion', 'anonimo', 'fecha_creacion', 'id_user'];
+
+    protected $hidden = ['publico'];
 
     protected $casts = [
-        'estado' => EstadoEncuesta::class
+        'id' => 'string',
+        'estado' => \App\Enums\EstadoEncuesta::class,
+        'publico' => 'boolean',
+        'votacion' => 'boolean',
+        'anonimo' => 'boolean',
     ];
 
-    /**
-     * Create an Encuesta from an Entity object.
-     *
-     * @param Encuesta $entity The entity object containing survey data.
-     * @return self
-     */
-    public static function fromEntity(Encuesta $entity): self
+    public function newUniqueId(): string
     {
-        return new self([
-            'nombre' => $entity->nombre,
-            'uuid_usuario' => $entity->uuid_usuario,
-            'descripcion' => $entity->descripcion,
-            'url_foto' => $entity->url_foto,
-            'publico' => $entity->publico,
-            'votacion' => $entity->votacion,
-            'certificacion' => $entity->certificacion,
-            'estado' => $entity->estado, //Set the state from the entity.
-        ]);
+        return (string) Str::uuid();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

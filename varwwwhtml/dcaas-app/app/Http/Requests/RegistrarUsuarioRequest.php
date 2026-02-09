@@ -65,8 +65,11 @@ class RegistrarUsuarioRequest extends FormRequest
 
             // We validate it here to ensure it's present, but prepareForValidation fixed the value
             'permisos' => 'required|integer',
+            //'permisos' => 'prohibited',
+            'fecha_creacion' => 'prohibited',
+            'id' => 'prohibited',
 
-            'publicante' => 'boolean',
+            'publicante' => 'required|boolean',
             'descripcion' => 'nullable|string|max:512',
             'url_foto' => 'nullable|url',
         ];
