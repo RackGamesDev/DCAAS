@@ -103,7 +103,7 @@ class EncuestaController extends Controller
             if ($encuesta['estado'] != EstadoEncuesta::SinIniciar) return RespuestaAPI::fallo(406, 'Solo se pueden iniciar encuestas sin iniciar');
             //dd($encuesta);
             if ($encuesta['publico'] == false) return RespuestaAPI::fallo(406, 'La encuesta debe de ser pública antes de iniciarla (al menos de momento)'); //TODO: iniciar privadas
-            $encuesta->fill(['estado' => EstadoEncuesta::Activa]);
+            $encuesta->fill(['estado' => EstadoEncuesta::Activa, 'fecha_inicio' => now()]);
             $encuesta->save();
             return RespuestaAPI::exito('Encuesta iniciada', ['encuesta' => $encuesta->only(self::$entregablesPrivados)]);
         } catch (\Exception $e) {
@@ -119,7 +119,7 @@ class EncuestaController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta || $encuesta['id_user'] != $user->id) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
             if ($encuesta['estado'] != EstadoEncuesta::Activa) return RespuestaAPI::fallo(406, 'Solo se pueden finalizar encuestas que estén activas');
-            $encuesta->fill(['estado' => EstadoEncuesta::Terminada]);
+            $encuesta->fill(['estado' => EstadoEncuesta::Terminada, 'fecha_fin' => now()]);
             $encuesta->save();
             return RespuestaAPI::exito('Encuesta finalizada', ['encuesta' => $encuesta->only(self::$entregablesPrivados)]);
         } catch (\Exception $e) {
@@ -129,7 +129,7 @@ class EncuestaController extends Controller
 
     public function buscar($busqueda) {
         try {
-            $encuestas = Encuesta::where('publico', true)->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower($busqueda) . '%'])->select(self::$entregablesPublicos)->get();
+            $encuestas = Encuesta::where('publico', true)->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower($busqueda) . '%'])->select(self::$entregablesPublicos)->take(50)->get();
             //dd($encuestas);
             if (!$encuestas || $encuestas->isEmpty()) return RespuestaAPI::fallo(404, 'Encuestas no encontradas (que coincidan con la busqueda)');
             return RespuestaAPI::exito('Encuestas encontradas', ['encuestas' => $encuestas]);

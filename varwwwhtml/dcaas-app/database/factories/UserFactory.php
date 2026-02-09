@@ -20,7 +20,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'descripcion' => fake()->sentence(),
             'url_foto' => fake()->imageUrl(200, 200, 'people'),
-            'permisos' => fake()->randomElement([0, 1, 2, 3]), // Or PermisosUsuario::Normal->value
+            'permisos' => fake()->randomElement(PermisosUsuario::toArray()), // Or PermisosUsuario::Normal->value
             'publicante' => fake()->boolean(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),

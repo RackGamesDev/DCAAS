@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         ]);*/
         $this->call([
             UserSeeder::class,
-            EncuestaSeeder::class
+            EncuestaSeeder::class,
+            PreguntaSeeder::class,
         ]);
     }
 }

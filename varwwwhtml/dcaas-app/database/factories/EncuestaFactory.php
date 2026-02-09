@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Enums\EstadoEncuesta;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Encuesta>
@@ -24,8 +25,8 @@ class EncuestaFactory extends Factory
             'publico' => fake()->boolean(),
             'votacion' => fake()->boolean(),
             'anonimo' => fake()->boolean(),
-            'estado' => fake()->randomElement([0, 1, 2, 3]),
-            'id_usuario' => function () {
+            'estado' => fake()->randomElement(EstadoEncuesta::toArray()),
+            'id_user' => function () {
                 return \App\Models\User::factory()->create()->id;
             },
         ];
