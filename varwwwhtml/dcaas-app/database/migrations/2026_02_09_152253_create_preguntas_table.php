@@ -16,9 +16,13 @@ return new class extends Migration
             $table->string('titulo')->nullable(false);
             $table->text('descripcion')->nullable();
             $table->text('contenido')->nullable();
+            $table->text('subtitulo')->nullable();
             $table->boolean('opcional')->default(false);
             $table->unsignedTinyInteger('tipo')->default(0);
+            $table->text('placeholder')->nullable();
+            $table->text('correcta')->nullable();
             $table->foreignUuid("id_encuesta")->constrained("encuestas")->onDelete("cascade");
+            $table->unique(['id_encuesta', 'titulo']);
             $table->timestamps();
         });
     }

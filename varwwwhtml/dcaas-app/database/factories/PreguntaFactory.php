@@ -20,6 +20,9 @@ class PreguntaFactory extends Factory
         return [
             'titulo' => fake()->sentence(),
             'contenido' => fake()->sentence(),
+            'placeholder' => fake()->sentence(),
+            'subtitulo' => fake()->sentence(),
+            'correcta' => fake()->sentence(),
             'descripcion' => fake()->paragraph(),
             'opcional' => fake()->boolean(),
             'tipo' => fake()->randomElement(TipoPregunta::toArray()),

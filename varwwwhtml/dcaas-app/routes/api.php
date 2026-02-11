@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EncuestaController;
+use App\Http\Controllers\PreguntaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
@@ -82,8 +83,8 @@ Route::prefix('v1')->group(function () {
                 Route::post('/encuesta/iniciar/{id}', [EncuestaController::class, 'iniciar'])->name('iniciarEncuesta');
                 Route::post('/encuesta/finalizar/{id}', [EncuestaController::class, 'finalizar'])->name('finalizarEncuesta');
 
-                Route::get('/preguntas/verMia/{id}', [EncuestaController::class, 'verDeEncuestaPrivado'])->name('verDeEncuestaPrivado');
-                Route::put('/preguntas/establecer/{id}', [EncuestaController::class, 'establecer'])->name('establecer');
+                Route::get('/preguntas/verMia/{id}', [PreguntaController::class, 'verDeEncuestaPrivado'])->name('verDeEncuestaPrivado');
+                Route::put('/preguntas/establecer/{id}', [PreguntaController::class, 'establecer'])->name('establecer');
 
             });
 
