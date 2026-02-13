@@ -42,10 +42,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/encuesta/ver/{id}', [EncuestaController::class, 'verPublico'])->name('verEncuestaPublica');
 
     //Buscar encuesta
-    Route::get('/encuesta/buscar/{busqueda}', [EncuestaController::class, 'buscar'])->name('buscarEncuestaPublica');
+    Route::get('/encuesta/buscar/{busqueda}/{pagina}', [EncuestaController::class, 'buscar'])->name('buscarEncuestaPublica');
 
     //Leer preguntas de encuesta (solo si es público)
-    Route::get('/preguntas/ver/{busqueda}', [EncuestaController::class, 'verDeEncuesta'])->name('verDeEncuesta');
+    Route::get('/preguntas/ver/{busqueda}/{pagina}', [PreguntaController::class, 'verDeEncuesta'])->name('verDeEncuesta');
 
 
 
@@ -83,7 +83,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('/encuesta/iniciar/{id}', [EncuestaController::class, 'iniciar'])->name('iniciarEncuesta');
                 Route::post('/encuesta/finalizar/{id}', [EncuestaController::class, 'finalizar'])->name('finalizarEncuesta');
 
-                Route::get('/preguntas/verMia/{id}', [PreguntaController::class, 'verDeEncuestaPrivado'])->name('verDeEncuestaPrivado');
+                Route::get('/preguntas/verMia/{id}/{pagina}', [PreguntaController::class, 'verDeEncuestaPrivado'])->name('verDeEncuestaPrivado');
                 Route::put('/preguntas/establecer/{id}', [PreguntaController::class, 'establecer'])->name('establecer');
 
             });
@@ -119,6 +119,9 @@ Route::prefix('v1')->group(function () {
 
             Route::delete('/admin/encuesta/{id}/borrar', [AdminController::class, 'borrarEncuestaAjena'])->name('borrarEncuestaAjena');
 
+            Route::delete('/admin/pregunta/{id}/borrar', [AdminController::class, 'borrarPreguntaAjena'])->name('borrarPreguntaAjena');
+
+            Route::delete('/admin/preguntas/{id}/ver', [AdminController::class, 'verPreguntasEncuestaAjena'])->name('verPreguntasEncuestaAjena');
 
 
         });

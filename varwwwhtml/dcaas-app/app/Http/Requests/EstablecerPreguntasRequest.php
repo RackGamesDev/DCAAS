@@ -21,43 +21,45 @@ class EstablecerPreguntasRequest extends FormRequest
 
     /*
 {
-    "destructivo": true,
-    "preguntas": [
-        {
-            "titulo": "di cosas",
-            "opcional": true,
-            "tipo": 0,
-            "subtitulo": "aquello",
-            "placeholder": "aaaaaa",
-            "correcta": "bbbb"
-        },
-        {
-            "titulo": "selecciona varias",
-            "opcional": true,
-            "contenido": ["aaa", "bbb", "ccc"],
-            "tipo": 1,
-            "subtitulo": "aquello",
-            "placeholder": [1,2],
-            "correcta": [0,1]
-        },
-        {
-            "titulo": "selecciona una",
-            "opcional": false,
-            "contenido": ["aaa", "bbb", "ccc"],
-            "tipo": 2,
-            "subtitulo": "esto",
-            "placeholder": 2,
-            "correcta": 0
-        },
-        {
-            "titulo": "cuanto?",
-            "opcional": true,
-            "tipo": 3,
-            "subtitulo": "aquello",
-            "placeholder": 20,
-            "correcta": -10
-        }
-    ]
+	"destructivo": true,
+	"preguntas": [
+		{
+			"titulo": "di cosas",
+			"opcional": true,
+			"tipo": 0,
+			"subtitulo": "aquello",
+			"placeholder": "aaaaaa",
+			"correcta": "bbbb",
+			"descripcion": "alkdfhaslidfhasodfh"
+		},
+		{
+			"titulo": "selecciona varias",
+			"opcional": true,
+			"contenido": ["aaa", "bbb", "ccc"],
+			"tipo": 1,
+			"subtitulo": "aquello",
+			"placeholder": [1,2],
+			"correcta": [0,1]
+		},
+		{
+			"titulo": "selecciona una",
+			"opcional": false,
+			"contenido": ["aaa", "bbb", "ccc"],
+			"tipo": 2,
+			"subtitulo": "esto",
+			"placeholder": 2,
+			"correcta": 0,
+			"descripcion": "alkdfhaslidfhasodfh"
+		},
+		{
+			"titulo": "cuanto?",
+			"opcional": true,
+			"tipo": 3,
+			"subtitulo": "aquello",
+			"placeholder": 20.5,
+			"correcta": -10
+		}
+	]
 }
     */
 
@@ -80,6 +82,7 @@ class EstablecerPreguntasRequest extends FormRequest
             'preguntas.*.contenido' => 'sometimes',
             'preguntas.*.placeholder' => 'sometimes|nullable',
             'preguntas.*.correcta' => 'sometimes|nullable',
+            'preguntas.*.descripcion' => 'nullable|string|max:255',
             'destructivo' => 'required|boolean'
         ];
     }

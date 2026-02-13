@@ -13,6 +13,8 @@ class EncuestaSeeder extends Seeder
      */
     public function run(): void
     {
-        Encuesta::factory()->count(20)->create();
+        Encuesta::factory()->count(200)->create();
+        //$payload = Encuesta::factory(200)->make()->toArray();
+        //Encuesta::insert($payload);
     }
 }

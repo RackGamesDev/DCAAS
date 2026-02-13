@@ -13,6 +13,8 @@ class PreguntaSeeder extends Seeder
      */
     public function run(): void
     {
-        Pregunta::factory()->count(70)->create();
+        Pregunta::factory()->count(700)->create();
+        //$payload = Pregunta::factory(700)->make()->toArray();
+        //Pregunta::insert($payload);
     }
 }

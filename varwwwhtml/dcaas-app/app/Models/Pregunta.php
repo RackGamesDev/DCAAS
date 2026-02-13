@@ -18,7 +18,7 @@ class Pregunta extends Model
 
     protected $fillable = ['id', 'descripcion', 'titulo', 'contenido', 'opcional', 'tipo', 'id_encuesta', 'subtitulo', 'placeholder', 'correcta'];
 
-    protected $hidden = ['correcta'];
+    //protected $hidden = ['correcta'];
 
     protected $casts = [
         'id' => 'string',

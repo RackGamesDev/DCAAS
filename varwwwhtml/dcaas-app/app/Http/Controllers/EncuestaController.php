@@ -20,6 +20,7 @@ class EncuestaController extends Controller
 
     public static $entregablesPublicos = ['nombre', 'descripcion', 'url_foto', 'id', 'fecha_creacion', 'certificacion', 'votacion', 'anonimo', 'fecha_inicio', 'fecha_fin', 'estado', 'id_user'];
     public static $entregablesPrivados = ['nombre', 'descripcion', 'url_foto', 'id', 'fecha_creacion', 'certificacion', 'publico', 'votacion', 'anonimo', 'fecha_inicio', 'fecha_fin', 'estado', 'id_user'];
+    public static $tamagnoPagina = 50;
 
     public function crear(CrearEncuestaRequest $request) {
         try {
@@ -127,10 +128,11 @@ class EncuestaController extends Controller
         }
     }
 
-    public function buscar($busqueda) {
+    public function buscar($busqueda, $pagina) {
         try {
-            $encuestas = Encuesta::where('publico', true)->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower($busqueda) . '%'])->select(self::$entregablesPublicos)->take(50)->get();
-            //dd($encuestas);
+            $pagina = (int)$pagina;
+            if (is_null($pagina) || !is_int($pagina) || $pagina < 0) $pagina = 1;
+            $encuestas = Encuesta::where('publico', true)->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower($busqueda) . '%'])->select(self::$entregablesPublicos)->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
             if (!$encuestas || $encuestas->isEmpty()) return RespuestaAPI::fallo(404, 'Encuestas no encontradas (que coincidan con la busqueda)');
             return RespuestaAPI::exito('Encuestas encontradas', ['encuestas' => $encuestas]);
         } catch (\Exception $e) {

@@ -9,6 +9,7 @@ use App\Http\Requests\CambiarPermisosRequest;
 use App\Http\Requests\EditarEncuestaRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Pregunta;
 use App\Models\Encuesta;
 use Illuminate\Routing\Controller;
 use App\Responses\RespuestaAPI;
@@ -143,6 +144,56 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
+    }
+
+
+    public function verPreguntasEncuestaAjena(Request $request, $id, $pagina)
+    {
+
+
+
+
+
+
+
+
+
+
+        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        try {
+            $pagina = (int) $pagina;
+            if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
+                $pagina = 1;
+            $user = $request->user();
+            if (!$user || !ManejadorPermisos::esAdmin($user))
+                return RespuestaAPI::fallo(404, 'No tienes permisos');
+            $encuesta = Encuesta::find($id);
+            if (!$encuesta)
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            $preguntas = Pregunta::where('id_encuesta', $id)->select(PreguntaController::$entregablesPrivados)->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
+            $preguntas = PreguntaController::formatearPreguntasDesdeDB($preguntas->toArray());
+            return RespuestaAPI::exito('Preguntas de esa encuesta', ['preguntas' => $preguntas]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
+
+    public function borrarPreguntaAjena(Request $request, $id) {
+
     }
 
 }

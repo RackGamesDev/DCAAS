@@ -16,6 +16,8 @@ class UserSeeder extends Seeder
         ]);
 
         // Create 50 random users
-        User::factory()->count(50)->create();
+        User::factory()->count(500)->create();
+        //$payload = User::factory(500)->make()->toArray();
+        //User::insert($payload);
     }
 }
