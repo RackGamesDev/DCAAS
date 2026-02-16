@@ -9,7 +9,7 @@ use App\Models\Pregunta;
 class PreguntaSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Inserciones falsas, crear 700 preguntas
      */
     public function run(): void
     {

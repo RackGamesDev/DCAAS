@@ -14,14 +14,21 @@ use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
 use App\Facades\ManejadorPermisos;
 
-
+/**
+ * Controller para las funciones relacionadas explicitamente con las encuestas
+ */
 class EncuestaController extends Controller
 {
 
-    public static $entregablesPublicos = ['nombre', 'descripcion', 'url_foto', 'id', 'fecha_creacion', 'certificacion', 'votacion', 'anonimo', 'fecha_inicio', 'fecha_fin', 'estado', 'id_user'];
-    public static $entregablesPrivados = ['nombre', 'descripcion', 'url_foto', 'id', 'fecha_creacion', 'certificacion', 'publico', 'votacion', 'anonimo', 'fecha_inicio', 'fecha_fin', 'estado', 'id_user'];
-    public static $tamagnoPagina = 50;
+    public static $entregablesPublicos = ['nombre', 'descripcion', 'url_foto', 'id', 'fecha_creacion', 'certificacion', 'votacion', 'anonimo', 'fecha_inicio', 'fecha_fin', 'estado', 'id_user']; //Campos considerados publicos a la hora de entregar
+    public static $entregablesPrivados = ['nombre', 'descripcion', 'url_foto', 'id', 'fecha_creacion', 'certificacion', 'publico', 'votacion', 'anonimo', 'fecha_inicio', 'fecha_fin', 'estado', 'id_user']; //Campos considerados privados a la hora de entregar
+    public static $tamagnoPagina = 50; //El tamagno por defecto de paginacion
 
+    /**
+     * Crea una encuesta asociada a este usuario, si tiene permisos para ello, empieza como no iniciada
+     * @param CrearEncuestaRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function crear(CrearEncuestaRequest $request) {
         try {
             $user = $request->user();
@@ -36,6 +43,11 @@ class EncuestaController extends Controller
         }
     }
 
+    /**
+     * Ver los datos publicos de una encuesta publica
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verPublico($id) {
         try {
             $encuesta = Encuesta::find($id);
@@ -46,6 +58,12 @@ class EncuestaController extends Controller
         }
     }
 
+    /**
+     * Ver todos los datos de cualquier encuesta que sea de ese usuario
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verPrivado(Request $request, $id) {
         try {
             $user = $request->user();
@@ -59,6 +77,12 @@ class EncuestaController extends Controller
         }
     }
 
+    /**
+     * Borra una encuesta si tiene permisos, lo cual provocara un borrado en cascada
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function borrar(Request $request, $id) {
         try {
             $user = $request->user();
@@ -76,6 +100,12 @@ class EncuestaController extends Controller
         }
     }
 
+    /**
+     * Edita los datos de una encuesta si no ha sido iniciada aun y tiene permisos
+     * @param EditarEncuestaRequest $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function editar(EditarEncuestaRequest $request, $id) {
         try {
             $user = $request->user();
@@ -94,6 +124,12 @@ class EncuestaController extends Controller
         }
     }
 
+    /**
+     * Inicia una encuesta alterando su estado, debe de ser publica
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function iniciar(Request $request, $id) {
         try {
             $user = $request->user();
@@ -112,6 +148,12 @@ class EncuestaController extends Controller
         }
     }
 
+    /**
+     * Finaliza una encuesta que ya haya empezado
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function finalizar(Request $request, $id) {
         try {
             $user = $request->user();
@@ -128,6 +170,12 @@ class EncuestaController extends Controller
         }
     }
 
+    /**
+     * Busca una encuesta en x pagina usando unos parametros de busqueda (encuestas publicas)
+     * @param mixed $busqueda
+     * @param mixed $pagina
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function buscar($busqueda, $pagina = 1) {
         try {
             $pagina = (int)$pagina ?? 1;

@@ -9,15 +9,11 @@ use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
 use App\Facades\ManejadorPermisos;
 
-
-//Indica que el usuario tiene permisos para interactuar con la app
-//Quiere decir que no está bloqueado (ni deshabilitado), porque bloqueado quita permisos de edición sobre lo que sea en la app
 class Editor
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Indica que el usuario tiene permisos para interactuar con la app
+     * Quiere decir que no está bloqueado (ni deshabilitado), porque bloqueado quita permisos de edición sobre lo que sea en la app
      */
     public function handle(Request $request, Closure $next): Response
     {

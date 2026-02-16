@@ -15,14 +15,20 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Requests\EditarUsuarioRequest;
 use App\Facades\ManejadorPermisos;
 
+/**
+ * Funciones relacionadas con los usuarios
+ * Cuando en una accion no se indica el usuario, es porque se realiza con el indicado en el token de sesion, si es valido y tiene permisos para eso (esto se aplica a este controller y al resto)
+ */
 class UserController extends Controller
 {
 
-    public static $entregablesPublicos = ['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion'];
-    public static $entregablesPrivados = ['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion', 'email'];
+    public static $entregablesPublicos = ['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion']; //Campos considerados publicos a la hora de entregar
+    public static $entregablesPrivados = ['nickname', 'nombre', 'descripcion', 'url_foto', 'id', 'permisos', 'fecha_creacion', 'email']; //Campos considerados privados a la hora de entregar
 
     /**
-     *
+     * Se crea un usuario y inicia una sesion con este, se crea de normal un usuario publicante/votante con permisos normales
+     * @param RegistrarUsuarioRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function registrar(RegistrarUsuarioRequest $request)
     {
@@ -38,13 +44,13 @@ class UserController extends Controller
     }
 
     /**
-     *
+     * Ver los datos publicos de un usuario
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function ver($id)
     {
         try {
-
-
             $user = User::find($id);
             if (!$user || ManejadorPermisos::todoRestringido($user))
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
@@ -55,6 +61,11 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Ver todos los datos de mi usuario, indicado en la sesion
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verYo(Request $request)
     {
         try {
@@ -68,11 +79,12 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
-
     }
 
     /**
-     *
+     * Inicia sesion de un usuario a partir de su contrasegna y correo/nickname
+     * @param LoginUsuarioRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function login(LoginUsuarioRequest $request)
     {
@@ -96,9 +108,13 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
-
     }
 
+    /**
+     * Edita ciertos datos de este usuario
+     * @param EditarUsuarioRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function editar(EditarUsuarioRequest $request)
     {
         try {
@@ -127,6 +143,11 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Borra este usuario provocando un borrado en cascada
+     * @param BorrarUsuarioRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function borrar(BorrarUsuarioRequest $request)
     {
         try {
@@ -149,6 +170,11 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Cierra la sesion de este usuario, borrando el token de sesion
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cerrarSesion(Request $request)
     {
         try {

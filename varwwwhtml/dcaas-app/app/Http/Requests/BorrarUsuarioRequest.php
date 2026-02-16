@@ -11,7 +11,7 @@ use Illuminate\Validation\Rules\Password;
 class BorrarUsuarioRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * De la autorizacion se encargan los middlewares
      */
     public function authorize(): bool
     {
@@ -19,7 +19,7 @@ class BorrarUsuarioRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Valida los datos de la peticion, mas informacion en la documentacion
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
@@ -37,6 +37,12 @@ class BorrarUsuarioRequest extends FormRequest
         ];
     }
 
+    /**
+     * Devuelve una respuesta fallida en caso de que los datos no sean validos
+     * @param Validator $validator
+     * @throws HttpResponseException
+     * @return never
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(

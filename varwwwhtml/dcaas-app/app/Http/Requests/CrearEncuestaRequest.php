@@ -7,12 +7,11 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Responses\RespuestaAPI;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 
 class CrearEncuestaRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * De la autorizacion se encargan los middlewares
      */
     public function authorize(): bool
     {
@@ -20,7 +19,7 @@ class CrearEncuestaRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Valida los datos de la peticion, mas informacion en la documentacion
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
@@ -44,7 +43,6 @@ class CrearEncuestaRequest extends FormRequest
                     }
                 },
             ],*/
-
             'id' => 'prohibited',
             'fecha_creacion' => 'prohibited',
             'fecha_inicio' => 'prohibited',
@@ -53,6 +51,12 @@ class CrearEncuestaRequest extends FormRequest
         ];
     }
 
+    /**
+     * Devuelve una respuesta fallida en caso de que los datos no sean validos
+     * @param Validator $validator
+     * @throws HttpResponseException
+     * @return never
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(

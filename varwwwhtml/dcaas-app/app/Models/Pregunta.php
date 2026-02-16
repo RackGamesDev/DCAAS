@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Support\Str;
 use App\Models\Encuesta;
 
+/**
+ * Modelo de la pregunta dependiente de la encuesta
+ */
 class Pregunta extends Model
 {
     use HasFactory, HasUuids;

@@ -17,10 +17,17 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\UserController;
 
-
+/**
+ * Controller para las acciones relacionadas con los administradores, todas las funciones requieren de un token de sesion de un usaurio administrador
+ */
 class AdminController extends Controller
 {
 
+    /**
+     * Edita los permisos de otro usuario
+     * @param CambiarPermisosRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function editarPermisos(CambiarPermisosRequest $request)
     {
         try {
@@ -42,6 +49,11 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * Edita los datos de otro usuario
+     * @param AdminEditarUsuarioRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function editarUsuarioAjeno(AdminEditarUsuarioRequest $request)
     {
         try {
@@ -65,6 +77,12 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * Borrar otro usuario (seria similar a banearlo), esto provocaria un borrado en cascada
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function borrarUsuarioAjeno(Request $request, $id)
     {
         try {
@@ -89,6 +107,12 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * Ver todos los datos de otro usuario
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verUsuarioAjeno(Request $request, $id)
     {
         try {
@@ -104,7 +128,12 @@ class AdminController extends Controller
         }
     }
 
-
+    /**
+     * Edita los datos de cualquier encuesta que no haya iniciado aun
+     * @param EditarEncuestaRequest $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function editarEncuestaAjena(EditarEncuestaRequest $request, $id) {
         try {
             $usuarioPeticion = $request->user();
@@ -121,6 +150,12 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Borra una encuesta (que no deberia haber empezado) provocando un borrado en cascada
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function borrarEncuestaAjena(Request $request, $id) {
         try {
             $usuarioPeticion = $request->user();
@@ -135,6 +170,12 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Ver todos los datos de cualquier encuesta
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verEncuestaAjena(Request $request, $id) {
         try {
             $usuarioPeticion = $request->user();
@@ -147,7 +188,13 @@ class AdminController extends Controller
         }
     }
 
-
+    /**
+     * Ver las preguntas de cualquier encuesta
+     * @param Request $request
+     * @param mixed $id
+     * @param mixed $pagina
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verPreguntasEncuestaAjena(Request $request, $id, $pagina = 1)
     {
         try {

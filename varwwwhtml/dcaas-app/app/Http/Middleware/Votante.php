@@ -8,13 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Responses\RespuestaAPI;
 use App\Facades\ManejadorPermisos;
 
-//Indica que el usuario tiene el rol de votante
 class Votante
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Indica que el usuario tiene el rol de votante
      */
     public function handle(Request $request, Closure $next): Response
     {

@@ -2,9 +2,17 @@
 
 namespace App\Responses;
 
-//Mandar mas rápidamente respuestas JSON de la API
+/**
+ * Mandar mas rápidamente respuestas JSON de la API
+ */
 class RespuestaAPI
 {
+    /**
+     * Responde con una respuesta exitosa y ciertos datos
+     * @param mixed $mensaje
+     * @param mixed $datos
+     * @return \Illuminate\Http\JsonResponse
+     */
     public static function exito(?string $mensaje = '', ?array $datos = null)
     {
         return response()->json([
@@ -17,6 +25,13 @@ class RespuestaAPI
         ], 200);
     }
 
+    /**
+     * Responde con una respuesta fallida con ciertos datos
+     * @param mixed $codigo
+     * @param mixed $mensaje
+     * @param mixed $datos
+     * @return \Illuminate\Http\JsonResponse
+     */
     public static function fallo(?int $codigo = 400, ?string $mensaje = '', ?array $datos = null)
     {
         return response()->json([
@@ -29,6 +44,13 @@ class RespuestaAPI
         ], $codigo ?? 400);
     }
 
+    /**
+     * Responde con un fallo interno
+     * @param mixed $datos
+     * @param mixed $codigo
+     * @param mixed $mensaje
+     * @return \Illuminate\Http\JsonResponse
+     */
     public static function falloInterno(?array $datos = null, ?int $codigo = 500, ?string $mensaje = '')
     {
         return response()->json([

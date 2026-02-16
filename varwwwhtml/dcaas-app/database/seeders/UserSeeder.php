@@ -6,16 +6,19 @@ use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
+    /**
+     * Inserciones falsas
+     */
     public function run(): void
     {
-        // Create 1 admin user manually
+        //Crear 1 admin
         User::factory()->create([
             'nickname' => 'AdminMaster',
             'email' => 'admin@example.com',
             'permisos' => 3, // Assuming 3 is Admin
         ]);
 
-        // Create 50 random users
+        //Crear 500 usuarios
         User::factory()->count(500)->create();
         //$payload = User::factory(500)->make()->toArray();
         //User::insert($payload);

@@ -8,14 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Responses\RespuestaAPI;
 use App\Facades\ManejadorPermisos;
 
-//Indica que el usuario tiene el rol de publicante de encuestas
-//Osea que no esté deshabilitado, porque deshabilitado previene el login
 class Publicante
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Indica que el usuario tiene el rol de publicante de encuestas
+     * Osea que no esté deshabilitado, porque deshabilitado previene el login
      */
     public function handle(Request $request, Closure $next): Response
     {

@@ -9,13 +9,10 @@ use App\Responses\RespuestaAPI;
 use App\Enums\PermisosUsuario;
 use App\Facades\ManejadorPermisos;
 
-//Indica que el usuario es capaz de iniciar sesión
 class Logeable
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Indica que el usuario es capaz de iniciar sesión
      */
     public function handle(Request $request, Closure $next): Response
     {

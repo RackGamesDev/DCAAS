@@ -8,21 +8,27 @@ use App\Models\Pregunta;
 use Illuminate\Http\Request;
 use App\Enums\EstadoEncuesta;
 use App\Facades\ManejadorPermisos;
-use App\Models\User;
 use App\Models\Encuesta;
 use Illuminate\Routing\Controller;
 use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\UserController;
 
+/**
+ * Controller con las funciones relacionadas explicitamente con las preguntas de las encuestas
+ */
 class PreguntaController extends Controller
 {
 
-    public static $entregablesPublicos = ['id', 'titulo', 'descripcion', 'contenido', 'opcional', 'tipo', 'id_encuesta', 'placeholder', 'subtitulo'];
-    public static $entregablesPrivados = ['id', 'titulo', 'descripcion', 'contenido', 'opcional', 'tipo', 'id_encuesta', 'placeholder', 'subtitulo', 'correcta'];
-    public static $tamagnoPagina = 50;
+    public static $entregablesPublicos = ['id', 'titulo', 'descripcion', 'contenido', 'opcional', 'tipo', 'id_encuesta', 'placeholder', 'subtitulo']; //Campos considerados publicos a la hora de entregar
+    public static $entregablesPrivados = ['id', 'titulo', 'descripcion', 'contenido', 'opcional', 'tipo', 'id_encuesta', 'placeholder', 'subtitulo', 'correcta']; //Campos considerados privados a la hora de entregar
+    public static $tamagnoPagina = 50; //El tamagno por defecto de paginacion
 
+    /**
+     * Convierte los datos de una encuesta en JSON al formato que se usa en la base de datos
+     * @param array $preguntas
+     * @param string $id_encuesta
+     * @return array
+     */
     public static function formatearPreguntasADB(array $preguntas, string $id_encuesta): array
     {
         foreach ($preguntas as &$pregunta) {
@@ -55,6 +61,11 @@ class PreguntaController extends Controller
         return $preguntas;
     }
 
+    /**
+     * Formatea los datos de las preguntas guardadas en la base de datos a formato JSON
+     * @param array $preguntas
+     * @return array
+     */
     public static function formatearPreguntasDesdeDB(array $preguntas): array
     {
         foreach ($preguntas as &$pregunta)
@@ -83,6 +94,12 @@ class PreguntaController extends Controller
         return $preguntas;
     }
 
+    /**
+     * Establecer (reemplazando o no) las preguntas de una encuesta
+     * @param EstablecerPreguntasRequest $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function establecer(EstablecerPreguntasRequest $request, $id)
     {
         try {
@@ -114,6 +131,12 @@ class PreguntaController extends Controller
         }
     }
 
+    /**
+     * Ver las preguntas de cualquier encuesta publica
+     * @param mixed $id
+     * @param mixed $pagina
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verDeEncuesta($id, $pagina = 1)
     {
         try {
@@ -131,6 +154,13 @@ class PreguntaController extends Controller
         }
     }
 
+    /**
+     * Ver las preguntas de una encuesta de ese usuario aunque sea privada
+     * @param Request $request
+     * @param mixed $id
+     * @param mixed $pagina
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verDeEncuestaPrivado(Request $request, $id, $pagina = 1)
     {
         try {

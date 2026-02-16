@@ -10,10 +10,11 @@ use App\Enums\TipoPregunta;
  */
 class PreguntaFactory extends Factory
 {
+
+
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
+     * Devuelve una pregunta falsa de alguna encuesta
+     * @return array{contenido: string, correcta: string, descripcion: string, id_encuesta: callable, opcional: bool, placeholder: string, subtitulo: string, tipo: mixed, titulo: string}
      */
     public function definition(): array
     {

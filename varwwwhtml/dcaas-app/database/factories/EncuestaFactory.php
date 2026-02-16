@@ -10,10 +10,10 @@ use App\Enums\EstadoEncuesta;
  */
 class EncuestaFactory extends Factory
 {
+
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
+     * Devuelve una encuesta falsa de algun usuario
+     * @return array{anonimo: bool, certificacion: string, descripcion: string, estado: mixed, id_user: callable, nombre: string, publico: bool, url_foto: string, votacion: bool}
      */
     public function definition(): array
     {

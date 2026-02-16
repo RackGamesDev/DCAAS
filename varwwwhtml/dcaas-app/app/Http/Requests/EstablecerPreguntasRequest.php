@@ -12,7 +12,7 @@ use App\Responses\RespuestaAPI;
 class EstablecerPreguntasRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * De la autorizacion se encargan los middlewares
      */
     public function authorize(): bool
     {
@@ -20,6 +20,9 @@ class EstablecerPreguntasRequest extends FormRequest
     }
 
     /*
+
+    Para aclarar, asi se verian unos datos validos:
+
 {
 	"destructivo": true,
 	"preguntas": [
@@ -63,10 +66,10 @@ class EstablecerPreguntasRequest extends FormRequest
 }
     */
 
-    public static $separadorPreguntas = "¬";
+    public static $separadorPreguntas = "¬"; //Algunos datos se guardan usando este caracter como separador
 
     /**
-     * Get the validation rules that apply to the request.
+     * Valida los datos de la peticion, mas informacion en la documentacion
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
@@ -86,6 +89,10 @@ class EstablecerPreguntasRequest extends FormRequest
             'destructivo' => 'required|boolean'
         ];
     }
+
+    /**
+     * Las funciones a continuacion son para extender la logica de validacion de estos datos, que es bastante compleja
+     */
 
     public function after(): array
     {
@@ -185,6 +192,14 @@ class EstablecerPreguntasRequest extends FormRequest
             if (!is_int($val) || $val < 0 || $val >= $max)
                 $validator->errors()->add("preguntas.$index.$field", "Contiene un índice inválido ($val).");
     }
+
+
+    /**
+     * Devuelve una respuesta fallida en caso de que los datos no sean validos
+     * @param Validator $validator
+     * @throws HttpResponseException
+     * @return never
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(RespuestaAPI::fallo(422, 'Error en la validación de los campos, todas las preguntas deben seguir unas reglas.', $validator->errors()->all()));

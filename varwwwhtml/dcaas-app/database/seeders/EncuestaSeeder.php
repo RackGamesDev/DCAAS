@@ -9,7 +9,7 @@ use App\Models\Encuesta;
 class EncuestaSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Inserciones falsas, crear 200 encuestas
      */
     public function run(): void
     {

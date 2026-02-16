@@ -9,8 +9,13 @@ use Illuminate\Support\Facades\Log;
 use App\Responses\RespuestaAPI;
 use App\Http\Controllers\UserController;
 
+/**
+ * Para mas informacion sobre las rutas consultar la documentacion de la API (REST)
+ */
+
+//Este archivo es api.php, todas las rutas empezarán por /api/v1
 Route::prefix('v1')->group(function () {
-    //Este archivo es api.php, todas las rutas empezarán por /api
+
 
     //RUTAS PÚBLICAS:
 
@@ -54,17 +59,22 @@ Route::prefix('v1')->group(function () {
     //RUTAS PRIVADAS que requieran un usuario logeado (bearer token):
     Route::middleware('auth:sanctum')->group(function () {
 
-        //Requieren usuario cualquiera:
-
+        //Ver los datos de este usuario
         Route::get('/usuario/yo', [UserController::class, 'verYo'])->name('verUsuarioPrivado');
+
+        //Saber si el token de sesion proporcionado es valido
         Route::get('/validarSesion', [UserController::class, 'verYo'])->name('validarSesion');
 
+        //Borrar este usuario (provocara muchos borrados en cascada)
         Route::delete('/usuario', [UserController::class, 'borrar'])->name('borrarUsuario');
 
+        //Cerrar la sesion actual, esto borraria el token de sesion
         Route::delete('/usuario/cerrarSesion', [UserController::class, 'cerrarSesion'])->name('cerrarSesion');
 
         //Requieren un usuario con permisos de edición (que puedan editar y logear):
         Route::middleware('editor')->group(function () {
+
+            //Editar los datos de este usuario
             Route::patch('/usuario', [UserController::class, 'editar'])->name('editarUsuario');
 
             //Requieren usuario votante:
@@ -76,15 +86,30 @@ Route::prefix('v1')->group(function () {
 
             //Requieren usuario publicante:
             Route::middleware('publicante')->group(function () {
+
+                //Crear una encuesta
                 Route::post("/encuesta", [EncuestaController::class, 'crear'])->name('crearEncuesta');
+
+                //Ver los datos de una encuesta de la cual se es propietario, incluso si es privada
                 Route::get('/encuesta/verMia/{id}', [EncuestaController::class, 'verPrivado'])->name('verEncuestaPrivada');
+
+                //Borrar una encuesta si es de ese usuario
                 Route::delete('/encuesta/borrar/{id}', [EncuestaController::class, 'borrar'])->name('borrarEncuesta');
+
+                //Editar una encuesta si es de ese usuario y no ha empezado
                 Route::patch('/encuesta/editar/{id}', [EncuestaController::class, 'editar'])->name('editarEncuesta');
+
+                //Iniciar encuesta si no ha empezado aun
                 Route::post('/encuesta/iniciar/{id}', [EncuestaController::class, 'iniciar'])->name('iniciarEncuesta');
+
+                //Finalizar encuesta si estaba activa
                 Route::post('/encuesta/finalizar/{id}', [EncuestaController::class, 'finalizar'])->name('finalizarEncuesta');
 
-                Route::get('/preguntas/verMia/{id}/{pagina?}', [PreguntaController::class, 'verDeEncuestaPrivado'])->name('verDeEncuestaPrivado');
+                //Establecer (reemplazando o no) las preguntas de una encuesta
                 Route::put('/preguntas/establecer/{id}', [PreguntaController::class, 'establecer'])->name('establecer');
+
+                //Ver las preguntas de una encuesta que pertenezca al usuario aunque sea privada
+                Route::get('/preguntas/verMia/{id}/{pagina?}', [PreguntaController::class, 'verDeEncuestaPrivado'])->name('verDeEncuestaPrivado');
 
             });
 
@@ -100,25 +125,34 @@ Route::prefix('v1')->group(function () {
 
         //Requieren usuario administrador:
         Route::middleware('admin')->group(function () {
+
             //Info para admins
             Route::get('/admin', function (Request $request) {
                 return RespuestaAPI::exito('Posibles operaciones que tienes como admin', ['Otros' => 'Hacer cualquier acción aunque el item no lo hayas creado tú, en general consulta la documentación']);
             });
 
+            //Alterar los permisos de otro usuario
             Route::patch('/admin/usuario/alterPerms', [AdminController::class, 'editarPermisos'])->name('editarPermisos');
 
+            //Editar ciertos datos de otro usuario
             Route::patch('/admin/usuario/{id}/editar', [AdminController::class, 'editarUsuarioAjeno'])->name('editarUsuarioAjeno');
 
+            //Borrar otro usuario, lo que provocara borrados en cascada
             Route::delete('/admin/usuario/{id}/borrar', [AdminController::class, 'borrarUsuarioAjeno'])->name('borrarUsuarioAjeno');
 
+            //Ver todos los datos (incluso los privados) de otro usuario
             Route::get('/admin/usuario/{id}/ver', [AdminController::class, 'verUsuarioAjeno'])->name('verUsuarioAjeno');
 
+            //Ver todo de cualquier encuesta
             Route::get('/admin/encuesta/{id}/ver', [AdminController::class, 'verEncuestaAjena'])->name('verEncuestaAjena');
 
+            //Editar cualquier encuesta que no haya empezado
             Route::patch('/admin/encuesta/{id}/editar', [AdminController::class, 'editarEncuestaAjena'])->name('editarEncuestaAjena');
 
+            //Borrar una encuesta ajena
             Route::delete('/admin/encuesta/{id}/borrar', [AdminController::class, 'borrarEncuestaAjena'])->name('borrarEncuestaAjena');
 
+            //Ver todas las preguntas de una encuesta ajena aunque sea privada
             Route::get('/admin/preguntas/{id}/ver/{pagina?}', [AdminController::class, 'verPreguntasEncuestaAjena'])->name('verPreguntasEncuestaAjena');
 
 

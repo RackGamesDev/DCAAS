@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Support\Str;
 
+/**
+ * Modelo de la encuesta dependiente del usuario
+ */
 class Encuesta extends Model
 {
     use HasFactory, HasUuids;
@@ -16,7 +19,6 @@ class Encuesta extends Model
     public $incrementing = false;
 
     protected $fillable = ['nombre', 'descripcion', 'url_foto', 'certificacion', 'votacion', 'anonimo', 'fecha_creacion', 'id_user', 'fecha_inicio', 'fecha_fin', 'publico', 'estado'];
-    //protected $fillable = ['nombre', 'descripcion', 'url_foto', 'certificacion', 'votacion', 'anonimo', 'fecha_creacion', 'id_user'];
 
     protected $hidden = ['publico'];
 
@@ -33,6 +35,9 @@ class Encuesta extends Model
         return (string) Str::uuid();
     }
 
+    /**
+     * Definir permanencia al usuario
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
