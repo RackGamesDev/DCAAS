@@ -8,11 +8,10 @@ use App\Enums\PermisosUsuario;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Crear la tabla de usuarios
      */
     public function up(): void
     {
-        //Crear la tabla de usuarios
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary()->unique(); //UUID identificativo
             $table->string('nickname')->unique()->nullable(false); //Nickname identificativo
@@ -33,7 +32,7 @@ return new class extends Migration
         //Tabla de sesiones
         Schema::create('sessions', function (Blueprint $table) {
             $table->uuid('id')->primary()->unique();
-            $table->uuid('user_id')->index()->constrained('users'); // Changed to uuid
+            $table->uuid('user_id')->index()->constrained('users');
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
@@ -44,7 +43,7 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Borrar los usuarios, esto hace borrado en cascada a los elementos que haya creado (excepto respuestas)
      */
     public function down(): void
     {

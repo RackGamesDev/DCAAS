@@ -128,9 +128,9 @@ class EncuestaController extends Controller
         }
     }
 
-    public function buscar($busqueda, $pagina) {
+    public function buscar($busqueda, $pagina = 1) {
         try {
-            $pagina = (int)$pagina;
+            $pagina = (int)$pagina ?? 1;
             if (is_null($pagina) || !is_int($pagina) || $pagina < 0) $pagina = 1;
             $encuestas = Encuesta::where('publico', true)->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower($busqueda) . '%'])->select(self::$entregablesPublicos)->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
             if (!$encuestas || $encuestas->isEmpty()) return RespuestaAPI::fallo(404, 'Encuestas no encontradas (que coincidan con la busqueda)');

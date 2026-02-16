@@ -114,10 +114,10 @@ class PreguntaController extends Controller
         }
     }
 
-    public function verDeEncuesta($id, $pagina)
+    public function verDeEncuesta($id, $pagina = 1)
     {
         try {
-            $pagina = (int) $pagina;
+            $pagina = (int) $pagina ?? 1;
             if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
                 $pagina = 1;
             $encuesta = Encuesta::find($id);
@@ -131,10 +131,10 @@ class PreguntaController extends Controller
         }
     }
 
-    public function verDeEncuestaPrivado(Request $request, $id, $pagina)
+    public function verDeEncuestaPrivado(Request $request, $id, $pagina = 1)
     {
         try {
-            $pagina = (int) $pagina;
+            $pagina = (int) $pagina ?? 1;
             if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
                 $pagina = 1;
             $user = $request->user();

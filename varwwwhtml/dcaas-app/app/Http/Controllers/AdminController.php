@@ -20,6 +20,7 @@ use App\Http\Controllers\UserController;
 
 class AdminController extends Controller
 {
+
     public function editarPermisos(CambiarPermisosRequest $request)
     {
         try {
@@ -147,35 +148,10 @@ class AdminController extends Controller
     }
 
 
-    public function verPreguntasEncuestaAjena(Request $request, $id, $pagina)
+    public function verPreguntasEncuestaAjena(Request $request, $id, $pagina = 1)
     {
-
-
-
-
-
-
-
-
-
-
-        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         try {
-            $pagina = (int) $pagina;
+            $pagina = (int) $pagina ?? 1;
             if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
                 $pagina = 1;
             $user = $request->user();
@@ -184,16 +160,12 @@ class AdminController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta)
                 return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            $preguntas = Pregunta::where('id_encuesta', $id)->select(PreguntaController::$entregablesPrivados)->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
+            $preguntas = Pregunta::where('id_encuesta', $id)->select(PreguntaController::$entregablesPrivados)->skip(($pagina - 1) * PreguntaController::$tamagnoPagina)->take(PreguntaController::$tamagnoPagina)->get();
             $preguntas = PreguntaController::formatearPreguntasDesdeDB($preguntas->toArray());
             return RespuestaAPI::exito('Preguntas de esa encuesta', ['preguntas' => $preguntas]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
-    }
-
-    public function borrarPreguntaAjena(Request $request, $id) {
-
     }
 
 }
