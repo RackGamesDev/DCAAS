@@ -21,10 +21,10 @@ return new class extends Migration
             $table->boolean('votacion')->default(false); //Si esta declarada como votacion, no afecta en nada a su funcionamiento pero puede tener un uso mas adelante
             $table->boolean('anonimo')->default(false); //Si la encuesta es anonima, osea que no se muestran nunca quien ha respondido
             $table->string('fecha_creacion')->default(now()); //Timestamp de cuando se ha creado
-            $table->string('fecha_inicio')->default("N/A"); //Timestamp de cuando se ha iniciado (o vacio si no ha iniciado aun)
-            $table->string('fecha_fin')->default("N/A"); //Timestamp de cuando ha finalizado (o vacio si no ha terminado nunca aun)
+            $table->string('fecha_inicio')->default('N/A'); //Timestamp de cuando se ha iniciado (o vacio si no ha iniciado aun)
+            $table->string('fecha_fin')->default('N/A'); //Timestamp de cuando ha finalizado (o vacio si no ha terminado nunca aun)
             $table->unsignedTinyInteger('estado')->default(0); //Estado de la encuesta, ver el enum para mas informacion
-            $table->foreignUuid("id_user")->constrained("users")->onDelete("cascade"); //ID del usuario creador, debe de ser publicante y depende de este
+            $table->foreignUuid('id_user')->constrained('users')->onDelete('cascade'); //ID del usuario creador, debe de ser publicante y depende de este
             $table->timestamps();
         });
     }

@@ -34,24 +34,24 @@ class PreguntaController extends Controller
         foreach ($preguntas as &$pregunta) {
             switch ($pregunta['tipo']) {
                 case TipoPregunta::Desarrollar->value:
-                    $pregunta['placeholder'] = (string) $pregunta['placeholder'] . "";
-                    $pregunta['correcta'] = (string) $pregunta['correcta'] . "";
-                    $pregunta['contenido'] = "";
+                    $pregunta['placeholder'] = (string) $pregunta['placeholder'] . '';
+                    $pregunta['correcta'] = (string) $pregunta['correcta'] . '';
+                    $pregunta['contenido'] = '';
                     break;
                 case TipoPregunta::Check->value:
-                    $pregunta['placeholder'] = is_array($pregunta['placeholder'] ?? null) ? implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['placeholder']) : "";
-                    $pregunta['correcta'] = is_array($pregunta['correcta'] ?? null) ? implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['correcta']) : "";
+                    $pregunta['placeholder'] = is_array($pregunta['placeholder'] ?? null) ? implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['placeholder']) : '';
+                    $pregunta['correcta'] = is_array($pregunta['correcta'] ?? null) ? implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['correcta']) : '';
                     $pregunta['contenido'] = implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['contenido']);
                     break;
                 case TipoPregunta::Radio->value:
-                    $pregunta['placeholder'] = is_numeric($pregunta['placeholder'] ?? null) ? (string) $pregunta['placeholder'] : "";
-                    $pregunta['correcta'] = is_numeric($pregunta['correcta'] ?? null) ? (string) $pregunta['correcta'] : "";
+                    $pregunta['placeholder'] = is_numeric($pregunta['placeholder'] ?? null) ? (string) $pregunta['placeholder'] : '';
+                    $pregunta['correcta'] = is_numeric($pregunta['correcta'] ?? null) ? (string) $pregunta['correcta'] : '';
                     $pregunta['contenido'] = implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['contenido']);
                     break;
                 case TipoPregunta::Numero->value:
-                    $pregunta['placeholder'] = (string) $pregunta['placeholder'] . "";
-                    $pregunta['correcta'] = (string) $pregunta['correcta'] . "";
-                    $pregunta['contenido'] = "";
+                    $pregunta['placeholder'] = (string) $pregunta['placeholder'] . '';
+                    $pregunta['correcta'] = (string) $pregunta['correcta'] . '';
+                    $pregunta['contenido'] = '';
                     break;
                 default:
                     $pregunta = null;
@@ -123,7 +123,7 @@ class PreguntaController extends Controller
             foreach ($datos['preguntas'] as $pregunta)
                 if (!is_null($pregunta))
                     Pregunta::create($pregunta);
-            return RespuestaAPI::exito('Preguntas creadas con éxito', ['preguntas' => $previoPreguntas, 'destructivo' => $datos['destructivo']]);
+            return RespuestaAPI::exito('Preguntas creadas con éxito', ['preguntas' => 'Usa la ruta de ver preguntas para mas detalles', 'destructivo' => $datos['destructivo']]);
             //Manera alternativa:
             //return RespuestaAPI::exito('Preguntas creadas con éxito', ['preguntas' => $datos['preguntas'], 'destructivo' => $datos['destructivo']]);
         } catch (\Exception $e) {
@@ -146,7 +146,7 @@ class PreguntaController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta || $encuesta['publico'] == false)
                 return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            $preguntas = Pregunta::where('id_encuesta', $id)->select(self::$entregablesPublicos)->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
+            $preguntas = Pregunta::where('id_encuesta', $id)->select(self::$entregablesPublicos)->orderBy('created_at', 'desc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
             $preguntas = self::formatearPreguntasDesdeDB($preguntas->toArray());
             return RespuestaAPI::exito('Preguntas de esa encuesta', ['preguntas' => $preguntas]);
         } catch (\Exception $e) {
@@ -173,7 +173,7 @@ class PreguntaController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta || $encuesta['id_user'] != $user->id)
                 return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            $preguntas = Pregunta::where('id_encuesta', $id)->select(self::$entregablesPrivados)->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
+            $preguntas = Pregunta::where('id_encuesta', $id)->select(self::$entregablesPrivados)->orderBy('created_at', 'desc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
             $preguntas = self::formatearPreguntasDesdeDB($preguntas->toArray());
             return RespuestaAPI::exito('Preguntas de esa encuesta', ['preguntas' => $preguntas]);
         } catch (\Exception $e) {

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('tipo')->default(0); //Tipo de pregunta, mirar el enum para mas informacion
             $table->text('placeholder')->nullable(); //Contenido ya marcado por defecto para guiar (depende del tipo)
             $table->text('correcta')->nullable(); //Que respuesta es la correcta (depende del tipo) TODO: que los usuarios puedan ver que tan bien han respondido
-            $table->foreignUuid("id_encuesta")->constrained("encuestas")->onDelete("cascade"); //ID de la encuesta a la que pertenece, depende de esta
+            $table->foreignUuid('id_encuesta')->constrained('encuestas')->onDelete('cascade'); //ID de la encuesta a la que pertenece, depende de esta
             $table->unique(['id_encuesta', 'titulo']);
             $table->timestamps();
         });

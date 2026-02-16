@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EstablecerPreguntasRequest;
 use App\Http\Requests\VotarRequest;
 use App\Models\Respuesta;
 use Illuminate\Http\Request;
 use App\Enums\EstadoEncuesta;
+use App\Enums\TipoPregunta;
 use Illuminate\Routing\Controller;
-use App\Enums\PermisosUsuario;
-use App\Models\User;
 use App\Models\Encuesta;
+use App\Models\Pregunta;
 use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
 use App\Facades\ManejadorPermisos;
@@ -22,10 +23,12 @@ class RespuestaController extends Controller
 
     public static $tamagnoPagina = 50; //El tamagno por defecto de paginacion
 
-    public static function respuestaADB(string $respuesta): string {
+    public static function respuestaADB(string $respuesta): string
+    {
 
     }
-    public static function DBARespuesta(string $respuesta): string {
+    public static function DBARespuesta(string $respuesta): string
+    {
 
     }
 
@@ -35,19 +38,88 @@ class RespuestaController extends Controller
      * @param mixed $id
      * @return void
      */
-    public function votar(VotarRequest $request, $id) {
-        try{
+    public function votar(VotarRequest $request, $id)
+    {
+        try {
             $user = $request->user();
-            if (!$user || !ManejadorPermisos::esVotante($user) || !ManejadorPermisos::puedeEditar($user)) return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
+            if (!$user || !ManejadorPermisos::esVotante($user) || !ManejadorPermisos::puedeEditar($user))
+                return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || $encuesta['publico'] == false || $encuesta ['estado'] != EstadoEncuesta::Activa) return RespuestaAPI::fallo(404, 'La encuesta no ha empezado, no es pública o no existe');
+            if (!$encuesta || $encuesta['publico'] == false || $encuesta['estado'] != EstadoEncuesta::Activa)
+                return RespuestaAPI::fallo(404, 'La encuesta no ha empezado, no es pública o no existe');
             $yaRespondido = Respuesta::where('id_user', $user->id)->exists();
-            if ($yaRespondido) return RespuestaAPI::fallo(401, 'No puedes responder dos veces');
-            $datos = $request->datos;
-            if ($encuesta['anonimo'] == true) {
-
-            } else {
-
+            if ($yaRespondido)
+                return RespuestaAPI::fallo(401, 'No puedes responder dos veces');
+            $datos = $request->validated();
+            $preguntas = Pregunta::where('id_encuesta', $encuesta->id)->orderBy('created_at', 'desc')->get();
+            if (!is_array($datos['respuestas']) || $preguntas->count() != count($datos['respuestas']))
+                return RespuestaAPI::fallo(422, 'Debe haber las mismas respuestas que preguntas, para responder en vacio poner false');
+            $preguntas = $preguntas->toArray();
+            $i = 0;
+            $respuestas = $datos['respuestas'];
+            if (is_string($respuestas)) $respuestas = json_decode($respuestas, true);
+            ksort($respuestas);
+            foreach ($respuestas as &$respuesta) { //Validacion mas especifica de las respuestas
+                switch ($preguntas[$i]['tipo']) {
+                    case TipoPregunta::Desarrollar->value:
+                        if ($respuesta == false && $preguntas[$i]['opcional'] == true)
+                            break;
+                        if (($respuesta == false && $preguntas[$i]['opcional'] == false) || !is_string($respuesta))
+                            return RespuestaAPI::fallo(422, 'Una pregunta obligatoria no ha sido respondida');
+                        break;
+                    case TipoPregunta::Check->value:
+                        if ($respuesta == false && $preguntas[$i]['opcional'] == true)
+                            break;
+                        if (!is_array($respuesta))
+                            return RespuestaAPI::fallo(422, 'La respuesta a una pregunta multiple debe de ser un array');
+                        if (count($respuesta) !== count(array_unique($respuesta)))
+                            return RespuestaAPI::fallo(422, 'Hay una pregunta check que tiene respuestas marcadas repetidas');
+                        $opciones = explode(EstablecerPreguntasRequest::$separadorPreguntas, $preguntas[$i]['contenido']);
+                        if (count($respuesta) > 0)
+                            foreach ($respuesta as &$marcada)
+                                if (!$marcada || !is_numeric($marcada ?? null) || (int) $marcada < 0 || (int) $marcada > count($opciones))
+                                    return RespuestaAPI::fallo(422, 'Hay una pregunta check que tiene una respuesta mal formateada');
+                        break;
+                    case TipoPregunta::Radio->value:
+                        if ($respuesta == false && $preguntas[$i]['opcional'] == true)
+                            break;
+                        if (!is_int($respuesta ?? null))
+                            return RespuestaAPI::fallo(422, 'Hay que responder con el numero de la opcion en las preguntas check');
+                        if (count(explode(EstablecerPreguntasRequest::$separadorPreguntas, $preguntas[$i]['contenido'])) < (int) $respuesta || (int) $respuesta < 0)
+                            return RespuestaAPI::fallo(422, 'Respuesta fuera de rango en pregunta de check');
+                        break;
+                    case TipoPregunta::Numero->value:
+                        if ($respuesta == false && $preguntas[$i]['opcional'] == true)
+                            break;
+                        if ($respuesta == false && $preguntas[$i]['opcional'] == false)
+                            return RespuestaAPI::fallo(422, 'Una pregunta obligatoria no ha sido respondida');
+                        if (!is_numeric($respuesta ?? null))
+                            return RespuestaAPI::fallo(422, 'Las preguntas numericas hay que responderlas con numeros');
+                        break;
+                }
+                $i++;
+            }
+            if ($i === count($datos['respuestas'])) {
+                $i = 0;
+                if ($encuesta['anonimo'] == true) {
+                    foreach ($datos['respuestas'] as $respuesta) {
+                        if (is_array($respuesta)) {
+                            Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id']]);
+                        } else {
+                            Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id']]);
+                        }
+                        $i++;
+                    }
+                } else {
+                    foreach ($datos['respuestas'] as $respuesta) {
+                        if (is_array($respuesta)) {
+                            Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
+                        } else {
+                            Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
+                        }
+                        $i++;
+                    }
+                }
             }
             return RespuestaAPI::exito('Respuesta guardada correctamente');
         } catch (\Exception $e) {
@@ -62,7 +134,8 @@ class RespuestaController extends Controller
      * @param mixed $pagina
      * @return void
      */
-    public function verRespuestasDeEncuesta(Request $request, $id, $pagina) {
+    public function verRespuestasDeEncuesta(Request $request, $id, $pagina)
+    {
 
     }
 
@@ -72,7 +145,8 @@ class RespuestaController extends Controller
      * @param mixed $id
      * @return void
      */
-    public function verRespuestaDeEncuesta(Request $request, $id) {
+    public function verRespuestaDeEncuesta(Request $request, $id)
+    {
 
     }
 

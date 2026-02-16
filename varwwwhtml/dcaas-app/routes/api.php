@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EncuestaController;
 use App\Http\Controllers\PreguntaController;
+use App\Http\Controllers\RespuestaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
@@ -80,7 +81,8 @@ Route::prefix('v1')->group(function () {
             //Requieren usuario votante:
             Route::middleware('votante')->group(function () {
 
-
+                //Envia las respuestas a una encuesta
+                Route::post('/encuesta/votar/{id}', [RespuestaController::class, 'votar'])->name('votar');
 
             });
 
@@ -88,7 +90,7 @@ Route::prefix('v1')->group(function () {
             Route::middleware('publicante')->group(function () {
 
                 //Crear una encuesta
-                Route::post("/encuesta", [EncuestaController::class, 'crear'])->name('crearEncuesta');
+                Route::post('/encuesta', [EncuestaController::class, 'crear'])->name('crearEncuesta');
 
                 //Ver los datos de una encuesta de la cual se es propietario, incluso si es privada
                 Route::get('/encuesta/verMia/{id}', [EncuestaController::class, 'verPrivado'])->name('verEncuestaPrivada');

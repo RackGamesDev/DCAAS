@@ -26,7 +26,7 @@ class VotarRequest extends FormRequest
     {
         return [
             'respuestas' => 'required|array|min:0|max:127',
-            'respuestas.*.contenido' => 'sometimes|nullable|string|max:511',
+            'respuestas.*' => 'sometimes|nullable|max:511',
         ];
     }
 

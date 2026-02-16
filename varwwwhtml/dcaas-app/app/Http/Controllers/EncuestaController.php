@@ -7,8 +7,7 @@ use App\Http\Requests\CrearEncuestaRequest;
 use App\Http\Requests\EditarEncuestaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Enums\PermisosUsuario;
-use App\Models\User;
+use App\Models\Pregunta;
 use App\Models\Encuesta;
 use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
@@ -140,6 +139,7 @@ class EncuestaController extends Controller
             if ($encuesta['estado'] != EstadoEncuesta::SinIniciar) return RespuestaAPI::fallo(406, 'Solo se pueden iniciar encuestas sin iniciar');
             //dd($encuesta);
             if ($encuesta['publico'] == false) return RespuestaAPI::fallo(406, 'La encuesta debe de ser pública antes de iniciarla (al menos de momento)'); //TODO: iniciar privadas
+            if (!Pregunta::where('id_encuesta', $encuesta->id)->exists()) return RespuestaAPI::fallo(406, 'La encuesta debe tener al menos una pregunta');
             $encuesta->fill(['estado' => EstadoEncuesta::Activa, 'fecha_inicio' => now()]);
             $encuesta->save();
             return RespuestaAPI::exito('Encuesta iniciada', ['encuesta' => $encuesta->only(self::$entregablesPrivados)]);
