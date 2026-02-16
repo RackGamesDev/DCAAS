@@ -215,4 +215,14 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Ver las respuestas de cualquier encuesta, aunque si es anonima no se pueden ver los usuarios
+     * @param Request $request
+     * @param mixed $id
+     * @return void
+     */
+    public function verRespuestaDeEncuesta(Request $request, $id) {
+
+    }
+
 }
