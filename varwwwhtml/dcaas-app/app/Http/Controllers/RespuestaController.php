@@ -140,20 +140,28 @@ class RespuestaController extends Controller
     public function verRespuestasDeEncuesta(Request $request, $id, $pagina)
     {
         try {
-            //TODO:
+            $pagina = (int) $pagina ?? 1;
+            if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
+                $pagina = 1;
+            $user = $request->user();
+            if (!$user || !ManejadorPermisos::esPublicante($user) || !ManejadorPermisos::puedeEditar($user))
+                return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
+            $encuesta = Encuesta::find($id);
+            if (!$encuesta || $encuesta['id_user'] == $user->id)
+                return RespuestaAPI::fallo(404, 'No tienes permisos para ver estos datos sobre esa encuesta o no existe');
+            if ($encuesta['estado'] != EstadoEncuesta::Terminada)
+                return RespuestaAPI::fallo(401, 'No puedes ver los resultados concretos hasta que la encuesta termine (para eso primero tiene que empezar)');
 
 
 
 
 
 
+            if ($encuesta['anonimo'] == true) {
 
+            } else {
 
-
-
-
-
-
+            }
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
