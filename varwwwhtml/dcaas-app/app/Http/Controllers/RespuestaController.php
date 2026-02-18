@@ -23,15 +23,6 @@ class RespuestaController extends Controller
 
     public static $tamagnoPagina = 50; //El tamagno por defecto de paginacion
 
-    public static function respuestaADB(string $respuesta): string
-    {
-
-    }
-    public static function DBARespuesta(string $respuesta): string
-    {
-
-    }
-
     /**
      * Un usuario vota en una encuesta, se espera recibir los datos de todas las respuestas para guardarlos de golpe
      * @param VotarRequest $request
@@ -47,17 +38,21 @@ class RespuestaController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta || $encuesta['publico'] == false || $encuesta['estado'] != EstadoEncuesta::Activa)
                 return RespuestaAPI::fallo(404, 'La encuesta no ha empezado, no es pública o no existe');
-            $yaRespondido = Respuesta::where('id_user', $user->id)->exists();
+            $yaRespondido = Respuesta::join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')
+                ->where('respuestas.id_user', $user->id)
+                ->where('preguntas.id_encuesta', $id)
+                ->exists();
             if ($yaRespondido)
                 return RespuestaAPI::fallo(401, 'No puedes responder dos veces');
             $datos = $request->validated();
-            $preguntas = Pregunta::where('id_encuesta', $encuesta->id)->orderBy('created_at', 'desc')->get();
+            $preguntas = Pregunta::where('id_encuesta', $encuesta->id)->orderBy('orden', 'asc')->get();
             if (!is_array($datos['respuestas']) || $preguntas->count() != count($datos['respuestas']))
                 return RespuestaAPI::fallo(422, 'Debe haber las mismas respuestas que preguntas, para responder en vacio poner false');
             $preguntas = $preguntas->toArray();
             $i = 0;
             $respuestas = $datos['respuestas'];
-            if (is_string($respuestas)) $respuestas = json_decode($respuestas, true);
+            if (is_string($respuestas))
+                $respuestas = json_decode($respuestas, true);
             ksort($respuestas);
             foreach ($respuestas as &$respuesta) { //Validacion mas especifica de las respuestas
                 switch ($preguntas[$i]['tipo']) {
@@ -101,26 +96,34 @@ class RespuestaController extends Controller
             }
             if ($i === count($datos['respuestas'])) {
                 $i = 0;
+                $insercion = [];
                 if ($encuesta['anonimo'] == true) {
                     foreach ($datos['respuestas'] as $respuesta) {
                         if (is_array($respuesta)) {
-                            Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id']]);
+                            $insercion[] = ['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
+                            //Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id']]);
                         } else {
-                            Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id']]);
+                            $insercion[] = ['contenido' => (string) $respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
+                            //Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id']]);
                         }
                         $i++;
                     }
                 } else {
                     foreach ($datos['respuestas'] as $respuesta) {
                         if (is_array($respuesta)) {
-                            Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
+                            $insercion[] = ['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id, 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
+                            //Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
                         } else {
-                            Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
+                            $insercion[] = ['contenido' => (string) $respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id, 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
+                            //Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
                         }
                         $i++;
                     }
                 }
+                Respuesta::insert($insercion);
             }
+            if ($encuesta['anonimo'] == true)
+                return RespuestaAPI::exito('Respuesta guardada correctamente, como la encuesta es anonima solo se guardo la respuesta, no quien responde');
             return RespuestaAPI::exito('Respuesta guardada correctamente');
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
@@ -136,7 +139,24 @@ class RespuestaController extends Controller
      */
     public function verRespuestasDeEncuesta(Request $request, $id, $pagina)
     {
+        try {
+            //TODO:
 
+
+
+
+
+
+
+
+
+
+
+
+
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
     }
 
     /**

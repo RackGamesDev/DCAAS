@@ -27,6 +27,7 @@ class PreguntaFactory extends Factory
             'descripcion' => fake()->paragraph(),
             'opcional' => fake()->boolean(),
             'tipo' => fake()->randomElement(TipoPregunta::toArray()),
+            'orden' => fake()->randomNumber(),
             'id_encuesta' => function () {
                 return \App\Models\Encuesta::factory()->create()->id;
             },

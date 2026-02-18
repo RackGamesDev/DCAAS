@@ -120,13 +120,33 @@ class PreguntaController extends Controller
             }
             $previoPreguntas = $datos['preguntas'];
             $datos['preguntas'] = self::formatearPreguntasADB($previoPreguntas, $encuesta->id);
-            foreach ($datos['preguntas'] as $pregunta)
-                if (!is_null($pregunta))
-                    Pregunta::create($pregunta);
+            $i = 0;
+            $insercion = [];
+            foreach ($datos['preguntas'] as $pregunta) {
+                if (!is_null($pregunta)) {
+                    $datosIteracion = $pregunta;
+                    $datosIteracion['orden'] = $i;
+                    $datosIteracion['id'] = (string) \Illuminate\Support\Str::uuid();
+                    $datosIteracion['created_at'] = now();
+                    $datosIteracion['updated_at'] = now();
+                    if (!array_key_exists('contenido', $datosIteracion)) $datosIteracion['contenido'] = '';
+                    if (!array_key_exists('descripcion', $datosIteracion)) $datosIteracion['descripcion'] = '';
+                    if (!array_key_exists('subtitulo', $datosIteracion)) $datosIteracion['subtitulo'] = '';
+                    if (!array_key_exists('placeholder', $datosIteracion)) $datosIteracion['placeholder'] = '';
+                    if (!array_key_exists('correcta', $datosIteracion)) $datosIteracion['correcta'] = '';
+                    $insercion[] = $datosIteracion;
+                    //Pregunta::create($pregunta);
+                }
+                $i++;
+            }
+            if (empty($insercion)) return RespuestaAPI::fallo(422, 'Ha habido un error al insertar las preguntas, seguramente se deba a un error de formateo o un error interno.');
+            Pregunta::insert($insercion);
+
             return RespuestaAPI::exito('Preguntas creadas con éxito', ['preguntas' => 'Usa la ruta de ver preguntas para mas detalles', 'destructivo' => $datos['destructivo']]);
             //Manera alternativa:
             //return RespuestaAPI::exito('Preguntas creadas con éxito', ['preguntas' => $datos['preguntas'], 'destructivo' => $datos['destructivo']]);
         } catch (\Exception $e) {
+            dd($e);
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
     }
@@ -146,7 +166,7 @@ class PreguntaController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta || $encuesta['publico'] == false)
                 return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            $preguntas = Pregunta::where('id_encuesta', $id)->select(self::$entregablesPublicos)->orderBy('created_at', 'desc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
+            $preguntas = Pregunta::where('id_encuesta', $id)->select(self::$entregablesPublicos)->orderBy('orden', 'asc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
             $preguntas = self::formatearPreguntasDesdeDB($preguntas->toArray());
             return RespuestaAPI::exito('Preguntas de esa encuesta', ['preguntas' => $preguntas]);
         } catch (\Exception $e) {
@@ -173,7 +193,7 @@ class PreguntaController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta || $encuesta['id_user'] != $user->id)
                 return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            $preguntas = Pregunta::where('id_encuesta', $id)->select(self::$entregablesPrivados)->orderBy('created_at', 'desc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
+            $preguntas = Pregunta::where('id_encuesta', $id)->select(self::$entregablesPrivados)->orderBy('orden', 'asc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
             $preguntas = self::formatearPreguntasDesdeDB($preguntas->toArray());
             return RespuestaAPI::exito('Preguntas de esa encuesta', ['preguntas' => $preguntas]);
         } catch (\Exception $e) {

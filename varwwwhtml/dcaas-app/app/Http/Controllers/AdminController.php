@@ -207,7 +207,7 @@ class AdminController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta)
                 return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            $preguntas = Pregunta::where('id_encuesta', $id)->select(PreguntaController::$entregablesPrivados)->orderBy('created_at', 'desc')->skip(($pagina - 1) * PreguntaController::$tamagnoPagina)->take(PreguntaController::$tamagnoPagina)->get();
+            $preguntas = Pregunta::where('id_encuesta', $id)->select(PreguntaController::$entregablesPrivados)->orderBy('orden', 'asc')->skip(($pagina - 1) * PreguntaController::$tamagnoPagina)->take(PreguntaController::$tamagnoPagina)->get();
             $preguntas = PreguntaController::formatearPreguntasDesdeDB($preguntas->toArray());
             return RespuestaAPI::exito('Preguntas de esa encuesta', ['preguntas' => $preguntas]);
         } catch (\Exception $e) {
