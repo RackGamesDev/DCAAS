@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EncuestaController;
+use App\Http\Controllers\InformeController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\RespuestaController;
 use Illuminate\Http\Request;
@@ -55,6 +56,9 @@ Route::prefix('v1')->group(function () {
 
     //Vista de las encuestas que ha creado x usuario
     Route::get('/preguntas/verUsuario/{id}/{pagina?}', [EncuestaController::class, 'verEncuestasDeUsuario'])->name('verEncuestasDeUsuario');
+
+    //Ver la cantidad de votos de una encuesta activa
+    Route::get('/encuesta/verCantidadVotos/{id}', [RespuestaController::class, 'verCantidadVotados'])->name('verCantidadVotados');
 
 
     //RUTAS PRIVADAS que requieran un usuario logeado (bearer token):
@@ -122,15 +126,18 @@ Route::prefix('v1')->group(function () {
                 //Ver los datos de una respuesta concreta, si se puede
                 Route::get('/respuesta/ver/{id}', [RespuestaController::class, 'verRespuestaDeEncuesta'])->name('verRespuestaDeEncuesta');
 
+                //Crear un informe de una encuesta terminada
+                Route::post('/informe/crear/{id}', [InformeController::class, 'crearInforme'])->name('crearInforme');
+
             });
 
         });
 
         //Requieren un usuario que simplemente pueda logear (no hace falta que pueda editar):
-        Route::middleware('logeable')->group(function () {
+        /*Route::middleware('logeable')->group(function () {
 
 
-        });
+        });*/
 
 
 

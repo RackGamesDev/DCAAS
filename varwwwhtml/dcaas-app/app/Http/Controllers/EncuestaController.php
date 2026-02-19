@@ -222,7 +222,7 @@ class EncuestaController extends Controller
             if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
                 $pagina = 1;
             $user = User::find($id);
-            if (!$user || $user['publicante'] == false || $user['permisos'] == PermisosUsuario::Deshabilitado)
+            if (!$user || !ManejadorPermisos::esPublicante($user) || ManejadorPermisos::todoRestringido($user))
                 return RespuestaAPI::fallo(404, 'Usuario publicante no encontrado');
             $encuestas = Encuesta::where('id_user', $user->id)->select(self::$entregablesPublicos)->orderBy('nombre', 'asc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
             return RespuestaAPI::exito('Encuestas encontradas', ['encuestas' => $encuestas]);

@@ -247,4 +247,14 @@ class AdminController extends Controller
     }
     //No hay mas funciones de este tipo porque afectaria negativamente a la imparcialidad de la plataforma
 
+
+    public function verInformeAjeno(Request $request, $id) {
+
+    }
+
+
+    public function borrarInformeAjeno(Request $request, $id) {
+
+    }
+
 }

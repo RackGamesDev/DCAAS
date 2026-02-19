@@ -1,0 +1,13 @@
+use base;
+SELECT * FROM users;
+SELECT 1 FROM USUARIOS LIMIT 1;
+UPDATE users set permisos=1 where nickname='Usuario-a';
+select * from encuestas;
+delete from encuestas;
+update encuestas set publico=0 where id = 'c9378301-5956-42ac-9ed9-88d5d4aad36a';
+update encuestas set anonimo=0 where id = '107d03f6-59df-4568-8beb-35ff997a9310';
+select * from preguntas; where id_encuesta = '22d69550-8010-493b-b0af-d5d70815d294';
+delete from preguntas;
+select * from respuestas;
+delete from respuestas;
+select * from informes;

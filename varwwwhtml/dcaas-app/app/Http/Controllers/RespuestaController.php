@@ -13,6 +13,7 @@ use App\Models\Encuesta;
 use App\Models\Pregunta;
 use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use App\Facades\ManejadorPermisos;
 
 /**
@@ -21,7 +22,7 @@ use App\Facades\ManejadorPermisos;
 class RespuestaController extends Controller
 {
 
-    public static $entregablesPrivados = ['id', 'id_user', 'contenido', 'id_pregunta'];
+    public static $entregablesPrivados = ['id', 'id_user', 'contenido', 'id_pregunta']; //Campos considerados privados a la hora de entregar
     public static $tamagnoPagina = 50; //El tamagno por defecto de paginacion
 
     /**
@@ -190,7 +191,8 @@ class RespuestaController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function verVotado(Request $request, $id) {
+    public function verVotado(Request $request, $id)
+    {
         try {
             $user = $request->user();
             if (!$user || !ManejadorPermisos::esVotante($user) || !ManejadorPermisos::puedeEditar($user))
@@ -198,11 +200,33 @@ class RespuestaController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta || $encuesta['publico'] == false)
                 return RespuestaAPI::fallo(404, 'La encuesta no es pública o no existe');
+            if ($encuesta['estado'] == EstadoEncuesta::SinIniciar)
+                return RespuestaAPI::fallo(403, 'La encuesta aun no ha empezado');
             $yaRespondido = Respuesta::join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')
                 ->where('respuestas.id_user', $user->id)
                 ->where('preguntas.id_encuesta', $id)
                 ->exists();
             return RespuestaAPI::exito('Informacion sobre la encuesta', ['votado' => $yaRespondido]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
+
+    /**
+     * Ver la cantidad de gente que ha votado en la encuesta
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verCantidadVotados($id)
+    {
+        try {
+            $encuesta = Encuesta::find($id);
+            if (!$encuesta)
+                return RespuestaAPI::fallo(404, 'No se ha encontrado la encuesta');
+            if ($encuesta['estado'] == EstadoEncuesta::SinIniciar)
+                return RespuestaAPI::fallo(403, 'La encuesta aun no ha empezado o no existe');
+            $cantidad = DB::table('respuestas')->join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')->where('preguntas.id_encuesta', $encuesta->id)->distinct()->count('respuestas.id_user');
+            return RespuestaAPI::exito('Cantidad de personas que han votado en esta encuesta', ['cantidad' => $cantidad]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
