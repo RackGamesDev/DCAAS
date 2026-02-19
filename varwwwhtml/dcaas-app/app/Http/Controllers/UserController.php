@@ -158,9 +158,6 @@ class UserController extends Controller
             }
             $user->tokens()->delete();
             $user->delete();
-
-            //TODO: borrado en cascada
-
             return RespuestaAPI::exito('Usuario borrado correctamente', [
                 'user' => $user->only(self::$entregablesPrivados)
             ]);

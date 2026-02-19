@@ -97,9 +97,6 @@ class AdminController extends Controller
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
             $user->tokens()->delete();
             $user->delete();
-
-            //TODO: borrado en cascada
-
             return RespuestaAPI::exito('Usuario borrado correctamente');
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);

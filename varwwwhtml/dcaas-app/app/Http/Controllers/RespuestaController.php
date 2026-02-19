@@ -140,18 +140,14 @@ class RespuestaController extends Controller
             if ($encuesta['estado'] != EstadoEncuesta::Terminada)
                 return RespuestaAPI::fallo(401, 'No puedes ver los resultados concretos hasta que la encuesta termine (para eso primero tiene que empezar)');
             $respuestas = Respuesta::join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')
-                ->where('preguntas.id_encuesta', $id)->select('respuestas.*')->get()->groupBy('id_pregunta')
-                ->map(function ($respuestasDeEstaPregunta) {
-                    return $respuestasDeEstaPregunta->map(function ($respuesta) {
-                        return [
-                            'id' => $respuesta->id,
-                            'contenido' => $respuesta->contenido,
-                            'id_pregunta' => $respuesta->id_pregunta,
-                            'id_user' => $encuesta['anonimo'] == false ? $respuesta->id_user : null,
-                        ];
+                ->where('preguntas.id_encuesta', $id)->select('respuestas.*')->orderBy('id_pregunta', 'asc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get()->groupBy('id_pregunta')
+                ->map(function ($respuestasDeEstaPregunta) use ($encuesta) {
+                    return $respuestasDeEstaPregunta->map(function ($respuesta) use ($encuesta) {
+                        //Se devuelve el contenido de la respuesta en formato DB y no en JSON porque esta funcionalidad no está pensada para un usuario normal, sino para un analista de datos
+                        return ['id' => $respuesta->id,'contenido' => $respuesta->contenido,'id_pregunta' => $respuesta->id_pregunta,'id_user' => $encuesta['anonimo'] == false ? $respuesta->id_user : null,];
                     });
                 })->toArray();
-            dd($respuestas);
+            return RespuestaAPI::exito('Respuestas encontradas para esa encuesta', ['respuestas' => $respuestas]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
@@ -165,7 +161,22 @@ class RespuestaController extends Controller
      */
     public function verRespuestaDeEncuesta(Request $request, $id)
     {
-
+        try {
+            $user = $request->user();
+            if (!$user || !ManejadorPermisos::esPublicante($user) || !ManejadorPermisos::puedeEditar($user))
+                return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
+            $respuesta = Respuesta::find($id);
+            if (!$respuesta) return RespuestaAPI::fallo(401, 'Respuesta no encontrada o no tienes permisos para realizar esta acción');
+            $pregunta = Pregunta::find($respuesta['id_pregunta']);
+            $encuesta = Encuesta::find($pregunta['id_encuesta']);
+            if ($encuesta['id_user'] != $user->id || $encuesta['estado'] != EstadoEncuesta::Terminada) return RespuestaAPI::fallo(401, 'Respuesta no encontrada o no tienes permisos para realizar esta acción');
+            if ($encuesta['anonimo'] == true) $respuesta['id_user'] = '';
+            //Se devuelve el contenido de la respuesta en formato DB y no en JSON porque esta funcionalidad no está pensada para un usuario normal, sino para un analista de datos
+            return RespuestaAPI::exito('Respuesta encontrada', ['respuesta' => $respuesta]);
+        } catch (\Exception $e) {
+            dd($e);
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
     }
 
 

@@ -118,7 +118,8 @@ Route::prefix('v1')->group(function () {
                 //Ver los datos disponibles de las respuestas de una encuesta terminada, que pertenezca al usuario
                 Route::get('/respuestas/ver/{id}/{pagina?}', [RespuestaController::class, 'verRespuestasDeEncuesta'])->name('verRespuestasDeEncuesta');
 
-                //TODO: ver mis encuestas
+                //Ver los datos de una respuesta concreta, si se puede
+                Route::get('/respuesta/ver/{id}', [RespuestaController::class, 'verRespuestaDeEncuesta'])->name('verRespuestaDeEncuesta');
 
             });
 

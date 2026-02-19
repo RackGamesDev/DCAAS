@@ -90,9 +90,6 @@ class EncuestaController extends Controller
             $encuesta = Encuesta::find($id);
             if (!$encuesta || $encuesta['id_user'] != $user->id) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
             $encuesta->delete();
-
-            //TODO: borrado en cascada
-
             return RespuestaAPI::exito('Encuesta eliminada', ['encuesta' => $encuesta->only(self::$entregablesPrivados)]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
