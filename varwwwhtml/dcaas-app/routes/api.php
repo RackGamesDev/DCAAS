@@ -53,8 +53,8 @@ Route::prefix('v1')->group(function () {
     //Leer preguntas de encuesta (solo si es público)
     Route::get('/preguntas/ver/{busqueda}/{pagina?}', [PreguntaController::class, 'verDeEncuesta'])->name('verDeEncuesta');
 
-    //TODO: ver encuestas de usuario
-
+    //Vista de las encuestas que ha creado x usuario
+    Route::get('/preguntas/verUsuario/{id}/{pagina?}', [EncuestaController::class, 'verEncuestasDeUsuario'])->name('verEncuestasDeUsuario');
 
 
     //RUTAS PRIVADAS que requieran un usuario logeado (bearer token):
@@ -84,7 +84,8 @@ Route::prefix('v1')->group(function () {
                 //Envia las respuestas a una encuesta
                 Route::post('/encuesta/votar/{id}', [RespuestaController::class, 'votar'])->name('votar');
 
-                //TODO: ver si se ha votado a x encuesta
+                //Para que el usuario votante pueda saber si ya ha votado en una encuesta antes de intentarlo
+                Route::get('/encuesta/votado/{id}', [RespuestaController::class, 'verVotado'])->name('verVotado');
 
             });
 
@@ -165,6 +166,8 @@ Route::prefix('v1')->group(function () {
             //Ver todas las preguntas de una encuesta ajena aunque sea privada
             Route::get('/admin/preguntas/{id}/ver/{pagina?}', [AdminController::class, 'verPreguntasEncuestaAjena'])->name('verPreguntasEncuestaAjena');
 
+            //Ver las respuestas (lo que se pueda) de una encuesta
+            Route::get('/admin/respuestas/{id}/ver/{pagina?}', [AdminController::class, 'verRespuestaDeEncuestaAjena'])->name('verRespuestaDeEncuestaAjena');
 
         });
 

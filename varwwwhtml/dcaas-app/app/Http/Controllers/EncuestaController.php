@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\EstadoEncuesta;
+use App\Enums\PermisosUsuario;
 use App\Http\Requests\CrearEncuestaRequest;
 use App\Http\Requests\EditarEncuestaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Pregunta;
 use App\Models\Encuesta;
+use App\Models\User;
 use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
 use App\Facades\ManejadorPermisos;
@@ -28,10 +30,12 @@ class EncuestaController extends Controller
      * @param CrearEncuestaRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function crear(CrearEncuestaRequest $request) {
+    public function crear(CrearEncuestaRequest $request)
+    {
         try {
             $user = $request->user();
-            if (!$user || !ManejadorPermisos::esPublicante($user)) return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
+            if (!$user || !ManejadorPermisos::esPublicante($user))
+                return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
             $datos = $request->validated();
             $datos['id_user'] = $user->id;
             $encuesta = Encuesta::create($datos);
@@ -47,10 +51,12 @@ class EncuestaController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function verPublico($id) {
+    public function verPublico($id)
+    {
         try {
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || !$encuesta['publico']) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if (!$encuesta || !$encuesta['publico'])
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
             return RespuestaAPI::exito('Encuesta encontrada', ['encuesta' => $encuesta->only(self::$entregablesPublicos)]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
@@ -63,13 +69,15 @@ class EncuestaController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function verPrivado(Request $request, $id) {
+    public function verPrivado(Request $request, $id)
+    {
         try {
             $user = $request->user();
             if (!$user || !ManejadorPermisos::esPublicante($user))
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || $encuesta['id_user'] != $user->id) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if (!$encuesta || $encuesta['id_user'] != $user->id)
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
             return RespuestaAPI::exito('Encuesta encontrada', ['encuesta' => $encuesta->only(self::$entregablesPrivados)]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
@@ -82,13 +90,15 @@ class EncuestaController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function borrar(Request $request, $id) {
+    public function borrar(Request $request, $id)
+    {
         try {
             $user = $request->user();
             if (!$user || !ManejadorPermisos::esPublicante($user))
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || $encuesta['id_user'] != $user->id) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if (!$encuesta || $encuesta['id_user'] != $user->id)
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
             $encuesta->delete();
             return RespuestaAPI::exito('Encuesta eliminada', ['encuesta' => $encuesta->only(self::$entregablesPrivados)]);
         } catch (\Exception $e) {
@@ -102,14 +112,17 @@ class EncuestaController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function editar(EditarEncuestaRequest $request, $id) {
+    public function editar(EditarEncuestaRequest $request, $id)
+    {
         try {
             $user = $request->user();
             if (!$user || !ManejadorPermisos::esPublicante($user))
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || $encuesta['id_user'] != $user->id) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            if ($encuesta['estado'] != EstadoEncuesta::SinIniciar) return RespuestaAPI::fallo(406, 'Solo se puede editar una encuesta que no haya empezado aún');
+            if (!$encuesta || $encuesta['id_user'] != $user->id)
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if ($encuesta['estado'] != EstadoEncuesta::SinIniciar)
+                return RespuestaAPI::fallo(406, 'Solo se puede editar una encuesta que no haya empezado aún');
             $datos = $request->validated();
 
             $encuesta->fill($datos);
@@ -126,17 +139,22 @@ class EncuestaController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function iniciar(Request $request, $id) {
+    public function iniciar(Request $request, $id)
+    {
         try {
             $user = $request->user();
             if (!$user || !ManejadorPermisos::esPublicante($user))
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || $encuesta['id_user'] != $user->id) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            if ($encuesta['estado'] != EstadoEncuesta::SinIniciar) return RespuestaAPI::fallo(406, 'Solo se pueden iniciar encuestas sin iniciar');
+            if (!$encuesta || $encuesta['id_user'] != $user->id)
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if ($encuesta['estado'] != EstadoEncuesta::SinIniciar)
+                return RespuestaAPI::fallo(406, 'Solo se pueden iniciar encuestas sin iniciar');
             //dd($encuesta);
-            if ($encuesta['publico'] == false) return RespuestaAPI::fallo(406, 'La encuesta debe de ser pública antes de iniciarla (al menos de momento)'); //TODO: iniciar privadas
-            if (!Pregunta::where('id_encuesta', $encuesta->id)->exists()) return RespuestaAPI::fallo(406, 'La encuesta debe tener al menos una pregunta');
+            if ($encuesta['publico'] == false)
+                return RespuestaAPI::fallo(406, 'La encuesta debe de ser pública antes de iniciarla (al menos de momento)'); //TODO: iniciar privadas
+            if (!Pregunta::where('id_encuesta', $encuesta->id)->exists())
+                return RespuestaAPI::fallo(406, 'La encuesta debe tener al menos una pregunta');
             $encuesta->fill(['estado' => EstadoEncuesta::Activa, 'fecha_inicio' => now()]);
             $encuesta->save();
             return RespuestaAPI::exito('Encuesta iniciada', ['encuesta' => $encuesta->only(self::$entregablesPrivados)]);
@@ -151,14 +169,17 @@ class EncuestaController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function finalizar(Request $request, $id) {
+    public function finalizar(Request $request, $id)
+    {
         try {
             $user = $request->user();
             if (!$user || !ManejadorPermisos::esPublicante($user))
                 return RespuestaAPI::fallo(404, 'Usuario no encontrado');
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || $encuesta['id_user'] != $user->id) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            if ($encuesta['estado'] != EstadoEncuesta::Activa) return RespuestaAPI::fallo(406, 'Solo se pueden finalizar encuestas que estén activas');
+            if (!$encuesta || $encuesta['id_user'] != $user->id)
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if ($encuesta['estado'] != EstadoEncuesta::Activa)
+                return RespuestaAPI::fallo(406, 'Solo se pueden finalizar encuestas que estén activas');
             $encuesta->fill(['estado' => EstadoEncuesta::Terminada, 'fecha_fin' => now()]);
             $encuesta->save();
             return RespuestaAPI::exito('Encuesta finalizada', ['encuesta' => $encuesta->only(self::$entregablesPrivados)]);
@@ -173,12 +194,37 @@ class EncuestaController extends Controller
      * @param mixed $pagina
      * @return \Illuminate\Http\JsonResponse
      */
-    public function buscar($busqueda, $pagina = 1) {
+    public function buscar($busqueda, $pagina = 1)
+    {
         try {
-            $pagina = (int)$pagina ?? 1;
-            if (is_null($pagina) || !is_int($pagina) || $pagina < 0) $pagina = 1;
+            $pagina = (int) $pagina ?? 1;
+            if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
+                $pagina = 1;
             $encuestas = Encuesta::where('publico', true)->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower($busqueda) . '%'])->select(self::$entregablesPublicos)->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
-            if (!$encuestas || $encuestas->isEmpty()) return RespuestaAPI::fallo(404, 'Encuestas no encontradas (que coincidan con la busqueda)');
+            if (!$encuestas || $encuestas->isEmpty())
+                return RespuestaAPI::fallo(404, 'Encuestas no encontradas (que coincidan con la busqueda)');
+            return RespuestaAPI::exito('Encuestas encontradas', ['encuestas' => $encuestas]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
+
+    /**
+     * Summary of verEncuestasDeUsuario
+     * @param mixed $id
+     * @param mixed $pagina
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verEncuestasDeUsuario($id, $pagina = 1)
+    {
+        try {
+            $pagina = (int) $pagina ?? 1;
+            if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
+                $pagina = 1;
+            $user = User::find($id);
+            if (!$user || $user['publicante'] == false || $user['permisos'] == PermisosUsuario::Deshabilitado)
+                return RespuestaAPI::fallo(404, 'Usuario publicante no encontrado');
+            $encuestas = Encuesta::where('id_user', $user->id)->select(self::$entregablesPublicos)->orderBy('nombre', 'asc')->skip(($pagina - 1) * self::$tamagnoPagina)->take(self::$tamagnoPagina)->get();
             return RespuestaAPI::exito('Encuestas encontradas', ['encuestas' => $encuestas]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);

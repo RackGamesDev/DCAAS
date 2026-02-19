@@ -21,13 +21,14 @@ use App\Facades\ManejadorPermisos;
 class RespuestaController extends Controller
 {
 
+    public static $entregablesPrivados = ['id', 'id_user', 'contenido', 'id_pregunta'];
     public static $tamagnoPagina = 50; //El tamagno por defecto de paginacion
 
     /**
      * Un usuario vota en una encuesta, se espera recibir los datos de todas las respuestas para guardarlos de golpe
      * @param VotarRequest $request
      * @param mixed $id
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function votar(VotarRequest $request, $id)
     {
@@ -123,7 +124,7 @@ class RespuestaController extends Controller
      * @param Request $request
      * @param mixed $id
      * @param mixed $pagina
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function verRespuestasDeEncuesta(Request $request, $id, $pagina)
     {
@@ -144,7 +145,9 @@ class RespuestaController extends Controller
                 ->map(function ($respuestasDeEstaPregunta) use ($encuesta) {
                     return $respuestasDeEstaPregunta->map(function ($respuesta) use ($encuesta) {
                         //Se devuelve el contenido de la respuesta en formato DB y no en JSON porque esta funcionalidad no está pensada para un usuario normal, sino para un analista de datos
-                        return ['id' => $respuesta->id,'contenido' => $respuesta->contenido,'id_pregunta' => $respuesta->id_pregunta,'id_user' => $encuesta['anonimo'] == false ? $respuesta->id_user : null,];
+                        $respuesta = $respuesta->only(self::$entregablesPrivados);
+                        $respuesta['id_user'] = $encuesta['anonimo'] == false ? $respuesta['id_user'] : null;
+                        return $respuesta;
                     });
                 })->toArray();
             return RespuestaAPI::exito('Respuestas encontradas para esa encuesta', ['respuestas' => $respuestas]);
@@ -157,7 +160,7 @@ class RespuestaController extends Controller
      * Sabiendo el UUID de una respuesta concreta, ver sus datos solo si el usuario es quien responde o es el creador de la encuesta y esta no es anonima (si lo es entonces no se ve el usuario que responde)
      * @param Request $request
      * @param mixed $id
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function verRespuestaDeEncuesta(Request $request, $id)
     {
@@ -166,19 +169,46 @@ class RespuestaController extends Controller
             if (!$user || !ManejadorPermisos::esPublicante($user) || !ManejadorPermisos::puedeEditar($user))
                 return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
             $respuesta = Respuesta::find($id);
-            if (!$respuesta) return RespuestaAPI::fallo(401, 'Respuesta no encontrada o no tienes permisos para realizar esta acción');
+            if (!$respuesta)
+                return RespuestaAPI::fallo(404, 'Respuesta no encontrada o no tienes permisos para realizar esta acción');
             $pregunta = Pregunta::find($respuesta['id_pregunta']);
             $encuesta = Encuesta::find($pregunta['id_encuesta']);
-            if ($encuesta['id_user'] != $user->id || $encuesta['estado'] != EstadoEncuesta::Terminada) return RespuestaAPI::fallo(401, 'Respuesta no encontrada o no tienes permisos para realizar esta acción');
-            if ($encuesta['anonimo'] == true) $respuesta['id_user'] = '';
+            if ($encuesta['id_user'] != $user->id || $encuesta['estado'] != EstadoEncuesta::Terminada)
+                return RespuestaAPI::fallo(401, 'Respuesta no encontrada o no tienes permisos para realizar esta acción');
+            if ($encuesta['anonimo'] == true)
+                $respuesta['id_user'] = null;
             //Se devuelve el contenido de la respuesta en formato DB y no en JSON porque esta funcionalidad no está pensada para un usuario normal, sino para un analista de datos
-            return RespuestaAPI::exito('Respuesta encontrada', ['respuesta' => $respuesta]);
+            return RespuestaAPI::exito('Respuesta encontrada', ['respuesta' => $respuesta->only(self::$entregablesPrivados)]);
         } catch (\Exception $e) {
-            dd($e);
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
+
+    /**
+     * Summary of verVotado
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verVotado(Request $request, $id) {
+        try {
+            $user = $request->user();
+            if (!$user || !ManejadorPermisos::esVotante($user) || !ManejadorPermisos::puedeEditar($user))
+                return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
+            $encuesta = Encuesta::find($id);
+            if (!$encuesta || $encuesta['publico'] == false)
+                return RespuestaAPI::fallo(404, 'La encuesta no es pública o no existe');
+            $yaRespondido = Respuesta::join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')
+                ->where('respuestas.id_user', $user->id)
+                ->where('preguntas.id_encuesta', $id)
+                ->exists();
+            return RespuestaAPI::exito('Informacion sobre la encuesta', ['votado' => $yaRespondido]);
+        } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
     }
 
 
+    //TODO: implementar correcciones usando el campo de respuestas correctas
 
 }

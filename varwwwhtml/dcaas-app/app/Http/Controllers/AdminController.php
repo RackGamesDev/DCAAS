@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pregunta;
 use App\Models\Encuesta;
+use App\Models\Respuesta;
 use Illuminate\Routing\Controller;
 use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
@@ -200,7 +201,7 @@ class AdminController extends Controller
                 $pagina = 1;
             $user = $request->user();
             if (!$user || !ManejadorPermisos::esAdmin($user))
-                return RespuestaAPI::fallo(404, 'No tienes permisos');
+                return RespuestaAPI::fallo(403, 'No tienes permisos');
             $encuesta = Encuesta::find($id);
             if (!$encuesta)
                 return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
@@ -214,12 +215,36 @@ class AdminController extends Controller
 
     /**
      * Ver las respuestas de cualquier encuesta, aunque si es anonima no se pueden ver los usuarios
-     * @param Request $request
+     * @param Request $requestNo tienes permisos para ver estos datos sobre esa encuesta o no existe
      * @param mixed $id
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function verRespuestaDeEncuesta(Request $request, $id) {
-
+    public function verRespuestaDeEncuestaAjena(Request $request, $id, $pagina = 1) {
+        try {
+            $user = $request->user();
+            if (!$user || !ManejadorPermisos::esAdmin($user))
+                return RespuestaAPI::fallo(403, 'No tienes permisos');
+            $pagina = (int) $pagina ?? 1;
+            if (is_null($pagina) || !is_int($pagina) || $pagina < 0)
+                $pagina = 1;
+            $encuesta = Encuesta::find($id);
+            if (!$encuesta)
+                return RespuestaAPI::fallo(404, 'La encuesta no existe');
+            $respuestas = Respuesta::join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')
+                ->where('preguntas.id_encuesta', $id)->select('respuestas.*')->orderBy('id_pregunta', 'asc')->skip(($pagina - 1) * RespuestaController::$tamagnoPagina)->take(RespuestaController::$tamagnoPagina)->get()->groupBy('id_pregunta')
+                ->map(function ($respuestasDeEstaPregunta) use ($encuesta) {
+                    return $respuestasDeEstaPregunta->map(function ($respuesta) use ($encuesta) {
+                        //Se devuelve el contenido de la respuesta en formato DB y no en JSON porque esta funcionalidad no está pensada para un usuario normal, sino para un analista de datos
+                        $respuesta = $respuesta->only(RespuestaController::$entregablesPrivados);
+                        $respuesta['id_user'] = $encuesta['anonimo'] == false ? $respuesta['id_user'] : null;
+                        return $respuesta;
+                    });
+                })->toArray();
+            return RespuestaAPI::exito('Respuestas encontradas para esa encuesta', ['respuestas' => $respuestas]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
     }
+    //No hay mas funciones de este tipo porque afectaria negativamente a la imparcialidad de la plataforma
 
 }
