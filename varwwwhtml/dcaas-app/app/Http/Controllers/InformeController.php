@@ -27,14 +27,19 @@ class InformeController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function crearInforme(CreacionInformeRequest $request, $id) {
+    public function crearInforme(CreacionInformeRequest $request, $id)
+    {
         try {
             $user = $request->user();
-            if (!$user || !ManejadorPermisos::esPublicante($user) || !ManejadorPermisos::puedeEditar($user)) return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
+            if (!$user || !ManejadorPermisos::esPublicante($user) || !ManejadorPermisos::puedeEditar($user))
+                return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || $encuesta['id_user'] != $user->id) return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
-            if ($encuesta['estado'] != EstadoEncuesta::Terminada) return RespuestaAPI::fallo(403, 'No puedes crear informes hasta que termine la encuesta');
-            if (Encuesta::where('id', $id)->count() >= self::$maxInformes) return RespuestaAPI::fallo(403, 'No puedes hacer mas de ' . self::$maxInformes . ' informes por encuesta');
+            if (!$encuesta || $encuesta['id_user'] != $user->id)
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            if ($encuesta['estado'] != EstadoEncuesta::Terminada)
+                return RespuestaAPI::fallo(403, 'No puedes crear informes hasta que termine la encuesta');
+            if (Encuesta::where('id', $id)->count() >= self::$maxInformes)
+                return RespuestaAPI::fallo(403, 'No puedes hacer mas de ' . self::$maxInformes . ' informes por encuesta');
             $datos = $request->validated();
 
             //TODO: de momento los informes son muy basicos, de momento solo se puede ver el porcentaje de gente que pulso x opcion en preguntas de unica o multiple opcion, y ver la media de las respuestas de las preguntas de tipo numerico
@@ -42,7 +47,8 @@ class InformeController extends Controller
             //(Realmente si se usa para elegir cosas como el nombre y demas, pero lo interesante seria que se usase tambien para las opciones)
 
             $preguntas = Pregunta::where('id_encuesta', $encuesta->id)->get()->toArray();
-            if (count($preguntas) == 0) return RespuestaAPI::fallo(403, 'No se ha podido generar el informe porque no ha votado nadie');
+            if (count($preguntas) == 0)
+                return RespuestaAPI::fallo(403, 'No se ha podido generar el informe porque no ha votado nadie');
             //$informe = unserialize(serialize($preguntas));
             //dd($informe);
             $informe = [];
@@ -54,44 +60,59 @@ class InformeController extends Controller
                         $informe[$i]['informacion'] = 'Esta pregunta era tipo texto, de momento no hay ninguna funcionalidad para eso';
                         break;
                     case TipoPregunta::Check->value: //Porcentaje de marcado en cada opcion
-                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->where('tipo', TipoPregunta::Numero->value)->get();
-
+                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->get();
+                        //dump($respuestas);
                         break;
                     case TipoPregunta::Radio->value: //Porcentaje de marcado en cada opcion
-                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->where('tipo', TipoPregunta::Numero->value)->get();
-                        //VER TIPO DE PREGUNTA EN PREGUNTA NO EN RESPUESTA
+                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->get();
 
+                        //dump($respuestas);
                         break;
                     case TipoPregunta::Numero->value: //Media de respuestas
-                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->where('tipo', TipoPregunta::Numero->value)->get();
 
 
+
+                        //RESPUESTAS MAL ORDENADAS, OPCIONAL NO SE GUARDA, TODO MAL
+
+
+                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->get();
+                        dd($respuestas);
+                        dump($respuestas->avg());
+                        dump($respuestas->count());
+                        dump($respuestas->toArray());
                         break;
+
                 }
                 $i++;
             }
             dd($informe);
 
             return RespuestaAPI::exito('Informe creado con exito', ['informe_id' => '']);
+
         } catch (\Exception $e) {
+            dd($e);
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
     }
 
 
-    public function borrarInforme(Request $request, $id) {
+    public function borrarInforme(Request $request, $id)
+    {
 
     }
 
-    public function verInforme(Request $request, $id) {
+    public function verInforme(Request $request, $id)
+    {
 
     }
 
-    public function verInformesDeEncuesta(Request $request, $id) {
+    public function verInformesDeEncuesta(Request $request, $id)
+    {
 
     }
 
-    public function publicarInforme(Request $request, $id) {
+    public function publicarInforme(Request $request, $id)
+    {
 
     }
 
