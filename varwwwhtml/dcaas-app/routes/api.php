@@ -53,7 +53,7 @@ Route::prefix('v1')->group(function () {
     //Leer preguntas de encuesta (solo si es público)
     Route::get('/preguntas/ver/{busqueda}/{pagina?}', [PreguntaController::class, 'verDeEncuesta'])->name('verDeEncuesta');
 
-
+    //TODO: ver encuestas de usuario
 
 
 
@@ -84,6 +84,8 @@ Route::prefix('v1')->group(function () {
                 //Envia las respuestas a una encuesta
                 Route::post('/encuesta/votar/{id}', [RespuestaController::class, 'votar'])->name('votar');
 
+                //TODO: ver si se ha votado a x encuesta
+
             });
 
             //Requieren usuario publicante:
@@ -112,6 +114,11 @@ Route::prefix('v1')->group(function () {
 
                 //Ver las preguntas de una encuesta que pertenezca al usuario aunque sea privada
                 Route::get('/preguntas/verMia/{id}/{pagina?}', [PreguntaController::class, 'verDeEncuestaPrivado'])->name('verDeEncuestaPrivado');
+
+                //Ver los datos disponibles de las respuestas de una encuesta terminada, que pertenezca al usuario
+                Route::get('/respuestas/ver/{id}/{pagina?}', [RespuestaController::class, 'verRespuestasDeEncuesta'])->name('verRespuestasDeEncuesta');
+
+                //TODO: ver mis encuestas
 
             });
 

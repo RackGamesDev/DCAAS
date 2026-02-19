@@ -97,28 +97,16 @@ class RespuestaController extends Controller
             if ($i === count($datos['respuestas'])) {
                 $i = 0;
                 $insercion = [];
-                if ($encuesta['anonimo'] == true) {
-                    foreach ($datos['respuestas'] as $respuesta) {
-                        if (is_array($respuesta)) {
-                            $insercion[] = ['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
-                            //Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id']]);
-                        } else {
-                            $insercion[] = ['contenido' => (string) $respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
-                            //Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id']]);
-                        }
-                        $i++;
+                //Aunque la encuesta sea anonima, se guarda el id del usuario para saber si respondio o no (pero es confidencial)
+                foreach ($datos['respuestas'] as $respuesta) {
+                    if (is_array($respuesta)) {
+                        $insercion[] = ['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id, 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
+                        //Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
+                    } else {
+                        $insercion[] = ['contenido' => (string) $respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id, 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
+                        //Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
                     }
-                } else {
-                    foreach ($datos['respuestas'] as $respuesta) {
-                        if (is_array($respuesta)) {
-                            $insercion[] = ['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id, 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
-                            //Respuesta::create(['contenido' => implode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta), 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
-                        } else {
-                            $insercion[] = ['contenido' => (string) $respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id, 'id' => (string) \Illuminate\Support\Str::uuid(), 'created_at' => now(), 'updated_at' => now()];
-                            //Respuesta::create(['contenido' => (string)$respuesta, 'id_pregunta' => $preguntas[$i]['id'], 'id_user' => $user->id]);
-                        }
-                        $i++;
-                    }
+                    $i++;
                 }
                 Respuesta::insert($insercion);
             }
@@ -147,21 +135,23 @@ class RespuestaController extends Controller
             if (!$user || !ManejadorPermisos::esPublicante($user) || !ManejadorPermisos::puedeEditar($user))
                 return RespuestaAPI::fallo(401, 'No tienes permisos para realizar esta acción');
             $encuesta = Encuesta::find($id);
-            if (!$encuesta || $encuesta['id_user'] == $user->id)
+            if (!$encuesta || $encuesta['id_user'] != $user->id)
                 return RespuestaAPI::fallo(404, 'No tienes permisos para ver estos datos sobre esa encuesta o no existe');
             if ($encuesta['estado'] != EstadoEncuesta::Terminada)
                 return RespuestaAPI::fallo(401, 'No puedes ver los resultados concretos hasta que la encuesta termine (para eso primero tiene que empezar)');
-
-
-
-
-
-
-            if ($encuesta['anonimo'] == true) {
-
-            } else {
-
-            }
+            $respuestas = Respuesta::join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')
+                ->where('preguntas.id_encuesta', $id)->select('respuestas.*')->get()->groupBy('id_pregunta')
+                ->map(function ($respuestasDeEstaPregunta) {
+                    return $respuestasDeEstaPregunta->map(function ($respuesta) {
+                        return [
+                            'id' => $respuesta->id,
+                            'contenido' => $respuesta->contenido,
+                            'id_pregunta' => $respuesta->id_pregunta,
+                            'id_user' => $encuesta['anonimo'] == false ? $respuesta->id_user : null,
+                        ];
+                    });
+                })->toArray();
+            dd($respuestas);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
