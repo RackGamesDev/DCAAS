@@ -60,6 +60,12 @@ Route::prefix('v1')->group(function () {
     //Ver la cantidad de votos de una encuesta activa
     Route::get('/encuesta/verCantidadVotos/{id}', [RespuestaController::class, 'verCantidadVotados'])->name('verCantidadVotados');
 
+    //Ver un informe
+    Route::get('/informe/ver/{id}', [InformeController::class, 'verInforme'])->name('verInforme');
+
+    //Ver informes de una encuesta
+    Route::get('/informe/verEncuesta/{id}', [InformeController::class, 'verInformesDeEncuesta'])->name('verInformesDeEncuesta');
+
 
     //RUTAS PRIVADAS que requieran un usuario logeado (bearer token):
     Route::middleware('auth:sanctum')->group(function () {
@@ -129,6 +135,18 @@ Route::prefix('v1')->group(function () {
                 //Crear un informe de una encuesta terminada
                 Route::post('/informe/crear/{id}', [InformeController::class, 'crearInforme'])->name('crearInforme');
 
+                //Borra un informe
+                Route::delete('/informe/borrar/{id}', [InformeController::class, 'borrarInforme'])->name('borrarInforme');
+
+                //Publica un informe que antes era privado
+                Route::patch('/informe/publicar/{id}', [InformeController::class, 'publicarInforme'])->name('publicarInforme');
+
+                //Ver un informe del usuario aunque sea privado
+                Route::get('/informe/verMio/{id}', [InformeController::class, 'verMiInforme'])->name('verMiInforme');
+
+                //Ver los informes privados y publicos de una encuesta de la cual se es duegno
+                Route::get('/informe/verMiEncuesta/{id}', [InformeController::class, 'verInformesMiEncuesta'])->name('verInformesMiEncuesta');
+
             });
 
         });
@@ -176,6 +194,11 @@ Route::prefix('v1')->group(function () {
             //Ver las respuestas (lo que se pueda) de una encuesta
             Route::get('/admin/respuestas/{id}/ver/{pagina?}', [AdminController::class, 'verRespuestaDeEncuestaAjena'])->name('verRespuestaDeEncuestaAjena');
 
+            //Ver un informe
+            Route::get('/admin/informes/{id}/ver/', [AdminController::class, 'verInformeAjeno'])->name('verInformeAjeno');
+
+            //Borrar un informe
+            Route::delete('/admin/informes/{id}/borrar/', [AdminController::class, 'borrarInformeAjeno'])->name('borrarInformeAjeno');
         });
 
 

@@ -19,7 +19,7 @@ class Informe extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['id', 'nombre', 'id_encuesta', 'contenido', 'publico', 'fecha'];
+    protected $fillable = ['id', 'nombre', 'id_encuesta', 'contenido', 'publico', 'fecha', 'cantidad_votados'];
 
 
     protected $casts = [

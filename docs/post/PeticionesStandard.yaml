@@ -107,7 +107,7 @@ collection:
     meta:
       id: req_532849b36d244eb09c2f4f9379ac74fd
       created: 1770388934988
-      modified: 1771523937068
+      modified: 1771528800979
       isPrivate: false
       description: ""
       sortKey: -1770133447681.5
@@ -1099,12 +1099,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8081/api/v1/encuesta/iniciar/6c353507-bac4-4f9a-9e14-c17c4d260130
+  - url: http://localhost:8081/api/v1/encuesta/iniciar/161bc7b2-b816-4ff3-af00-bbca13d1e7b8
     name: Iniciar encuesta
     meta:
       id: req_b7f656633f194565acae761560e70b97
       created: 1770594578639
-      modified: 1771521312130
+      modified: 1771601759242
       isPrivate: false
       description: ""
       sortKey: -1770050369577.3145
@@ -1159,12 +1159,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8081/api/v1/encuesta/finalizar/6c353507-bac4-4f9a-9e14-c17c4d260130
+  - url: http://localhost:8081/api/v1/encuesta/finalizar/161bc7b2-b816-4ff3-af00-bbca13d1e7b8
     name: Terminar encuesta
     meta:
       id: req_597f00aa16ca404c9024c9a41f311354
       created: 1770594647673
-      modified: 1771521357558
+      modified: 1771601786811
       isPrivate: false
       description: ""
       sortKey: -1770050204083.083
@@ -1467,12 +1467,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8081/api/v1/preguntas/establecer/6c353507-bac4-4f9a-9e14-c17c4d260130
+  - url: http://localhost:8081/api/v1/preguntas/establecer/161bc7b2-b816-4ff3-af00-bbca13d1e7b8
     name: Establecer preguntas
     meta:
       id: req_fda06f1a9ff646eaa03e6902599f1d8c
       created: 1770828261147
-      modified: 1771521303488
+      modified: 1771601754108
       isPrivate: false
       description: ""
       sortKey: -1770051031554.2402
@@ -1574,12 +1574,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8081/api/v1/preguntas/ver/7579fb71-f750-4ddf-becd-0fb4601b02ff/1
+  - url: http://localhost:8081/api/v1/preguntas/ver/3fcf202d-c91e-4b8e-a377-33ffe5603a4b/1
     name: Ver preguntas de encuesta
     meta:
       id: req_dd4ebdd973ec4645a178942da75a6e3e
       created: 1770999850355
-      modified: 1771518437117
+      modified: 1771596410863
       isPrivate: false
       description: ""
       sortKey: -1770050866060.0088
@@ -1634,12 +1634,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8081/api/v1/preguntas/verMia/e2d9c34d-7126-4af0-abd8-c0491033fbe2/1
+  - url: http://localhost:8081/api/v1/preguntas/verMia/7d955ade-2b5b-482c-a2ef-7e1621c7a45f/1
     name: Ver preguntas de encuesta mio
     meta:
       id: req_a44e825cb77a47819b17f700f5c83055
       created: 1770999941739
-      modified: 1771442994720
+      modified: 1771596410863
       isPrivate: false
       description: ""
       sortKey: -1770050783312.893
@@ -1754,12 +1754,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8081/api/v1/encuesta/votar/6c353507-bac4-4f9a-9e14-c17c4d260130
+  - url: http://localhost:8081/api/v1/encuesta/votar/161bc7b2-b816-4ff3-af00-bbca13d1e7b8
     name: Votar
     meta:
       id: req_936be98aa8374db59237bff4bbeddf0b
       created: 1771261859672
-      modified: 1771521324995
+      modified: 1771601769740
       isPrivate: false
       description: ""
       sortKey: -1770049542106.1572
@@ -1828,7 +1828,7 @@ collection:
     meta:
       id: req_0456780011b147aca1832c5879ee2e1b
       created: 1771499474125
-      modified: 1771522481872
+      modified: 1771607373220
       isPrivate: false
       description: ""
       sortKey: -1770196997466.375
@@ -2057,12 +2057,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8081/api/v1/encuesta/votado/6c353507-bac4-4f9a-9e14-c17c4d260130
+  - url: http://localhost:8081/api/v1/encuesta/votado/3fcf202d-c91e-4b8e-a377-33ffe5603a4b
     name: Has votado
     meta:
       id: req_c240889a5eca4ab3a8e76bb5fa6c5cdd
       created: 1771523922787
-      modified: 1771524011129
+      modified: 1771596410863
       isPrivate: false
       description: ""
       sortKey: -1770049873094.62
@@ -2177,22 +2177,627 @@ collection:
         send: true
         store: true
       rebuildPath: true
+  - url: http://localhost:8081/api/v1/informe/crear/161bc7b2-b816-4ff3-af00-bbca13d1e7b8
+    name: Crear informe
+    meta:
+      id: req_41a0f6b0a1434fc9ad04aa8c170ba9d0
+      created: 1771527538708
+      modified: 1771605216492
+      isPrivate: false
+      description: ""
+      sortKey: -1770049459359.0415
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+        	"nombre": "este informe 1",
+        	"publico": true,
+        	"opciones": ""
+        }
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/encuesta/verCantidadVotos/3fcf202d-c91e-4b8e-a377-33ffe5603a4b
+    name: Ver cantidad votos
+    meta:
+      id: req_dc1f3ae3ba864b80804a878fa93418b7
+      created: 1771529308068
+      modified: 1771596410863
+      isPrivate: false
+      description: ""
+      sortKey: -1770049417985.4836
+    method: GET
+    body:
+      mimeType: application/json
+      text: "\n"
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/informe/ver/0204e956-3c7b-4b01-838c-e22003e873ff
+    name: Ver informe
+    meta:
+      id: req_5fc537fccb64455b84905af04b564ec2
+      created: 1771602412471
+      modified: 1771604608397
+      isPrivate: false
+      description: ""
+      sortKey: -1770049955841.7358
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/informe/verEncuesta/161bc7b2-b816-4ff3-af00-bbca13d1e7b8
+    name: Ver informes de encuesta
+    meta:
+      id: req_3ff2c89fde0a428f8b4e19652fe2e6a4
+      created: 1771602829635
+      modified: 1771604589066
+      isPrivate: false
+      description: ""
+      sortKey: -1770049914468.178
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/informe/borrar/930b1a2e-14d7-465c-9c24-b792339d2f30
+    name: Borrar informe
+    meta:
+      id: req_085236dc4700414caae695e1802c934b
+      created: 1771603331619
+      modified: 1771603976515
+      isPrivate: false
+      description: ""
+      sortKey: -1770049935154.957
+    method: DELETE
+    body:
+      mimeType: application/json
+      text: ""
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/informe/publicar/0204e956-3c7b-4b01-838c-e22003e873ff
+    name: Publicar informe
+    meta:
+      id: req_771dc14b9d244fc4ace47e2ba036e406
+      created: 1771604857300
+      modified: 1771604883824
+      isPrivate: false
+      description: ""
+      sortKey: -1770049945498.3464
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: ""
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/informe/verMio/b77f32e7-ebca-474b-8873-9488203eec05
+    name: Ver mi informe
+    meta:
+      id: req_9b9b751e6d794e689ef3f74b0b3c553c
+      created: 1771605237633
+      modified: 1771605245373
+      isPrivate: false
+      description: ""
+      sortKey: -1770049950670.041
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/informe/verMiEncuesta/161bc7b2-b816-4ff3-af00-bbca13d1e7b8
+    name: Ver mio informes de encuesta
+    meta:
+      id: req_da2c2741c0164062b74198f67261c858
+      created: 1771605536724
+      modified: 1771605567129
+      isPrivate: false
+      description: ""
+      sortKey: -1770049893781.399
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/admin/informes/b77f32e7-ebca-474b-8873-9488203eec05/ver
+    name: Ver informe ADMIN
+    meta:
+      id: req_9c906203d17e4a7f9b53647354bcb238
+      created: 1771607433547
+      modified: 1771607433547
+      isPrivate: false
+      description: ""
+      sortKey: -1770049898953.0938
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/api/v1/admin/informes/b77f32e7-ebca-474b-8873-9488203eec05/borrar
+    name: Borrar informe ADMIN
+    meta:
+      id: req_d35fbfc33fe94fc8b203af48d7ea45ca
+      created: 1771607456055
+      modified: 1771607467746
+      isPrivate: false
+      description: ""
+      sortKey: -1770049896367.2463
+    method: DELETE
+    body:
+      mimeType: application/json
+      text: ""
+    headers:
+      - id: pair_7f4ba125a6724708b22049a27f4cc41b
+        name: Content-Type
+        value: application/json
+      - id: pair_08ae32cfb06a4131a3b106697d548e73
+        name: User-Agent
+        value: insomnia/11.2.0
+      - description: ""
+        disabled: true
+        id: pair_98893c9c659c4ff3a52a9a449ca3973c
+        name: Authorization
+        value: "`Bearer 1"
+      - description: ""
+        disabled: false
+        id: pair_63e0e3482ae94ecf925723f69d1fe184
+        name: Accept
+        value: application/json
+    authentication:
+      disabled: false
+      token: "{{ dynamic_token }}"
+      type: bearer
+    scripts:
+      preRequest: >
+        const token = insomnia.environment.get('AuthorizationToken');
+
+
+        if (token) {
+        	insomnia.collectionVariables.set("dynamic_token", token);
+            //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+        } else {
+            console.error("Authorization Token is missing!");
+        }
+      afterResponse: >-
+        try{const responseBody = insomnia.response.json();
+
+        const token = responseBody?.data?.access_token ?? false;
+
+        if (token) insomnia.environment.set("AuthorizationToken",
+        token);}catch(e){}
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
 cookieJar:
   name: Default Jar
   meta:
     id: jar_6b6bda0b8afea05bdbf76678c8adf595a6dd43b9
     created: 1770387639505
-    modified: 1771524683506
+    modified: 1771607488363
 environments:
   name: Base Environment
   meta:
     id: env_6b6bda0b8afea05bdbf76678c8adf595a6dd43b9
     created: 1770379485662
-    modified: 1771524683507
+    modified: 1771607488364
     isPrivate: false
   data:
-    AuthorizationToken: 5|inacr6nqGmcpg4r6MS3VzBgQbINWi3W99OnfCsU094345731
+    AuthorizationToken: 5|sr5wcfvr2IRdAi2rC4w4HXfcaBKfTLbYhQymiljtb3d0630c
     AuthorizationToken2: your_new_token_here
-    dynamic_token: 5|inacr6nqGmcpg4r6MS3VzBgQbINWi3W99OnfCsU094345731
+    dynamic_token: 5|sr5wcfvr2IRdAi2rC4w4HXfcaBKfTLbYhQymiljtb3d0630c
     id_encuesta: 89d3582d-b28e-4ef7-aeca-f16015e434e1
     prueba: aaaaa

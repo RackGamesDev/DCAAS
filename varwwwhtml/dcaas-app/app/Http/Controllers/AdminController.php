@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pregunta;
 use App\Models\Encuesta;
+use App\Models\Informe;
 use App\Models\Respuesta;
 use Illuminate\Routing\Controller;
 use App\Responses\RespuestaAPI;
@@ -248,13 +249,46 @@ class AdminController extends Controller
     //No hay mas funciones de este tipo porque afectaria negativamente a la imparcialidad de la plataforma
 
 
+    /**
+     * Ver cualquier informe
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verInformeAjeno(Request $request, $id) {
-
+        try {
+            $user = $request->user();
+            if (!$user || !ManejadorPermisos::esAdmin($user))
+                return RespuestaAPI::fallo(403, 'No tienes permisos');
+            $informe = Informe::find($id);
+            if (!$informe)
+                return RespuestaAPI::fallo(404, 'Informe no encontrado');
+            return RespuestaAPI::exito('Informe encontrado', ['informe' => $informe]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
     }
 
-
+    /**
+     * Borrar cualquier informe
+     * @param Request $request
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function borrarInformeAjeno(Request $request, $id) {
-
+        try {
+            $user = $request->user();
+            if (!$user || !ManejadorPermisos::esAdmin($user))
+                return RespuestaAPI::fallo(403, 'No tienes permisos');
+            $informe = Informe::find($id);
+            if (!$informe)
+                return RespuestaAPI::fallo(404, 'Informe no encontrado');
+            $idPrevio = $informe->id;
+            $informe->delete();
+            return RespuestaAPI::exito('Informe borrado', ['informe' => $idPrevio]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
     }
 
 }
