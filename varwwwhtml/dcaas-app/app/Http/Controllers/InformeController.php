@@ -51,8 +51,6 @@ class InformeController extends Controller
             $preguntas = Pregunta::where('id_encuesta', $encuesta->id)->get()->toArray();
             if (count($preguntas) == 0)
                 return RespuestaAPI::fallo(403, 'No se ha podido generar el informe porque no ha votado nadie');
-            //$informe = unserialize(serialize($preguntas));
-            //dd($informe);
             $informe = [];
             $i = 0;
             $cantidadVotados = DB::table('respuestas')->join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')->where('preguntas.id_encuesta', $encuesta->id)->distinct()->count('respuestas.id_user');
@@ -67,26 +65,26 @@ class InformeController extends Controller
                         $informe[$i]['informacion'] = 'Esta pregunta era tipo texto, de momento no hay ninguna funcionalidad para eso';
                         break;
                     case TipoPregunta::Check->value: //Porcentaje de marcado en cada opcion
-                        if (is_numeric($pregunta['correcta']))
-                            $informe[$i]['porcentajeAciertos'] = (float) Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', $pregunta['correcta'])->count() * 100.0 / (float)$cantidadVotados;
                         if ($pregunta['opcional'] == true)
                             $informe[$i]['cantidadRespondidos'] = Respuesta::where('id_pregunta', $pregunta['id'])->whereNot('contenido', '')->whereNot('contenido', null)->count();
                         $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->get();
 
                         $informe[$i]['porcentajes'] = [];
-
-
-
-                        //igual que en radio pero mas complejo porque cada respuesta incluye varias opciones
                         $opciones = explode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['contenido']);
+                        $respuestasTotal = [];
+                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->whereNot('contenido', '')->whereNot('contenido', null)->pluck('contenido');
+                        foreach ($respuestas as $respuesta) {
+                            $respuestasTotal = array_merge($respuestasTotal, explode(EstablecerPreguntasRequest::$separadorPreguntas, $respuesta));
+                        }
+                        $apariciones = array_count_values($respuestasTotal);
                         $ii = 0;
                         foreach ($opciones as $opcion) {
-                            dump($opcion);
-                            $cantidadCruda = Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', (string)$ii)->count();
-                            $informe[$i]['porcentajes'][] = ['texto_opcion' => $opcion, 'porcentaje' => (float)$cantidadCruda * 100.0 / (float)$cantidadVotados, 'cantidad' => $cantidadCruda, 'numero' => $ii];
+                            $informe[$i]['porcentajes'][] = ['texto_opcion' => $opcion, 'numero' => $i, 'cantidad' => data_get($apariciones, $ii, 0), 'porcentaje' => ((float)data_get($apariciones, $ii, 0)) * 100.0 / (float)$cantidadVotados];
                             $ii++;
                         }
 
+                        if (is_numeric($pregunta['correcta']))
+                            $informe[$i]['porcentajeAciertos'] = "afasdfgadg";
 
 
 
@@ -101,7 +99,6 @@ class InformeController extends Controller
                         $opciones = explode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['contenido']);
                         $ii = 0;
                         foreach ($opciones as $opcion) {
-                            dump($opcion);
                             $cantidadCruda = Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', (string)$ii)->count();
                             $informe[$i]['porcentajes'][] = ['texto_opcion' => $opcion, 'porcentaje' => (float)$cantidadCruda * 100.0 / (float)$cantidadVotados, 'cantidad' => $cantidadCruda, 'numero' => $ii];
                             $ii++;

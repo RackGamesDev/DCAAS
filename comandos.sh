@@ -44,6 +44,7 @@ php artisan cache:clear
 php artisan view:clear
 php artisan sanctum:prune-expired
 composer audit
+sudo systemctl restart php8.3-fpm
 
 #conectar a bases de datos sql o redis
 #mirar .env.example
