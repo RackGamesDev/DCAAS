@@ -97,6 +97,7 @@ class RespuestaController extends Controller
                 $i++;
             }
             if ($i === count($datos['respuestas'])) {
+                ksort($datos['respuestas']);
                 $i = 0;
                 $insercion = [];
                 //Aunque la encuesta sea anonima, se guarda el id del usuario para saber si respondio o no (pero es confidencial)

@@ -14,6 +14,8 @@ use App\Responses\RespuestaAPI;
 use Illuminate\Support\Facades\Log;
 use App\Facades\ManejadorPermisos;
 use App\Enums\TipoPregunta;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\EstablecerPreguntasRequest;
 
 class InformeController extends Controller
 {
@@ -53,38 +55,73 @@ class InformeController extends Controller
             //dd($informe);
             $informe = [];
             $i = 0;
+            $cantidadVotados = DB::table('respuestas')->join('preguntas', 'respuestas.id_pregunta', '=', 'preguntas.id')->where('preguntas.id_encuesta', $encuesta->id)->distinct()->count('respuestas.id_user');
             foreach ($preguntas as $pregunta) {
                 $informe[] = ['id_pregunta' => $pregunta['id'], 'titulo' => $pregunta['titulo'], 'tipo' => $pregunta['tipo'], 'correcta' => $pregunta['correcta']];
                 switch ($pregunta['tipo']) {
                     case TipoPregunta::Desarrollar->value: //Nada, por determinar
+                        if (is_string($pregunta['correcta']) && strlen($pregunta['correcta']) > 0)
+                            $informe[$i]['porcentajeAciertos'] = (float) Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', $pregunta['correcta'])->count() * 100.0 / (float)$cantidadVotados;
+                        if ($pregunta['opcional'] == true)
+                            $informe[$i]['cantidadRespondidos'] = Respuesta::where('id_pregunta', $pregunta['id'])->whereNot('contenido', '')->whereNot('contenido', null)->count();
                         $informe[$i]['informacion'] = 'Esta pregunta era tipo texto, de momento no hay ninguna funcionalidad para eso';
                         break;
                     case TipoPregunta::Check->value: //Porcentaje de marcado en cada opcion
+                        if (is_numeric($pregunta['correcta']))
+                            $informe[$i]['porcentajeAciertos'] = (float) Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', $pregunta['correcta'])->count() * 100.0 / (float)$cantidadVotados;
+                        if ($pregunta['opcional'] == true)
+                            $informe[$i]['cantidadRespondidos'] = Respuesta::where('id_pregunta', $pregunta['id'])->whereNot('contenido', '')->whereNot('contenido', null)->count();
                         $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->get();
-                        //dump($respuestas);
+
+                        $informe[$i]['porcentajes'] = [];
+
+
+
+                        //igual que en radio pero mas complejo porque cada respuesta incluye varias opciones
+                        $opciones = explode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['contenido']);
+                        $ii = 0;
+                        foreach ($opciones as $opcion) {
+                            dump($opcion);
+                            $cantidadCruda = Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', (string)$ii)->count();
+                            $informe[$i]['porcentajes'][] = ['texto_opcion' => $opcion, 'porcentaje' => (float)$cantidadCruda * 100.0 / (float)$cantidadVotados, 'cantidad' => $cantidadCruda, 'numero' => $ii];
+                            $ii++;
+                        }
+
+
+
+
+
                         break;
                     case TipoPregunta::Radio->value: //Porcentaje de marcado en cada opcion
-                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->get();
-
-                        //dump($respuestas);
+                        if (strlen($pregunta['correcta']) > 0)
+                            $informe[$i]['porcentajeAciertos'] = (float) Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', $pregunta['correcta'])->count() * 100.0 / (float)$cantidadVotados;
+                        if ($pregunta['opcional'] == true)
+                            $informe[$i]['cantidadRespondidos'] = Respuesta::where('id_pregunta', $pregunta['id'])->whereNot('contenido', '')->whereNot('contenido', null)->count();
+                        $informe[$i]['porcentajes'] = [];
+                        $opciones = explode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['contenido']);
+                        $ii = 0;
+                        foreach ($opciones as $opcion) {
+                            dump($opcion);
+                            $cantidadCruda = Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', (string)$ii)->count();
+                            $informe[$i]['porcentajes'][] = ['texto_opcion' => $opcion, 'porcentaje' => (float)$cantidadCruda * 100.0 / (float)$cantidadVotados, 'cantidad' => $cantidadCruda, 'numero' => $ii];
+                            $ii++;
+                        }
                         break;
                     case TipoPregunta::Numero->value: //Media de respuestas
-
-
-
-                        //RESPUESTAS MAL ORDENADAS, OPCIONAL NO SE GUARDA, TODO MAL
-
-
-                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->get();
-                        dd($respuestas);
-                        dump($respuestas->avg());
-                        dump($respuestas->count());
-                        dump($respuestas->toArray());
+                        if (is_numeric($pregunta['correcta']))
+                            $informe[$i]['porcentajeAciertos'] = (float) Respuesta::where('id_pregunta', $pregunta['id'])->where('contenido', $pregunta['correcta'])->count() * 100.0 / (float)$cantidadVotados;
+                        if ($pregunta['opcional'] == true)
+                            $informe[$i]['cantidadRespondidos'] = Respuesta::where('id_pregunta', $pregunta['id'])->whereNot('contenido', '')->whereNot('contenido', null)->count();
+                        $respuestas = Respuesta::where('id_pregunta', $pregunta['id'])->pluck('contenido')->map(fn($v) => trim($v))
+                        ->filter(fn($v) => is_numeric($v))
+                        ->map(fn($v) => (float) $v)->avg();
+                        $informe[$i]['media'] = $respuestas;
                         break;
 
                 }
                 $i++;
             }
+            $informe = array_reverse($informe);
             dd($informe);
 
             return RespuestaAPI::exito('Informe creado con exito', ['informe_id' => '']);

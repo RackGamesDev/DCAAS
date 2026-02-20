@@ -41,6 +41,7 @@ class PreguntaController extends Controller
                 case TipoPregunta::Check->value:
                     $pregunta['placeholder'] = is_array($pregunta['placeholder'] ?? null) ? implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['placeholder']) : '';
                     $pregunta['correcta'] = is_array($pregunta['correcta'] ?? null) ? implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['correcta']) : '';
+                    asort($pregunta['contenido']);
                     $pregunta['contenido'] = implode(EstablecerPreguntasRequest::$separadorPreguntas, $pregunta['contenido']);
                     break;
                 case TipoPregunta::Radio->value:

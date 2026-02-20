@@ -18,6 +18,7 @@ return new class extends Migration
             $table->json('contenido')->nullable(false); //El contenido es un JSON
             $table->boolean('publico')->default(false); //Si es publico
             $table->string('fecha')->default(now()); //Timestamp de cuando se ha creado
+            $table->integer('cantidad_votados')->nullable(false); //La cantidad de usuarios que votaron en la encuesta asociada
             $table->timestamps();
         });
     }
