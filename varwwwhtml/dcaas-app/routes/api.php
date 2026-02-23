@@ -36,7 +36,7 @@ Route::prefix('v1')->group(function () {
         abort(404); //Si no, 404
     })->name('debug');
 
-    //Ver los datos públicos de un usuario
+    //Ver los datos públicos de un usuario (permite tanto UUID como nickname)
     Route::get('/usuario/ver/{id}', [UserController::class, 'ver'])->name('verUsuarioPublico');
 
     //Registrarse

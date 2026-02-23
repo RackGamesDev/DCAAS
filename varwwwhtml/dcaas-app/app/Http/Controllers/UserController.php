@@ -52,8 +52,11 @@ class UserController extends Controller
     {
         try {
             $user = User::find($id);
-            if (!$user || ManejadorPermisos::todoRestringido($user))
-                return RespuestaAPI::fallo(404, 'Usuario no encontrado');
+            if (!$user || ManejadorPermisos::todoRestringido($user)) {
+                $user = User::where('nickname', $id)->limit(1);
+                if (!$user || ManejadorPermisos::todoRestringido($user))
+                    return RespuestaAPI::fallo(404, 'Usuario no encontrado');
+            }
             return RespuestaAPI::exito('Usuario encontrado correctamente', ['usuario' => $user->only(self::$entregablesPublicos)]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);
