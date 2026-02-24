@@ -1,0 +1,105 @@
+{
+    "informe": {
+        "id": "44d620ce-3bb4-4070-b3f5-6cc16f7ddc3c",
+        "nombre": "este informe 1",
+        "contenido": [
+            {
+                "id_pregunta": "6e01f446-36d4-4e62-a3af-543cb3382245",
+                "titulo": "selecciona varias",
+                "tipo": 1,
+                "correcta": "0¬1",
+                "cantidadRespondidos": 1,
+                "porcentajes": [
+                    {
+                        "texto_opcion": "aaa",
+                        "numero": 4,
+                        "cantidad": 0,
+                        "porcentaje": 0
+                    },
+                    {
+                        "texto_opcion": "bbb",
+                        "numero": 4,
+                        "cantidad": 1,
+                        "porcentaje": 100
+                    },
+                    {
+                        "texto_opcion": "ccc",
+                        "numero": 4,
+                        "cantidad": 1,
+                        "porcentaje": 100
+                    }
+                ],
+                "porcentajeAciertos": 0.01
+            },
+            {
+                "id_pregunta": "5db6baa5-603e-4b37-968d-040dedce9d1a",
+                "titulo": "selecciona una",
+                "tipo": 2,
+                "correcta": "0",
+                "porcentajeAciertos": 0,
+                "porcentajes": [
+                    {
+                        "texto_opcion": "aaa",
+                        "porcentaje": 0,
+                        "cantidad": 0,
+                        "numero": 0
+                    },
+                    {
+                        "texto_opcion": "bbb",
+                        "porcentaje": 0,
+                        "cantidad": 0,
+                        "numero": 1
+                    },
+                    {
+                        "texto_opcion": "ccc",
+                        "porcentaje": 100,
+                        "cantidad": 1,
+                        "numero": 2
+                    }
+                ]
+            },
+            {
+                "id_pregunta": "7c7c5782-2663-4de2-a773-ddcb53071505",
+                "titulo": "no hace falta que respondas aqui",
+                "tipo": 2,
+                "correcta": "",
+                "cantidadRespondidos": 0,
+                "porcentajes": [
+                    {
+                        "texto_opcion": "si",
+                        "porcentaje": 0,
+                        "cantidad": 0,
+                        "numero": 0
+                    },
+                    {
+                        "texto_opcion": "no",
+                        "porcentaje": 0,
+                        "cantidad": 0,
+                        "numero": 1
+                    }
+                ]
+            },
+            {
+                "id_pregunta": "2ed4545a-01af-43c8-9c55-a55b81807ab1",
+                "titulo": "escribe texto",
+                "tipo": 0,
+                "correcta": "defg",
+                "porcentajeAciertos": 0,
+                "cantidadRespondidos": 1,
+                "informacion": "Esta pregunta era tipo texto, de momento no hay ninguna funcionalidad para eso"
+            },
+            {
+                "id_pregunta": "3ecf06d1-599a-4617-b4a9-71348939155d",
+                "titulo": "escoge un numero",
+                "tipo": 3,
+                "correcta": "-10",
+                "porcentajeAciertos": 0,
+                "cantidadRespondidos": 1,
+                "media": 4.4
+            }
+        ],
+        "publico": true,
+        "id_encuesta": "3ec7fc79-8b7b-4333-b5f0-733651ac7fab",
+        "fecha": "2026-02-24 15:45:48"
+    }
+}

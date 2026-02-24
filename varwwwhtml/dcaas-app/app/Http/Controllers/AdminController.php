@@ -56,13 +56,15 @@ class AdminController extends Controller
      * @param AdminEditarUsuarioRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function editarUsuarioAjeno(AdminEditarUsuarioRequest $request)
+    public function editarUsuarioAjeno(AdminEditarUsuarioRequest $request, $id)
     {
         try {
             $usuarioPeticion = $request->user();
             if (!$usuarioPeticion || !ManejadorPermisos::esAdmin($usuarioPeticion)) return RespuestaAPI::fallo(403, 'No tienes permisos para esto');
 
-            $user = $request->user();
+            $user = User::find($id);
+            if (!$user)
+                return RespuestaAPI::fallo(404, 'Usuario no encontrado');
             $datos = $request->validated();
 
             if (isset($datos['password'])) {
