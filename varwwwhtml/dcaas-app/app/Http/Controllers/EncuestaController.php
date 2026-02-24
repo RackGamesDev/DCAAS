@@ -230,4 +230,24 @@ class EncuestaController extends Controller
             return RespuestaAPI::falloInterno(['info' => $e]);
         }
     }
+
+    /**
+     * Ver las encuestas del usuario
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verMias(Request $request)
+    {
+        try {
+            $user = $request->user();
+            if (!$user || !ManejadorPermisos::esPublicante($user))
+                return RespuestaAPI::fallo(404, 'Usuario no encontrado');
+            $encuestas = Encuesta::where('id_user', $user->id)->select(self::$entregablesPrivados)->orderBy('nombre', 'asc')->get();
+            if (!$encuestas)
+                return RespuestaAPI::fallo(404, 'Encuesta no encontrada');
+            return RespuestaAPI::exito('Encuesta encontrada', ['encuestas' => $encuestas]);
+        } catch (\Exception $e) {
+            return RespuestaAPI::falloInterno(['info' => $e]);
+        }
+    }
 }

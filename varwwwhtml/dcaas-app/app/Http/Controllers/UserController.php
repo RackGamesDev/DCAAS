@@ -77,7 +77,7 @@ class UserController extends Controller
             return RespuestaAPI::exito('Tus datos', [
                 'usuario' => $user->only(self::$entregablesPrivados),
                 //'access_token' => $token,
-                'token_type' => 'Bearer'
+                //'token_type' => 'Bearer'
             ]);
         } catch (\Exception $e) {
             return RespuestaAPI::falloInterno(['info' => $e]);

@@ -108,6 +108,9 @@ Route::prefix('v1')->group(function () {
                 //Ver los datos de una encuesta de la cual se es propietario, incluso si es privada
                 Route::get('/encuesta/verMia/{id}', [EncuestaController::class, 'verPrivado'])->name('verEncuestaPrivada');
 
+                //Devuelve todas las encuestas del usuario actual
+                Route::get('/encuestas/verMias', [EncuestaController::class, 'verMias'])->name('verMias');
+
                 //Borrar una encuesta si es de ese usuario
                 Route::delete('/encuesta/borrar/{id}', [EncuestaController::class, 'borrar'])->name('borrarEncuesta');
 

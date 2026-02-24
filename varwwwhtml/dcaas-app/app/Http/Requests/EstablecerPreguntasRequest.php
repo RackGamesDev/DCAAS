@@ -27,13 +27,13 @@ class EstablecerPreguntasRequest extends FormRequest
 	"destructivo": true,
 	"preguntas": [
 		{
-			"titulo": "di cosas",
+			"titulo": "escribe texto",
 			"opcional": true,
 			"tipo": 0,
-			"subtitulo": "aquello",
-			"placeholder": "aaaaaa",
-			"correcta": "bbbb",
-			"descripcion": "alkdfhaslidfhasodfh"
+			"subtitulo": "abajo",
+			"placeholder": "abc",
+			"correcta": "defg",
+			"descripcion": "descripcion hola hola"
 		},
 		{
 			"titulo": "selecciona varias",
@@ -52,15 +52,21 @@ class EstablecerPreguntasRequest extends FormRequest
 			"subtitulo": "esto",
 			"placeholder": 2,
 			"correcta": 0,
-			"descripcion": "alkdfhaslidfhasodfh"
+			"descripcion": "e e e e"
 		},
 		{
-			"titulo": "cuanto?",
+			"titulo": "escoge un numero",
 			"opcional": true,
 			"tipo": 3,
 			"subtitulo": "aquello",
 			"placeholder": 20.5,
 			"correcta": -10
+		},
+		{
+			"titulo": "no hace falta que respondas aqui",
+			"opcional": true,
+			"tipo": 2,
+			"contenido": ["si", "no"]
 		}
 	]
 }
