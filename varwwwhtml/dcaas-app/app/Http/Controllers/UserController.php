@@ -53,7 +53,7 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             if (!$user || ManejadorPermisos::todoRestringido($user)) {
-                $user = User::where('nickname', $id)->limit(1);
+                $user = User::where('nickname', $id)->first();
                 if (!$user || ManejadorPermisos::todoRestringido($user))
                     return RespuestaAPI::fallo(404, 'Usuario no encontrado');
             }

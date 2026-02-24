@@ -52,10 +52,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/encuesta/buscar/{busqueda}/{pagina?}', [EncuestaController::class, 'buscar'])->name('buscarEncuestaPublica');
 
     //Leer preguntas de encuesta (solo si es público)
-    Route::get('/preguntas/ver/{busqueda}/{pagina?}', [PreguntaController::class, 'verDeEncuesta'])->name('verDeEncuesta');
+    Route::get('/preguntas/ver/{id}/{pagina?}', [PreguntaController::class, 'verDeEncuesta'])->name('verDeEncuesta');
 
     //Vista de las encuestas que ha creado x usuario
-    Route::get('/preguntas/verUsuario/{id}/{pagina?}', [EncuestaController::class, 'verEncuestasDeUsuario'])->name('verEncuestasDeUsuario');
+    Route::get('/encuestas/verUsuario/{id}/{pagina?}', [EncuestaController::class, 'verEncuestasDeUsuario'])->name('verEncuestasDeUsuario');
 
     //Ver la cantidad de votos de una encuesta activa
     Route::get('/encuesta/verCantidadVotos/{id}', [RespuestaController::class, 'verCantidadVotados'])->name('verCantidadVotados');
@@ -64,7 +64,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/informe/ver/{id}', [InformeController::class, 'verInforme'])->name('verInforme');
 
     //Ver informes de una encuesta
-    Route::get('/informe/verEncuesta/{id}', [InformeController::class, 'verInformesDeEncuesta'])->name('verInformesDeEncuesta');
+    Route::get('/informes/verEncuesta/{id}', [InformeController::class, 'verInformesDeEncuesta'])->name('verInformesDeEncuesta');
 
 
     //RUTAS PRIVADAS que requieran un usuario logeado (bearer token):
@@ -145,7 +145,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('/informe/verMio/{id}', [InformeController::class, 'verMiInforme'])->name('verMiInforme');
 
                 //Ver los informes privados y publicos de una encuesta de la cual se es duegno
-                Route::get('/informe/verMiEncuesta/{id}', [InformeController::class, 'verInformesMiEncuesta'])->name('verInformesMiEncuesta');
+                Route::get('/informes/verMiEncuesta/{id}', [InformeController::class, 'verInformesMiEncuesta'])->name('verInformesMiEncuesta');
 
             });
 

@@ -15,6 +15,7 @@ docker compose up -d
 docker exec -it dcaas-basemariadb-1 /bin/chmod -R 777 /var/lib/mysql
 docker exec -it apache-http /bin/chmod -R 777 /var/www/html
 docker exec -it apache-http bash -c 'while true; do chmod -R 777 /var/www/html; sleep 2; done' #&
+#docker exec -it apache-http php dcaas-app/artisan migrate:fresh
 
 
 
