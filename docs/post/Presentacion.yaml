@@ -1,26 +1,25 @@
 type: collection.insomnia.rest/5.0
-schema_version: "5.1"
 name: Peticiones standard
 meta:
   id: wrk_c4bbf3b0d7e544faaf56e4f9009ba1a0
   created: 1770379485661
-  modified: 1770412476477
+  modified: 1770388052114
   description: ""
 collection:
   - name: Presentacion
     meta:
       id: fld_3d76fc54edea4e70809189f2bbaccb70
       created: 1771974004902
-      modified: 1771977643479
+      modified: 1772032695139
       sortKey: -1771974004903
       description: ""
     children:
-      - url: http://localhost:8081/api/v1/usuario
+      - url: "{{ _['url-api'] }}/api/v1/usuario"
         name: "1: Crear usuario publicante"
         meta:
           id: req_e2b968b8209c434598c4ca2fbeec7992
           created: 1771974577288
-          modified: 1771977414457
+          modified: 1772032497913
           isPrivate: false
           description: ""
           sortKey: -1771974580806
@@ -41,8 +40,8 @@ collection:
           - name: User-Agent
             value: insomnia/11.2.0
         authentication:
-          type: bearer
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -73,12 +72,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario
+      - url: "{{ _['url-api'] }}/api/v1/usuario"
         name: "2: Editar usuario publicante"
         meta:
           id: req_4766259163954b41b78761e31aca224e
           created: 1771974645668
-          modified: 1771977429655
+          modified: 1772032501025
           isPrivate: false
           description: ""
           sortKey: -1771974580706
@@ -96,22 +95,26 @@ collection:
             	"oldPassword": "123456789aA."
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -142,12 +145,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario/yo
+      - url: "{{ _['url-api'] }}/api/v1/usuario/yo"
         name: "3: Ver usuario publicante"
         meta:
           id: req_fa3a4d27c7f9484fbcb7ad1dcfdcfd51
           created: 1771974730251
-          modified: 1771977433218
+          modified: 1772032503856
           isPrivate: false
           description: ""
           sortKey: -1771974580606
@@ -156,26 +159,31 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: TokenEX
+          - description: ""
+            disabled: true
+            id: pair_d70eee80526246fb94579bb78b2b6041
+            name: TokenEX
             value: 2|FMV3kewsDdEcKkaN9whZqcl8ACoqB1CptbQY5Tnha9acad9a
-            description: ""
+          - description: ""
             disabled: true
-          - name: Authorization
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
             value: "`Bearer 1"
-            description: ""
-            disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -206,12 +214,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/encuesta
+      - url: "{{ _['url-api'] }}/api/v1/encuesta"
         name: "4: Crear encuesta"
         meta:
           id: req_529ba242ebcd42879bda72e814ef7500
           created: 1771975000855
-          modified: 1771977436723
+          modified: 1772032507149
           isPrivate: false
           description: ""
           sortKey: -1771974580506
@@ -229,22 +237,26 @@ collection:
             	"url_foto": "http://yangmei.io/a.png"
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -279,13 +291,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/preguntas/establecer/{{
-          _['encuesta-presentacion'] }}
+      - url: "{{ _['url-api'] }}/api/v1/preguntas/establecer/{{
+          _['encuesta-presentacion'] }}"
         name: "5: Establecer preguntas"
         meta:
           id: req_11acf275682944d4a77d1c1ec365e1c5
           created: 1771975046377
-          modified: 1771977439700
+          modified: 1772032511104
           isPrivate: false
           description: ""
           sortKey: -1771974580406
@@ -341,22 +353,26 @@ collection:
             	]
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -387,13 +403,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/encuesta/editar/{{ _['encuesta-presentacion']
-          }}
+      - url: "{{ _['url-api'] }}/api/v1/encuesta/editar/{{ _['encuesta-presentacion']
+          }}"
         name: "6: Editar encuesta"
         meta:
           id: req_af4f082e888b40f8a3797237ef4b997d
           created: 1771975071372
-          modified: 1771977442467
+          modified: 1772032514173
           isPrivate: false
           description: ""
           sortKey: -1771974580306
@@ -410,22 +426,26 @@ collection:
             	"url_foto": "http://yangmei.io/a.png"
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -456,13 +476,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/preguntas/ver/{{ _['encuesta-presentacion']
-          }}/1
+      - url: "{{ _['url-api'] }}/api/v1/preguntas/ver/{{ _['encuesta-presentacion']
+          }}/1"
         name: "8: Ver preguntas de encuesta"
         meta:
           id: req_737499f61fe142b08bfbb6ddc8add718
           created: 1771975225094
-          modified: 1771977449035
+          modified: 1772032519953
           isPrivate: false
           description: ""
           sortKey: -1771974580206
@@ -471,22 +491,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -517,13 +541,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/encuesta/verMia/{{ _['encuesta-presentacion']
-          }}
+      - url: "{{ _['url-api'] }}/api/v1/encuesta/verMia/{{ _['encuesta-presentacion']
+          }}"
         name: "7: Ver mi encuesta"
         meta:
           id: req_d3546a4a091c4ab7934d6e66865fcba6
           created: 1771975261656
-          modified: 1771977445306
+          modified: 1772032517283
           isPrivate: false
           description: ""
           sortKey: -1771974580256
@@ -532,22 +556,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -578,13 +606,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/encuesta/iniciar/{{ _['encuesta-presentacion']
-          }}
+      - url: "{{ _['url-api'] }}/api/v1/encuesta/iniciar/{{ _['encuesta-presentacion']
+          }}"
         name: "9: Iniciar encuesta"
         meta:
           id: req_712b21cb62fa491b82b1d852f6f0c3c6
           created: 1771975288972
-          modified: 1771977451270
+          modified: 1772032529584
           isPrivate: false
           description: ""
           sortKey: -1771974580106
@@ -593,22 +621,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -639,12 +671,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario/cerrarSesion
+      - url: "{{ _['url-api'] }}/api/v1/usuario/cerrarSesion"
         name: "10: Cerrar sesion"
         meta:
           id: req_80740f59861740dcaea0a9f9a41506f7
           created: 1771975319537
-          modified: 1771977454335
+          modified: 1772032533098
           isPrivate: false
           description: ""
           sortKey: -1771974580006
@@ -653,22 +685,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -699,12 +735,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario
+      - url: "{{ _['url-api'] }}/api/v1/usuario"
         name: "11: Crear usuario votante"
         meta:
           id: req_00fee0b265814a54aaeb380fdd99e474
           created: 1771975333854
-          modified: 1771977459229
+          modified: 1772032536271
           isPrivate: false
           description: ""
           sortKey: -1771974579906
@@ -725,8 +761,8 @@ collection:
           - name: User-Agent
             value: insomnia/11.2.0
         authentication:
-          type: bearer
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -757,12 +793,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/encuesta/buscar/preguntas/1
+      - url: "{{ _['url-api'] }}/api/v1/encuesta/buscar/preguntas/1"
         name: "12: Buscar encuesta"
         meta:
           id: req_1ecea0c5d9114906bb460b83be72edf0
           created: 1771975377449
-          modified: 1771977492163
+          modified: 1772032540385
           isPrivate: false
           description: ""
           sortKey: -1771974579806
@@ -771,22 +807,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -817,13 +857,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/preguntas/ver/{{ _['encuesta-presentacion']
-          }}/1
+      - url: "{{ _['url-api'] }}/api/v1/preguntas/ver/{{ _['encuesta-presentacion']
+          }}/1"
         name: "13: Ver preguntas de encuesta"
         meta:
           id: req_2e8cd00d25e74825aa60f773d1f5ed44
           created: 1771975490362
-          modified: 1771977496285
+          modified: 1772032543556
           isPrivate: false
           description: ""
           sortKey: -1771974579706
@@ -832,22 +872,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -878,13 +922,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/encuesta/votar/{{ _['encuesta-presentacion']
-          }}
+      - url: "{{ _['url-api'] }}/api/v1/encuesta/votar/{{ _['encuesta-presentacion'] }}"
         name: "14: Votar"
         meta:
           id: req_03525168bb0e4287a4ddbb0d6a0e5342
           created: 1771975513715
-          modified: 1771977504868
+          modified: 1772032546772
           isPrivate: false
           description: ""
           sortKey: -1771974579606
@@ -902,22 +945,26 @@ collection:
             	]
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -948,12 +995,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario/cerrarSesion
+      - url: "{{ _['url-api'] }}/api/v1/usuario/cerrarSesion"
         name: "15: Cerrar sesion"
         meta:
           id: req_dab946791156456b8ecea45d072e76e7
           created: 1771975529973
-          modified: 1771977508430
+          modified: 1772032550931
           isPrivate: false
           description: ""
           sortKey: -1771974579506
@@ -962,22 +1009,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1008,12 +1059,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario/login
+      - url: "{{ _['url-api'] }}/api/v1/usuario/login"
         name: "16: Login a publicante"
         meta:
           id: req_80c0361686cf4073bfffeffd61599a91
           created: 1771975556453
-          modified: 1771977512158
+          modified: 1772032554573
           isPrivate: false
           description: ""
           sortKey: -1771974579406
@@ -1026,22 +1077,26 @@ collection:
             	"password": "123456789aA.."
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: TokenEX
+          - description: ""
+            disabled: false
+            id: pair_d70eee80526246fb94579bb78b2b6041
+            name: TokenEX
             value: 2|FMV3kewsDdEcKkaN9whZqcl8ACoqB1CptbQY5Tnha9acad9a
-            description: ""
+          - description: ""
             disabled: false
-          - name: Authorization
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
             value: "`Bearer 1"
-            description: ""
-            disabled: false
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1073,13 +1128,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/encuesta/finalizar/{{
-          _['encuesta-presentacion'] }}
+      - url: "{{ _['url-api'] }}/api/v1/encuesta/finalizar/{{ _['encuesta-presentacion']
+          }}"
         name: "17: Terminar encuesta"
         meta:
           id: req_5b317bd27d804bdfaec10ced8e6fd9aa
           created: 1771975575945
-          modified: 1771977515284
+          modified: 1772032557963
           isPrivate: false
           description: ""
           sortKey: -1771974579306
@@ -1088,22 +1143,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1134,13 +1193,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/respuestas/ver/{{ _['encuesta-presentacion']
-          }}/1
+      - url: "{{ _['url-api'] }}/api/v1/respuestas/ver/{{ _['encuesta-presentacion']
+          }}/1"
         name: "18: Ver respuestas de encuesta"
         meta:
           id: req_d489cababe0c4bbdb526b3bd9a240d2e
           created: 1771975623220
-          modified: 1771977518355
+          modified: 1772032561062
           isPrivate: false
           description: ""
           sortKey: -1771974579206
@@ -1149,22 +1208,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1195,12 +1258,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/informe/crear/{{ _['encuesta-presentacion'] }}
+      - url: "{{ _['url-api'] }}/api/v1/informe/crear/{{ _['encuesta-presentacion'] }}"
         name: "19: Crear informe"
         meta:
           id: req_b6c72600596c4538a63ee1be21dee2ff
           created: 1771975690695
-          modified: 1771977521142
+          modified: 1772032564026
           isPrivate: false
           description: ""
           sortKey: -1771974579106
@@ -1214,22 +1277,26 @@ collection:
             	"opciones": ""
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1265,12 +1332,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/informe/verMio/{{ _['informe-presentacion'] }}
+      - url: "{{ _['url-api'] }}/api/v1/informe/verMio/{{ _['informe-presentacion'] }}"
         name: "20: Ver mi informe"
         meta:
           id: req_7239778af3ec4b2096f1a61e1a94e2c2
           created: 1771975721705
-          modified: 1771977523983
+          modified: 1772032567554
           isPrivate: false
           description: ""
           sortKey: -1771974579006
@@ -1279,22 +1346,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1325,13 +1396,13 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/informe/publicar/{{ _['informe-presentacion']
-          }}
+      - url: "{{ _['url-api'] }}/api/v1/informe/publicar/{{ _['informe-presentacion']
+          }}"
         name: "21: Publicar informe"
         meta:
           id: req_9aba9cc7771745d4bb388afca94647dd
           created: 1771975757347
-          modified: 1771977528382
+          modified: 1772032571068
           isPrivate: false
           description: ""
           sortKey: -1771974578906
@@ -1340,22 +1411,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1386,12 +1461,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario/cerrarSesion
+      - url: "{{ _['url-api'] }}/api/v1/usuario/cerrarSesion"
         name: "22: Cerrar sesion"
         meta:
           id: req_9f62744b2595483bb7b198c7e1074e1a
           created: 1771975778122
-          modified: 1771977530436
+          modified: 1772032574397
           isPrivate: false
           description: ""
           sortKey: -1771974578806
@@ -1400,22 +1475,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1446,12 +1525,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario/login
+      - url: "{{ _['url-api'] }}/api/v1/usuario/login"
         name: 23 Login a votante
         meta:
           id: req_e72a45c67e664896b07d5c6868bd1f8c
           created: 1771975845189
-          modified: 1771977533004
+          modified: 1772032577204
           isPrivate: false
           description: ""
           sortKey: -1771974578706
@@ -1464,22 +1543,26 @@ collection:
             	"password": "123456789aA."
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: TokenEX
+          - description: ""
+            disabled: false
+            id: pair_d70eee80526246fb94579bb78b2b6041
+            name: TokenEX
             value: 2|FMV3kewsDdEcKkaN9whZqcl8ACoqB1CptbQY5Tnha9acad9a
-            description: ""
+          - description: ""
             disabled: false
-          - name: Authorization
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
             value: "`Bearer 1"
-            description: ""
-            disabled: false
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1511,12 +1594,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/informe/ver/{{ _['informe-presentacion'] }}
+      - url: "{{ _['url-api'] }}/api/v1/informe/ver/{{ _['informe-presentacion'] }}"
         name: "24: Ver informe"
         meta:
           id: req_9fb1fd6d83834f249cbded0cf8214381
           created: 1771975883097
-          modified: 1771977536422
+          modified: 1772032579955
           isPrivate: false
           description: ""
           sortKey: -1771974578606
@@ -1525,22 +1608,26 @@ collection:
           mimeType: application/json
           text: ""
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1571,12 +1658,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario
+      - url: "{{ _['url-api'] }}/api/v1/usuario"
         name: "25: Borrar usuario votante"
         meta:
           id: req_0b150e2105464bb3a8688ecf8f9cedba
           created: 1771975957361
-          modified: 1771977538519
+          modified: 1772032583356
           isPrivate: false
           description: ""
           sortKey: -1771974578506
@@ -1588,22 +1675,26 @@ collection:
             	"password": "123456789aA."
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1634,12 +1725,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario/login
+      - url: "{{ _['url-api'] }}/api/v1/usuario/login"
         name: "26: Login a publicante"
         meta:
           id: req_1ef4e779de9f40fcab17e7789ddba5f9
           created: 1771975980334
-          modified: 1771977541425
+          modified: 1772032586690
           isPrivate: false
           description: ""
           sortKey: -1771974578406
@@ -1652,22 +1743,26 @@ collection:
             	"password": "123456789aA.."
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: TokenEX
+          - description: ""
+            disabled: false
+            id: pair_d70eee80526246fb94579bb78b2b6041
+            name: TokenEX
             value: 2|FMV3kewsDdEcKkaN9whZqcl8ACoqB1CptbQY5Tnha9acad9a
-            description: ""
+          - description: ""
             disabled: false
-          - name: Authorization
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
             value: "`Bearer 1"
-            description: ""
-            disabled: false
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1699,12 +1794,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/usuario
+      - url: "{{ _['url-api'] }}/api/v1/usuario"
         name: "27: Borrar usuario publicante"
         meta:
           id: req_cd33c7f713b043f09c340dc1c3604248
           created: 1771975993465
-          modified: 1771977544633
+          modified: 1772032590287
           isPrivate: false
           description: ""
           sortKey: -1771974578306
@@ -1716,22 +1811,26 @@ collection:
             	"password": "123456789aA.."
             }
         headers:
-          - name: Content-Type
+          - id: pair_7f4ba125a6724708b22049a27f4cc41b
+            name: Content-Type
             value: application/json
-          - name: User-Agent
+          - id: pair_08ae32cfb06a4131a3b106697d548e73
+            name: User-Agent
             value: insomnia/11.2.0
-          - name: Authorization
-            value: "`Bearer 1"
-            description: ""
+          - description: ""
             disabled: true
-          - name: Accept
-            value: application/json
-            description: ""
+            id: pair_98893c9c659c4ff3a52a9a449ca3973c
+            name: Authorization
+            value: "`Bearer 1"
+          - description: ""
             disabled: false
+            id: pair_63e0e3482ae94ecf925723f69d1fe184
+            name: Accept
+            value: application/json
         authentication:
-          type: bearer
           disabled: false
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1762,12 +1861,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8081/api/v1/aaa
+      - url: "{{ _['url-api'] }}/api/v1/aaa"
         name: "0: Error de ejemplo"
         meta:
           id: req_c02c62f50b424a40b5a34970f3fc725b
           created: 1771976511811
-          modified: 1771977359456
+          modified: 1772032487681
           isPrivate: false
           description: ""
           sortKey: -1771974580906
@@ -1784,8 +1883,8 @@ collection:
           - name: User-Agent
             value: insomnia/11.2.0
         authentication:
-          type: bearer
           token: "{{ dynamic_token }}"
+          type: bearer
         scripts:
           preRequest: >
             const token = insomnia.environment.get('AuthorizationToken');
@@ -1816,27 +1915,28 @@ collection:
     meta:
       id: fld_56ee5c5ee28b40f69a764d71a4f19253
       created: 1771976175868
-      modified: 1771976175868
+      modified: 1772032345240
       sortKey: -1771976175868
       description: ""
 cookieJar:
   name: Default Jar
   meta:
     id: jar_6b6bda0b8afea05bdbf76678c8adf595a6dd43b9
-    created: 1770379485663
-    modified: 1771977643476
+    created: 1770387639505
+    modified: 1772032695137
 environments:
   name: Base Environment
   meta:
     id: env_6b6bda0b8afea05bdbf76678c8adf595a6dd43b9
     created: 1770379485662
-    modified: 1771977643479
+    modified: 1772032695138
     isPrivate: false
   data:
-    AuthorizationToken: 5|ggSkS6SsNmQlMl3XK4dZWQpicvOWVwJ98CF3Mnum3f78de00
+    AuthorizationToken: 5|yswXRtKrrOE3ucMyPOSdh7noBovxTVBpsXr5CZhj89aa82f2
     AuthorizationToken2: your_new_token_here
-    dynamic_token: 5|ggSkS6SsNmQlMl3XK4dZWQpicvOWVwJ98CF3Mnum3f78de00
+    dynamic_token: 5|yswXRtKrrOE3ucMyPOSdh7noBovxTVBpsXr5CZhj89aa82f2
     id_encuesta: 89d3582d-b28e-4ef7-aeca-f16015e434e1
     prueba: aaaaa
-    encuesta-presentacion: 9bca2e4a-2e9c-4529-a0ee-161a77f9167a
-    informe-presentacion: fb9a2c2a-9067-4bc7-a992-9a27b6e40521
+    encuesta-presentacion: 0c71a0de-8fa9-4e06-8977-675cec559655
+    informe-presentacion: 3471cc7c-a0bb-40cb-9cef-ee101b25ce19
+    url-api: http://localhost:8081
