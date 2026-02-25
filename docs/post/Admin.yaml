@@ -1,0 +1,737 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Peticiones standard
+meta:
+  id: wrk_c4bbf3b0d7e544faaf56e4f9009ba1a0
+  created: 1770379485661
+  modified: 1770412476477
+  description: ""
+collection:
+  - name: Presentacion
+    meta:
+      id: fld_3d76fc54edea4e70809189f2bbaccb70
+      created: 1771974004902
+      modified: 1771977643479
+      sortKey: -1771974004903
+      description: ""
+  - name: ADMIN
+    meta:
+      id: fld_56ee5c5ee28b40f69a764d71a4f19253
+      created: 1771976175868
+      modified: 1771976175868
+      sortKey: -1771976175868
+      description: ""
+    children:
+      - url: http://localhost:8081/api/v1/admin/usuario/019c9054-8f9c-7159-bac7-59d17a0aaea1/editar
+        name: Editar usuario ADMIN
+        meta:
+          id: req_c05c5cbb95b74247a72f4e85aba2a336
+          created: 1770407096573
+          modified: 1771976188301
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188234
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nickname": "Usuario-mod2",
+            	"nombre": "El modificado",
+            	"email": "modificado2@yangmail.com",
+            	"password": "123456789aA..",
+            	"descripcion": "esto lo ha puesto un admin realmente",
+            	"url_foto": "http://delivery.io/aaa.png"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/usuario/alterPerms
+        name: Editar usuario permisos ADMIN
+        meta:
+          id: req_8db74c64e1014a0d9b00fa6dbbeea402
+          created: 1770407146715
+          modified: 1771976195269
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188334
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"id": "019c9054-8f9c-7159-bac7-59d17a0aaea1",
+            	"permisos": 2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/usuario/019c3877-5242-7313-9510-80579b348a60/borrar
+        name: Borrar usuario ADMIN
+        meta:
+          id: req_ab43f68fff6447bab9f408d4529ba7d1
+          created: 1770407204842
+          modified: 1771976197314
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188434
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/usuario/019c9054-8f9c-7159-bac7-59d17a0aaea1/ver
+        name: Ver todo usuario ADMIN
+        meta:
+          id: req_c9d0355f274c42f3a36a969326a42448
+          created: 1770407240838
+          modified: 1771976199114
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188284
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/
+        name: ADMIN
+        meta:
+          id: req_29e12273f97f452bb3fa02a1f378337e
+          created: 1770407273022
+          modified: 1771976215010
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188534
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/encuesta/3ec7fc79-8b7b-4333-b5f0-733651ac7fab/ver
+        name: Ver todo encuesta ADMIN
+        meta:
+          id: req_56cbc78c5c2846d09ccd144c84e8fa1e
+          created: 1770648428322
+          modified: 1771976243208
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188312.125
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/encuesta/3212b658-01b1-440a-b11a-7a52cc919dbb/borrar
+        name: Borrar encuesta ADMIN
+        meta:
+          id: req_7c19d645f26d433dba24d2202d1f48f4
+          created: 1770648467951
+          modified: 1771976241873
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188359
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/encuesta/3ec7fc79-8b7b-4333-b5f0-733651ac7fab/editar
+        name: Editar encuesta ADMIN
+        meta:
+          id: req_4b5da75d7fb94f4bb295f5e85bb23377
+          created: 1770648491990
+          modified: 1771976220855
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188296.5
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"anonimo": true,
+            	"publico": true,
+            	"votacion": false,
+            	"nombre": "encuesta editada",
+            	"descripcion": "hola nuevo",
+            	"url_foto": "http://yangmei.io/a.png"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/preguntas/3ec7fc79-8b7b-4333-b5f0-733651ac7fab/ver/1
+        name: Ver preguntas de encuesta ADMIN
+        meta:
+          id: req_03f048f10727450d88205704041b1461
+          created: 1771251912608
+          modified: 1771976201092
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188384
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/respuestas/3ec7fc79-8b7b-4333-b5f0-733651ac7fab/ver/1
+        name: Ver respuestas encuesta ADMIN
+        meta:
+          id: req_de373a6ef1e2462f84b093f714790d99
+          created: 1771522495860
+          modified: 1771976202480
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188309
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/informes/44d620ce-3bb4-4070-b3f5-6cc16f7ddc3c/ver
+        name: Ver informe ADMIN
+        meta:
+          id: req_9c906203d17e4a7f9b53647354bcb238
+          created: 1771607433547
+          modified: 1771976217858
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188315.25
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/api/v1/admin/informes/b77f32e7-ebca-474b-8873-9488203eec05/borrar
+        name: Borrar informe ADMIN
+        meta:
+          id: req_d35fbfc33fe94fc8b203af48d7ea45ca
+          created: 1771607456055
+          modified: 1771976216426
+          isPrivate: false
+          description: ""
+          sortKey: -1771976188321.5
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+          - name: Authorization
+            value: "`Bearer 1"
+            description: ""
+            disabled: true
+          - name: Accept
+            value: application/json
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{ dynamic_token }}"
+        scripts:
+          preRequest: >
+            const token = insomnia.environment.get('AuthorizationToken');
+
+
+            if (token) {
+            	insomnia.collectionVariables.set("dynamic_token", token);
+                //insomnia.request.auth.update({type: 'bearer', bearer: [{key: 'token', value: "token"}]}, 'bearer');
+            } else {
+                console.error("Authorization Token is missing!");
+            }
+          afterResponse: >-
+            try{const responseBody = insomnia.response.json();
+
+            const token = responseBody?.data?.access_token ?? false;
+
+            if (token) insomnia.environment.set("AuthorizationToken",
+            token);}catch(e){}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_6b6bda0b8afea05bdbf76678c8adf595a6dd43b9
+    created: 1770379485663
+    modified: 1771977643476
+environments:
+  name: Base Environment
+  meta:
+    id: env_6b6bda0b8afea05bdbf76678c8adf595a6dd43b9
+    created: 1770379485662
+    modified: 1771977643479
+    isPrivate: false
+  data:
+    AuthorizationToken: 5|ggSkS6SsNmQlMl3XK4dZWQpicvOWVwJ98CF3Mnum3f78de00
+    AuthorizationToken2: your_new_token_here
+    dynamic_token: 5|ggSkS6SsNmQlMl3XK4dZWQpicvOWVwJ98CF3Mnum3f78de00
+    id_encuesta: 89d3582d-b28e-4ef7-aeca-f16015e434e1
+    prueba: aaaaa
+    encuesta-presentacion: 9bca2e4a-2e9c-4529-a0ee-161a77f9167a
+    informe-presentacion: fb9a2c2a-9067-4bc7-a992-9a27b6e40521
